@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcwut0htsf36f"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l68op"]
+size = Vector2(10, 10)
+
+[node name="Game" type="Node3D"]
+
+[node name="Actors" type="Node3D" parent="."]
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map"]
+mesh = SubResource("PlaneMesh_l68op")

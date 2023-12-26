@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://w172lg7775ce"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_surv4"]
+height = 1.5
+radial_segments = 16
+
+[node name="Actor" type="Node3D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_surv4")
+
+[node name="AttackStats" type="Node" parent="."]
+
+[node name="Hitbox" type="Area3D" parent="."]
