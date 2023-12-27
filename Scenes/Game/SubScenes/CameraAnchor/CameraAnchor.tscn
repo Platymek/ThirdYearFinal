@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvdndu8codtbb"]
+
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/CameraAnchor/CameraAnchor.cs" id="1_7gnd5"]
+
+[node name="CameraAnchor" type="Node3D"]
+script = ExtResource("1_7gnd5")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2.5)

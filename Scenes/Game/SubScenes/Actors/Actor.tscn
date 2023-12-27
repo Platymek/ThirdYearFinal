@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://w172lg7775ce"]
+
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Actor.cs" id="1_1pp71"]
+[ext_resource type="Resource" uid="uid://chvbm8nykabkg" path="res://Scenes/Game/SubScenes/Actors/ActorStats.tres" id="2_jnwxs"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/AttackStats.cs" id="2_r16ci"]
+
+[node name="Actor" type="CharacterBody3D"]
+script = ExtResource("1_1pp71")
+_stats = ExtResource("2_jnwxs")
+State = "idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AttackStats" type="Node" parent="."]
+script = ExtResource("2_r16ci")
+Damage = 0.0
+Knock = 0.0
+CheckDamage = false
+TrackSpeedMultiplier = 1.0
+DamageReactMutliplier = 1.0
+HurtBoxes = null
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]

@@ -5,9 +5,15 @@ public partial class Actor : CharacterBody3D
 {
 	// Properties //
 
-	[Export] public Actor Target { protected set; get; }
-	[Export] private ActorStats _stats;
+	[Export] public Node3D Target { protected set; get; }
+	[Export] protected ActorStats _stats;
 
+	protected string Animation
+	{
+		get => _animationPlayer.CurrentAnimation;
+		set => _animationPlayer?.Play(value);
+	}
+	
 	private string _state;
 	[Export] public virtual string State
 	{
@@ -21,23 +27,18 @@ public partial class Actor : CharacterBody3D
 			if (_state == value) return;
 			
 			_state = value;
-
-			_animationPlayer ??= GetNode<AnimationPlayer>("AnimationPlayer");
-			_animationPlayer.Play(value);
+			Animation = value;
 				
 			GD.Print($"{Name} change State to {value}");
 		}
 	}
 	
+	// position of actor in a top-down, 2D space
 	public Vector2 Position2D
 	{
 		get
 		{
-			Vector2 position = new Vector2(
-				Position.X,
-				Position.Z);
-
-			return position;
+			return Vector3to2D(Position);
 		}
 
 		set
@@ -83,9 +84,12 @@ public partial class Actor : CharacterBody3D
 		// initialise variables
 		Health = _stats.MaxHealth;
 		CurrentKnock = 0;
-
 		_justJustHit = false;
 		JustHit = false;
+		
+		// get animation player and start animation based on starting state
+		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		Animation = State;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -93,6 +97,9 @@ public partial class Actor : CharacterBody3D
 	{
 		base._Process(delta);
 
+		// reset velocity
+		Velocity = Vector3.Zero;
+		
 		// check hurtbox if set to
 		if (_attackStats.CheckDamage && _attackStats.HurtBoxes != null)
 		{
@@ -109,6 +116,8 @@ public partial class Actor : CharacterBody3D
 		{
 			JustHit = false;
 		}
+
+		TrackTarget((float)delta);
 	}
 	
 	
@@ -152,7 +161,7 @@ public partial class Actor : CharacterBody3D
 		_previousKnock = knockback;
 
 		GD.Print($"{Name} was hit for {_attackStats.DamageReactMutliplier} damage " +
-		         $"and {finalKnockback} knockback");
+				 $"and {finalKnockback} knockback");
 	}
 	
 	// rotate actor to face target actor
@@ -161,8 +170,8 @@ public partial class Actor : CharacterBody3D
 		// get angle difference (the smallest angle to the target)
 
 		float angleToTarget = new Vector2(-Position.Z, Position.X)
-			                      .AngleToPoint(new Vector2(-Target.Position.Z, Target.Position.X))
-		                      * -1;
+								  .AngleToPoint(new Vector2(-Target.Position.Z, Target.Position.X))
+							  * -1;
 
 		float angleDifference = Mathf.AngleDifference(Rotation.Y, angleToTarget);
 
@@ -187,8 +196,8 @@ public partial class Actor : CharacterBody3D
 			// get new angle difference
 
 			float newAngleToTarget = new Vector2(-Position.Z, Position.X)
-				                         .AngleToPoint(new Vector2(-Target.Position.Z, Target.Position.X))
-			                         * -1;
+										 .AngleToPoint(new Vector2(-Target.Position.Z, Target.Position.X))
+									 * -1;
 
 			float newAngleDifference = Mathf.AngleDifference(Rotation.Y, newAngleToTarget);
 
@@ -197,7 +206,7 @@ public partial class Actor : CharacterBody3D
 			// and point the character to the target accordingly
 
 			if ((angleDifference < 0 && newAngleDifference > 0) ||
-			    (angleDifference > 0 && newAngleDifference < 0))
+				(angleDifference > 0 && newAngleDifference < 0))
 			{
 				Rotation = new Vector3(
 					Rotation.X,
@@ -205,6 +214,19 @@ public partial class Actor : CharacterBody3D
 					Rotation.Z);
 			}
 		}
+	}
+	
+	// move on local rotation
+	protected void Move(Vector2 velocity)
+	{
+		// get velocity
+		Velocity += (new Vector3(velocity.X, 0, -velocity.Y) * _stats.Speed).Rotated(Vector3.Up, Rotation.Y);
+	}
 
+	protected Vector2 Vector3to2D(Vector3 vector)
+	{
+		return new Vector2(
+			Position.X,
+			Position.Z);
 	}
 }

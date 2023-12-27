@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://drf2gde56141u"]
+
+[ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_5sbhb"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Player/Player.cs" id="2_njyg1"]
+[ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="3_8bij5"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pi7fi"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qbww1"]
+height = 1.5
+
+[node name="Player" instance=ExtResource("1_5sbhb")]
+script = ExtResource("2_njyg1")
+_stats = ExtResource("3_8bij5")
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_pi7fi")
+}
+
+[node name="AttackStats" parent="." index="1"]
+HurtBoxes = []
+
+[node name="Hitbox" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CylinderShape3D_qbww1")
+
+[node name="DodgeTimer" type="Timer" parent="." index="3"]
+wait_time = 0.5
+one_shot = true
+
+[node name="DodgeStunTimer" type="Timer" parent="." index="4"]
+wait_time = 0.5
+one_shot = true
+
+[node name="InputBufferTimer" type="Timer" parent="." index="5"]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="DodgeTimer" to="." method="OnDodgeEnd"]
+[connection signal="timeout" from="DodgeStunTimer" to="." method="OnDodgeStunEnd"]
+[connection signal="timeout" from="InputBufferTimer" to="." method="OnInputBufferEnd"]

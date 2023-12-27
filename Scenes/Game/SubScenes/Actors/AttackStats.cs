@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+[Tool]
 public partial class AttackStats : Node
 {
 	[Export] public float Damage;
@@ -12,8 +13,7 @@ public partial class AttackStats : Node
 
 	private NodePath[] _hurtBoxes;
 
-	[Export]
-	public NodePath[] HurtBoxes
+	[Export] public NodePath[] HurtBoxes
 	{
 		get
 		{
@@ -28,7 +28,7 @@ public partial class AttackStats : Node
 			{
 				string hitBoxString = n.ToString();
 				
-				if (n == null || hitBoxString.Length < 3)
+				if (hitBoxString.Length < 3)
 				{
 					hurtBoxes.Add(new NodePath(hitBoxString.Substring(3)));
 				}
