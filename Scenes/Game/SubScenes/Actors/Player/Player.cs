@@ -92,11 +92,8 @@ public partial class Player : Actor
 					"move_down", "move_up");
 	
 				Move(move);
-				
-				GD.Print(Velocity.Z);
 
-				float halfPi = Mathf.Pi * .5f;
-				float angle = move.Angle() - halfPi;
+				float angle = move.Rotated(-Mathf.Pi * .5f).Angle();
 
 				/*
 				if (move != Vector2.Zero)
@@ -121,19 +118,21 @@ public partial class Player : Actor
 
 				if (_bufferedAction == "dodge")
 				{
-					if (move.X < -0.8)
+					switch (angle)
 					{
-						State = "dodge_left";
+						case > Mathf.Pi * .75f:
+						case < Mathf.Pi * -.75f:
+						case 0:
+							State = "dodge_down";
+							break;
+						case < 0:
+							State = "dodge_right";
+							break;
+						default:
+							State = "dodge_left";
+							break;
 					}
-					else if (move.X > 0.8)
-					{
-						State = "dodge_right";
-					}
-					else
-					{
-						State = "dodge_down";
-					}
-					
+
 					_dodgeTimer.Start();
 				}
 				

@@ -18,9 +18,6 @@ libraries = {
 "": SubResource("AnimationLibrary_pi7fi")
 }
 
-[node name="AttackStats" parent="." index="1"]
-HurtBoxes = []
-
 [node name="Hitbox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CylinderShape3D_qbww1")
