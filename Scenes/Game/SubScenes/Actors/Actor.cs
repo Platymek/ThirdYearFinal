@@ -143,8 +143,6 @@ public partial class Actor : CharacterBody3D
 				}
 			}
 		}
-
-		_attackStats.CheckDamage = false;
 	}
 	
 	// get hurt by another actor
