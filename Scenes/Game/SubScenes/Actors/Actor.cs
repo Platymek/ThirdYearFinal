@@ -28,6 +28,17 @@ public partial class Actor : CharacterBody3D
 			
 			_state = value;
 			Animation = value;
+
+			switch (value)
+			{
+				case "idle":
+					_attackStats.TrackSpeedMultiplier = 1;
+					break;
+				
+				case "stun":
+					_attackStats.TrackSpeedMultiplier = 0;
+					break;
+			}
 				
 			GD.Print($"{Name} change State to {value}");
 		}
@@ -38,7 +49,7 @@ public partial class Actor : CharacterBody3D
 	{
 		get
 		{
-			return Vector3to2D(Position);
+			return Vector3To2D(Position);
 		}
 
 		set
@@ -117,7 +128,14 @@ public partial class Actor : CharacterBody3D
 			JustHit = false;
 		}
 
-		TrackTarget((float)delta);
+		float fDelta = (float)delta;
+
+		if (CurrentKnock != 0)
+		{
+			ProcessKnock(fDelta);
+		}
+		
+		TrackTarget(fDelta);
 	}
 	
 	
@@ -146,20 +164,43 @@ public partial class Actor : CharacterBody3D
 	}
 	
 	// get hurt by another actor
-	void Hurt(float damage, float knockback)
+	protected void Hurt(float damage, float knock)
 	{
 		float finalDamage = damage * _attackStats.DamageReactMutliplier;
-		float finalKnockback = knockback * _attackStats.DamageReactMutliplier;
+		float finalKnock = knock * _attackStats.DamageReactMutliplier;
 
 		Health -= finalDamage;
-		CurrentKnock = finalKnockback;
+		CurrentKnock = finalKnock;
 		_justJustHit = false;
 
 		_previousDamage = damage;
-		_previousKnock = knockback;
+		_previousKnock = knock;
 
 		GD.Print($"{Name} was hit for {_attackStats.DamageReactMutliplier} damage " +
-				 $"and {finalKnockback} knockback");
+				 $"and {finalKnock} knock");
+	}
+	
+	// get hurt by another actor and change angle
+	protected void Hurt(float damage, float knock, float angle)
+	{
+		Rotation = new Vector3(Rotation.X, angle, Rotation.Z);
+		
+		Hurt(damage, knock);
+	}
+
+	// returns true if the wall bounce was successful
+	public bool WallBounce(float angle)
+	{
+		if (CurrentKnock == 0) return false;
+		
+		float angleDifference = angle - Rotation.Y;
+		float hurtAngle = angle + angleDifference;
+		
+		Hurt(_previousDamage, -CurrentKnock, hurtAngle);
+		State = "stun";
+			
+		GD.Print($"Actor {Name} Wall Bounced!");
+		return true;
 	}
 	
 	// rotate actor to face target actor
@@ -221,10 +262,32 @@ public partial class Actor : CharacterBody3D
 		Velocity += (new Vector3(velocity.X, 0, -velocity.Y) * _stats.Speed).Rotated(Vector3.Up, Rotation.Y);
 	}
 
-	protected Vector2 Vector3to2D(Vector3 vector)
+	protected Vector2 Vector3To2D(Vector3 vector)
 	{
 		return new Vector2(
 			Position.X,
 			Position.Z);
+	}
+	
+	void ProcessKnock(float delta)
+	{
+		Move(new Vector2(0, -CurrentKnock));
+
+		bool positiveKnock = CurrentKnock > 0;
+
+		CurrentKnock -= delta * _stats.KnockReactDeceleration
+								  * (positiveKnock ? 1 : -1);
+
+		bool newPositiveKnock = CurrentKnock > 0;
+
+		if (positiveKnock != newPositiveKnock)
+		{
+			CurrentKnock = 0;
+
+			if (State == "stun")
+			{
+				State = "idle";
+			}
+		}
 	}
 }

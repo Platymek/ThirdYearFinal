@@ -71,7 +71,7 @@ public partial class Player : Actor
 
 		foreach (string action in _bufferableActions)
 		{
-			if (Input.IsActionPressed(action))
+			if (Input.IsActionJustPressed(action))
 			{
 				_inputBufferTimer.Start();
 				_bufferedAction = action;
@@ -116,24 +116,37 @@ public partial class Player : Actor
 				}
 				*/
 
-				if (_bufferedAction == "dodge")
+				if (_bufferedAction != null)
 				{
-					switch (angle)
+					// only dodge if the user is pointing the stick in a direction they can dodge in
+					if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .3f or < Mathf.Pi * -.3f))
 					{
-						case > Mathf.Pi * .75f:
-						case < Mathf.Pi * -.75f:
-						case 0:
-							State = "dodge_down";
-							break;
-						case < 0:
-							State = "dodge_right";
-							break;
-						default:
-							State = "dodge_left";
-							break;
+						switch (angle)
+						{
+							// if the stick is pointing backwards, dodge back
+							case > Mathf.Pi * .6f:
+							case < Mathf.Pi * -.6f:
+							case 0:
+								State = "dodge_down";
+								break;
+							// otherwise, if the stick is pointing right, dodge right
+							case < 0:
+								State = "dodge_right";
+								break;
+							// else, dodge left
+							default:
+								State = "dodge_left";
+								break;
+						}
+
+						_dodgeTimer.Start();
+					}
+					else if (_bufferedAction == "punch")
+					{
+						Hurt(0, 4);
 					}
 
-					_dodgeTimer.Start();
+					_bufferedAction = null;
 				}
 				
 				break;

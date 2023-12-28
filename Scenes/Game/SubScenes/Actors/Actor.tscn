@@ -20,4 +20,6 @@ TrackSpeedMultiplier = 1.0
 DamageReactMutliplier = 1.0
 HurtBoxes = []
 
-[node name="Hitbox" type="CollisionShape3D" parent="."]
+[node name="CollisionBox" type="CollisionShape3D" parent="."]
+
+[node name="Hitbox" type="Area3D" parent="."]
