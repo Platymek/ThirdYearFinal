@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://w172lg7775ce"]
+[gd_scene load_steps=5 format=3 uid="uid://w172lg7775ce"]
 
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Actor.cs" id="1_1pp71"]
 [ext_resource type="Resource" uid="uid://chvbm8nykabkg" path="res://Scenes/Game/SubScenes/Actors/ActorStats.tres" id="2_jnwxs"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/AttackStats.cs" id="2_r16ci"]
+[ext_resource type="Texture2D" uid="uid://d0b5t8iv82smp" path="res://icon.svg" id="4_vg58c"]
 
 [node name="Actor" type="CharacterBody3D"]
 script = ExtResource("1_1pp71")
@@ -23,3 +24,7 @@ HurtBoxes = []
 [node name="CollisionBox" type="CollisionShape3D" parent="."]
 
 [node name="Hitbox" type="Area3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 0.3, 0)
+texture = ExtResource("4_vg58c")

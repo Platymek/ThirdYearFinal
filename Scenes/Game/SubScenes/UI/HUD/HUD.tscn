@@ -13,16 +13,16 @@ script = ExtResource("1_6rn4j")
 
 [node name="PlayerHealth" type="ProgressBar" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -35.0
-offset_right = 64.0
-offset_bottom = -8.0
-grow_horizontal = 2
+offset_left = -144.0
+offset_top = -43.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
 grow_vertical = 0
 max_value = 1.0
 value = 0.75
@@ -39,14 +39,10 @@ text = "Player Health"
 
 [node name="OpponentHealth" type="ProgressBar" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_top = 8.0
-offset_right = 64.0
-offset_bottom = 35.0
-grow_horizontal = 2
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 43.0
 max_value = 1.0
 value = 0.75
 

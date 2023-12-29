@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bcwut0htsf36f"]
 
 [ext_resource type="PackedScene" uid="uid://drf2gde56141u" path="res://Scenes/Game/SubScenes/Actors/Player/Player.tscn" id="1_cxp7k"]
-[ext_resource type="Texture2D" uid="uid://d0b5t8iv82smp" path="res://icon.svg" id="1_prqui"]
+[ext_resource type="PackedScene" uid="uid://f0emr35uydsf" path="res://Scenes/Game/SubScenes/Actors/Opponent/Opponent.tscn" id="2_5hirn"]
 [ext_resource type="PackedScene" uid="uid://cvdndu8codtbb" path="res://Scenes/Game/SubScenes/CameraAnchor/CameraAnchor.tscn" id="3_gshri"]
 [ext_resource type="PackedScene" uid="uid://c54376f7qc04q" path="res://Scenes/Game/SubScenes/Wall/Wall.tscn" id="3_o07bf"]
 [ext_resource type="PackedScene" uid="uid://bt437vsmw6isq" path="res://Scenes/Game/SubScenes/UI/HUD/HUD.tscn" id="5_3dvb1"]
@@ -13,15 +13,12 @@ size = Vector2(10, 10)
 
 [node name="Actors" type="Node3D" parent="."]
 
-[node name="Node3D" type="Sprite3D" parent="Actors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
-pixel_size = 0.005
-billboard = 1
-texture = ExtResource("1_prqui")
-
 [node name="Player" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("1_cxp7k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
-Target = NodePath("../Node3D")
+Target = NodePath("../Opponent")
+
+[node name="Opponent" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("2_5hirn")]
+Target = NodePath("../Player")
 
 [node name="Map" type="Node3D" parent="."]
 
@@ -45,9 +42,23 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="Wall4" parent="Map/Walls" instance=ExtResource("3_o07bf")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -5, 0, 0)
 
+[node name="Corners" type="Node3D" parent="Map"]
+
+[node name="XZ" type="Node3D" parent="Map/Corners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+
+[node name="Xn" type="Node3D" parent="Map/Corners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
+
+[node name="nn" type="Node3D" parent="Map/Corners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="nZ" type="Node3D" parent="Map/Corners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
+
 [node name="CameraAnchor" parent="." node_paths=PackedStringArray("_player", "_target") instance=ExtResource("3_gshri")]
 _player = NodePath("../Actors/Player")
-_target = NodePath("../Actors/Node3D")
+_target = NodePath("../Actors/Opponent")
 _angleOffset = -30
 _turnSpeed = 2.0
 
@@ -55,4 +66,4 @@ _turnSpeed = 2.0
 
 [node name="Hud" parent="HUD" node_paths=PackedStringArray("Player", "Opponent") instance=ExtResource("5_3dvb1")]
 Player = NodePath("../../Actors/Player")
-Opponent = NodePath("../../Actors/Player")
+Opponent = NodePath("../../Actors/Opponent")

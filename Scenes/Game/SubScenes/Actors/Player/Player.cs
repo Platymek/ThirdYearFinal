@@ -119,7 +119,7 @@ public partial class Player : Actor
 				if (_bufferedAction != null)
 				{
 					// only dodge if the user is pointing the stick in a direction they can dodge in
-					if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .3f or < Mathf.Pi * -.3f))
+					if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .2f or < Mathf.Pi * -.2f))
 					{
 						switch (angle)
 						{

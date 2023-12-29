@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://drf2gde56141u"]
+[gd_scene load_steps=7 format=3 uid="uid://drf2gde56141u"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_5sbhb"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Player/Player.cs" id="2_njyg1"]
 [ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="3_8bij5"]
-[ext_resource type="Texture2D" uid="uid://d0b5t8iv82smp" path="res://icon.svg" id="4_moamy"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pi7fi"]
 
@@ -44,10 +43,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 [node name="Hitbox" type="CollisionShape3D" parent="Hitbox" index="0"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 shape = SubResource("CylinderShape3D_qbww1")
-
-[node name="Sprite3D" type="Sprite3D" parent="." index="7"]
-transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 0.3, 0)
-texture = ExtResource("4_moamy")
 
 [connection signal="timeout" from="DodgeTimer" to="." method="OnDodgeEnd"]
 [connection signal="timeout" from="DodgeStunTimer" to="." method="OnDodgeStunEnd"]
