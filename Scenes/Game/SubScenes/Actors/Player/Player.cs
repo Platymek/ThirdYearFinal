@@ -160,8 +160,6 @@ public partial class Player : Actor
 			case "dodge_down": ProcessDodge(Vector2.Up);
 				break;
 		}
-		
-		MoveAndSlide();
 	}
 	
 	

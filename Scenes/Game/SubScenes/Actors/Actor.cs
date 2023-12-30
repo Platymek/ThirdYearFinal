@@ -7,6 +7,9 @@ public partial class Actor : CharacterBody3D
 
 	[Export] public Node3D Target { protected set; get; }
 	[Export] protected ActorStats _stats;
+	
+	private AnimationPlayer _animationPlayer;
+	protected AttackStats AttackStats;
 
 	protected string Animation
 	{
@@ -32,11 +35,11 @@ public partial class Actor : CharacterBody3D
 			switch (value)
 			{
 				case "idle":
-					_attackStats.TrackSpeedMultiplier = 1;
+					AttackStats.TrackSpeedMultiplier = 1;
 					break;
 				
 				case "stun":
-					_attackStats.TrackSpeedMultiplier = 0;
+					AttackStats.TrackSpeedMultiplier = 0;
 					break;
 			}
 				
@@ -63,9 +66,6 @@ public partial class Actor : CharacterBody3D
 		}
 	}
 
-	private AnimationPlayer _animationPlayer;
-	private AttackStats _attackStats;
-
 	public float Health;
 	public float CurrentKnock;
 
@@ -90,7 +90,7 @@ public partial class Actor : CharacterBody3D
 		base._Ready();
 
 		// get nodes
-		_attackStats = GetNode<AttackStats>("AttackStats");
+		AttackStats = GetNode<AttackStats>("AttackStats");
 
 		// initialise variables
 		Health = _stats.MaxHealth;
@@ -108,11 +108,14 @@ public partial class Actor : CharacterBody3D
 	{
 		base._Process(delta);
 
+		// move using velocity from previous frame
+		MoveAndSlide();
+		
 		// reset velocity
 		Velocity = Vector3.Zero;
 		
 		// check hurtbox if set to
-		if (_attackStats.CheckDamage && _attackStats.HurtBoxes != null)
+		if (AttackStats.CheckDamage && AttackStats.HurtBoxes != null)
 		{
 			CheckDamage();
 		}
@@ -145,7 +148,7 @@ public partial class Actor : CharacterBody3D
 	void CheckDamage()
 	{
 		// check every overlapping area
-		foreach (var nodePath in _attackStats.HurtBoxes)
+		foreach (var nodePath in AttackStats.HurtBoxes)
 		{
 			foreach (var area3D in GetNode<Area3D>(nodePath).GetOverlappingAreas())
 			{
@@ -156,8 +159,8 @@ public partial class Actor : CharacterBody3D
 				if (actor.Name != Name)
 				{
 					actor.Hurt(
-						_stats.DamageMultiplier * _attackStats.Damage,
-						_stats.KnockMultiplier * _attackStats.Knock);
+						_stats.DamageMultiplier * AttackStats.Damage,
+						_stats.KnockMultiplier * AttackStats.Knock);
 				}
 			}
 		}
@@ -166,8 +169,8 @@ public partial class Actor : CharacterBody3D
 	// get hurt by another actor
 	protected void Hurt(float damage, float knock)
 	{
-		float finalDamage = damage * _attackStats.DamageReactMutliplier;
-		float finalKnock = knock * _attackStats.DamageReactMutliplier;
+		float finalDamage = damage * AttackStats.DamageReactMutliplier;
+		float finalKnock = knock * AttackStats.DamageReactMutliplier;
 
 		Health -= finalDamage;
 		CurrentKnock = finalKnock;
@@ -176,7 +179,7 @@ public partial class Actor : CharacterBody3D
 		_previousDamage = damage;
 		_previousKnock = knock;
 
-		GD.Print($"{Name} was hit for {_attackStats.DamageReactMutliplier} damage " +
+		GD.Print($"{Name} was hit for {AttackStats.DamageReactMutliplier} damage " +
 				 $"and {finalKnock} knock");
 	}
 	
@@ -202,18 +205,35 @@ public partial class Actor : CharacterBody3D
 		GD.Print($"Actor {Name} Wall Bounced!");
 		return true;
 	}
-	
-	// rotate actor to face target actor
-	void TrackTarget(float delta)
+
+	static protected float GetAngleDifference(Vector3 myPosition, float myRotation, 
+		Vector3 targetPosition, float tolerance = 0)
 	{
 		// get angle difference (the smallest angle to the target)
 
-		float angleToTarget = new Vector2(-Position.Z, Position.X)
-								  .AngleToPoint(new Vector2(-Target.Position.Z, Target.Position.X))
+		float angleToTarget = new Vector2(-myPosition.Z, myPosition.X)
+								  .AngleToPoint(new Vector2(-targetPosition.Z, targetPosition.X))
 							  * -1;
 
-		float angleDifference = Mathf.AngleDifference(Rotation.Y, angleToTarget);
+		float angleDifference = Mathf.AngleDifference(myRotation, angleToTarget);
 
+		if (angleDifference < tolerance && angleDifference > -tolerance)
+		{
+			return 0;
+		}
+
+		return angleDifference;
+	}
+
+	protected float GetAngleDifference(Vector3 targetPosition, float tolerance = 0)
+	{
+		return GetAngleDifference(Position, Rotation.Y, targetPosition, tolerance);
+	}
+	
+	// rotate actor to face target actor
+	private void TrackTarget(float delta)
+	{
+		float angleDifference = GetAngleDifference(Target.Position);
 
 		// if the difference is 0, no rotation is needed
 
@@ -221,7 +241,7 @@ public partial class Actor : CharacterBody3D
 		{
 			// rotate character
 
-			float deltaAngle = Mathf.Tau * delta * _attackStats.TrackSpeedMultiplier * _stats.TrackSpeed;
+			float deltaAngle = Mathf.Tau * delta * AttackStats.TrackSpeedMultiplier * _stats.TrackSpeed;
 
 			Vector3 newRotation = Rotation;
 
@@ -262,11 +282,11 @@ public partial class Actor : CharacterBody3D
 		Velocity += (new Vector3(velocity.X, 0, -velocity.Y) * _stats.Speed).Rotated(Vector3.Up, Rotation.Y);
 	}
 
-	protected Vector2 Vector3To2D(Vector3 vector)
+	protected static Vector2 Vector3To2D(Vector3 vector)
 	{
 		return new Vector2(
-			Position.X,
-			Position.Z);
+			vector.X,
+			vector.Z);
 	}
 	
 	void ProcessKnock(float delta)
