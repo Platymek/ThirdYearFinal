@@ -23,9 +23,6 @@ Target = NodePath("../Player")
 
 [node name="Map" type="Node3D" parent="."]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Map"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Map"]
 mesh = SubResource("PlaneMesh_l68op")
 
@@ -56,6 +53,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
 
 [node name="nZ" type="Node3D" parent="Map/Corners"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
+
+[node name="Lights" type="Node3D" parent="Map"]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Map/Lights"]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -5, 4, 5)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 10.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Map/Lights"]
+transform = Transform3D(0.707107, -0.5, 0.5, -4.21468e-08, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 5, 4, 5)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 10.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Map/Lights"]
+transform = Transform3D(-0.707107, -0.5, 0.5, -6.32203e-08, 0.707107, 0.707107, -0.707107, 0.5, -0.5, 5, 4, -5)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 10.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="Map/Lights"]
+transform = Transform3D(-0.707107, 0.5, -0.5, -2.10734e-08, 0.707107, 0.707107, 0.707107, 0.5, -0.5, -5, 4, -5)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 10.0
 
 [node name="CameraAnchor" parent="." node_paths=PackedStringArray("_player", "_target") instance=ExtResource("3_gshri")]
 _player = NodePath("../Actors/Player")

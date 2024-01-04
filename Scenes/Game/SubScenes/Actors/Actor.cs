@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Actor : CharacterBody3D
 {
@@ -17,6 +18,7 @@ public partial class Actor : CharacterBody3D
 		set => _animationPlayer?.Play(value);
 	}
 	
+	// the state the actor is in
 	private string _state;
 	[Export] public virtual string State
 	{
@@ -113,12 +115,6 @@ public partial class Actor : CharacterBody3D
 		
 		// reset velocity
 		Velocity = Vector3.Zero;
-		
-		// check hurtbox if set to
-		if (AttackStats.CheckDamage && AttackStats.HurtBoxes != null)
-		{
-			CheckDamage();
-		}
 
 		// if just hit, set JustHit to true so that this can be seen next frame
 		if (!_justJustHit)
@@ -141,36 +137,11 @@ public partial class Actor : CharacterBody3D
 		TrackTarget(fDelta);
 	}
 	
-	
-	// Other Functions //
-	
-	// check the current hit boxes to get if there have been any collisions and hurt actors
-	void CheckDamage()
-	{
-		// check every overlapping area
-		foreach (var nodePath in AttackStats.HurtBoxes)
-		{
-			foreach (var area3D in GetNode<Area3D>(nodePath).GetOverlappingAreas())
-			{
-				var victim = area3D.GetOwner<Node>();
-
-				if (victim is not Actor actor) continue;
-				
-				if (actor.Name != Name)
-				{
-					actor.Hurt(
-						_stats.DamageMultiplier * AttackStats.Damage,
-						_stats.KnockMultiplier * AttackStats.Knock);
-				}
-			}
-		}
-	}
-	
 	// get hurt by another actor
 	protected void Hurt(float damage, float knock)
 	{
-		float finalDamage = damage * AttackStats.DamageReactMutliplier;
-		float finalKnock = knock * AttackStats.DamageReactMutliplier;
+		float finalDamage = damage * _stats.DamageReactMultiplier * AttackStats.DamageReactMutliplier;
+		float finalKnock = knock * _stats.KnockReactMultiplier * AttackStats.KnockReactMutliplier;
 
 		Health -= finalDamage;
 		CurrentKnock = finalKnock;
@@ -291,23 +262,41 @@ public partial class Actor : CharacterBody3D
 	
 	void ProcessKnock(float delta)
 	{
+		// move player back for the value of the current knock
 		Move(new Vector2(0, -CurrentKnock));
 
 		bool positiveKnock = CurrentKnock > 0;
 
+		// move knock value to zero
 		CurrentKnock -= delta * _stats.KnockReactDeceleration
 								  * (positiveKnock ? 1 : -1);
 
 		bool newPositiveKnock = CurrentKnock > 0;
 
+		// if the sign has changed on the knock, set to 0 as it has crossed 0
 		if (positiveKnock != newPositiveKnock)
 		{
 			CurrentKnock = 0;
 
+			// if the actor's state is 'stun', turn the player back to idle
 			if (State == "stun")
 			{
 				State = "idle";
 			}
 		}
+	}
+
+	private void OnActorHurt(Actor actor)
+	{
+		// if actor is self or not checking for damage currently, return
+		if (actor.Name == Name || !AttackStats.CheckDamage) return;
+
+		// stop checking damage
+		AttackStats.CheckDamage = false;
+		
+		// hurt actor
+		actor.Hurt(
+			_stats.DamageMultiplier * AttackStats.Damage,
+			_stats.KnockMultiplier * AttackStats.Knock);
 	}
 }

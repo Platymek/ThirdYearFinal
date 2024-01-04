@@ -98,9 +98,6 @@ public partial class Opponent : Actor
 				}
 				*/
 				
-				GD.Print(Position2D.DistanceTo(Vector3To2D(Target.Position)) + ", " 
-					+ _opponentStats.ClosingInDistance);
-				
 				_opponentAttackStats.ClosingInSpeed = 1;
 
 				if (Position2D.DistanceTo(Vector3To2D(Target.Position)) 

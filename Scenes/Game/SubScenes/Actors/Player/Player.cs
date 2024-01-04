@@ -7,6 +7,7 @@ public partial class Player : Actor
 	// Properties //
 	
 	private PlayerStats _playerStats;
+	private ActorModel _model;
 
 	private Timer _dodgeTimer;
 	private Timer _dodgeStunTimer;
@@ -49,6 +50,7 @@ public partial class Player : Actor
 		base._Ready();
 
 		_playerStats = _stats as PlayerStats;
+		_model = GetNode <ActorModel>("PlayerModel");
 
 		_bufferedAction = null;
 		
@@ -71,7 +73,7 @@ public partial class Player : Actor
 
 		foreach (string action in _bufferableActions)
 		{
-			if (Input.IsActionJustPressed(action))
+			if (Input.IsActionPressed(action))
 			{
 				_inputBufferTimer.Start();
 				_bufferedAction = action;
@@ -143,7 +145,7 @@ public partial class Player : Actor
 					}
 					else if (_bufferedAction == "punch")
 					{
-						Hurt(0, 4);
+						State = "punch";
 					}
 
 					_bufferedAction = null;

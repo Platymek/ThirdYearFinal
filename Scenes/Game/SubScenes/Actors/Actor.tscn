@@ -14,12 +14,6 @@ State = "idle"
 
 [node name="AttackStats" type="Node" parent="."]
 script = ExtResource("2_r16ci")
-Damage = 0.0
-Knock = 0.0
-CheckDamage = false
-TrackSpeedMultiplier = 1.0
-DamageReactMutliplier = 1.0
-HurtBoxes = []
 
 [node name="CollisionBox" type="CollisionShape3D" parent="."]
 
