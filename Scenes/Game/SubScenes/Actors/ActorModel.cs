@@ -17,6 +17,7 @@ public partial class ActorModel : Node
 
 		set
 		{
+			_animationPlayer.Stop();
 			_animationPlayer.Play("Animation/" + value);
 		}
 	}

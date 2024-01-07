@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dhj21w4npciwk"
-path="res://.godot/imported/PlayerModel.fbx-cc1f342c61721585fba7a9d1505915bb.scn"
+uid="uid://dbwlof13oif3m"
+path="res://.godot/imported/walk.fbx-fe4ba44a565180ee6d7006ed22a852d2.scn"
 
 [deps]
 
-source_file="res://Scenes/Game/SubScenes/Actors/Player/Model/PlayerModel.fbx"
-dest_files=["res://.godot/imported/PlayerModel.fbx-cc1f342c61721585fba7a9d1505915bb.scn"]
+source_file="res://Scenes/Game/SubScenes/Actors/Player/Model/walk.fbx"
+dest_files=["res://.godot/imported/walk.fbx-fe4ba44a565180ee6d7006ed22a852d2.scn"]
 
 [params]
 
@@ -31,11 +31,11 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "animations": {
-"Take 001": {
+"clip": {
 "save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/idle.res",
-"settings/loop_mode": 0,
+"save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/walk.res",
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",

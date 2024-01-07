@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8exwqqbqkiy7"]
+
+[ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_j2a6o"]
+
+[node name="MainMenu" instance=ExtResource("1_j2a6o")]
+
+[node name="Title" parent="AspectRatioContainer/CenterContainer/VBoxContainer" index="0"]
+text = "Main Menu"
+
+[node name="Play" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="0"]
+layout_mode = 2
+text = "Play
+"
+
+[node name="Settings" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="1"]
+layout_mode = 2
+text = "Settings
+"
+
+[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="2"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Play" to="." method="OnPlayPressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Settings" to="." method="OnSettingsPressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Exit" to="." method="OnExitPressed"]

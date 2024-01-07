@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwy3f26ko0tq"]
+
+[ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_2yide"]
+
+[node name="Pause" instance=ExtResource("1_2yide")]
+
+[node name="Menu" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="0"]
+layout_mode = 2
+text = "Back to Menu"
+
+[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="1"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Menu" to="." method="OnMenuPressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Exit" to="." method="OnExitPressed"]

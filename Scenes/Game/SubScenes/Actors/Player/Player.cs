@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-
 public partial class Player : Actor
 {
 	// Properties //
@@ -30,6 +29,9 @@ public partial class Player : Actor
 				case "dodge_left":
 				case "dodge_right":
 				case "dodge_down":
+
+					Animation = "dodge";
+
 					break;
 				
 				case "dodge_stun":
@@ -50,7 +52,7 @@ public partial class Player : Actor
 		base._Ready();
 
 		_playerStats = _stats as PlayerStats;
-		_model = GetNode <ActorModel>("PlayerModel");
+		_model = GetNode <ActorModel>("Model");
 
 		_bufferedAction = null;
 		
@@ -97,26 +99,34 @@ public partial class Player : Actor
 
 				float angle = move.Rotated(-Mathf.Pi * .5f).Angle();
 
-				/*
 				if (move != Vector2.Zero)
 				{
-					switch (Mathf.RoundToInt(angle / halfPi))
+					if (Animation != "walk")
 					{
-						case 1: Animation = "move_up";
-							break;
-						case 0: Animation = "move_right";
-							break;
-						case-1: Animation = "move_down";
-							break;
-						case 2: Animation = "move_left";
-							break;
+						Animation = "walk";
 					}
+
+					/*
+						switch (Mathf.RoundToInt(angle / halfPi))
+						{
+							case 1: Animation = "move_up";
+								break;
+							case 0: Animation = "move_right";
+								break;
+							case-1: Animation = "move_down";
+								break;
+							case 2: Animation = "move_left";
+								break;
+						}
+					*/
 				}
 				else
 				{
-					Animation = "idle";
+					if (Animation != "idle")
+					{
+						Animation = "idle";
+					}
 				}
-				*/
 
 				if (_bufferedAction != null)
 				{
@@ -145,14 +155,22 @@ public partial class Player : Actor
 					}
 					else if (_bufferedAction == "punch")
 					{
-						State = "punch";
+						State = "charge_start";
 					}
+
+
+					else if (_bufferedAction == "block")
+					{
+						State = "block_start";
+					}
+
 
 					_bufferedAction = null;
 				}
 				
 				break;
 			
+
 			case "dodge_left": ProcessDodge(Vector2.Left);
 				break;
 			
@@ -160,6 +178,45 @@ public partial class Player : Actor
 				break;
 			
 			case "dodge_down": ProcessDodge(Vector2.Up);
+				break;
+
+
+			case "punch":
+
+				Move(Vector2.Down * .25f);
+
+				break;
+
+
+			case "charge_light":
+
+				if (!Input.IsActionPressed("punch"))
+				{
+					State = "punch_light";
+					_bufferedAction = null;
+				}
+
+				break;
+
+			case "charge_medium":
+
+				if (!Input.IsActionPressed("punch"))
+				{
+					State = "punch_medium";
+					_bufferedAction = null;
+				}
+
+				break;
+
+
+			case "block":
+
+				if (!Input.IsActionPressed("block"))
+				{
+					State = "idle";
+					_bufferedAction = null;
+				}
+
 				break;
 		}
 	}

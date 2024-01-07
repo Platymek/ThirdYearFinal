@@ -100,28 +100,30 @@ public partial class Opponent : Actor
 				
 				_opponentAttackStats.ClosingInSpeed = 1;
 
-				if (Position2D.DistanceTo(Vector3To2D(Target.Position)) 
-					< _opponentStats.ClosingInDistance)
-				{
-					// get angle difference from centre of ring, which is the origin of the world
-					float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
-						Vector3.Zero, 0.1f);
+				bool closedIn = Position2D.DistanceTo(Vector3To2D(Target.Position))
+					< _opponentStats.ClosingInDistance;
 
-					// try to move with back turned to center of ring if a certain distance away from ring
-					if (Position2D.DistanceTo(Vector2.Zero) > _opponentStats.CenterStrafingDistance)
+				// get angle difference from centre of ring, which is the origin of the world
+				float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
+					Vector3.Zero, 0.1f);
+
+				// try to move with back turned to center of ring if a certain distance away from ring
+				if (Position2D.DistanceTo(Vector2.Zero) > _opponentStats.CenterStrafingDistance)
+				{
+					switch (angleToTarget)
 					{
-						switch (angleToTarget)
-						{
-							case > 0:
-								Move(Vector2.Left);
-								break;
-							case < 0:
-								Move(Vector2.Right);
-								break;
-						}
+						case > 0:
+							Move(Vector2.Left * (closedIn ? 1 : .25f));
+							break;
+						case < 0:
+							Move(Vector2.Right);
+							break;
 					}
+				}
 					
-					_opponentAttackStats.ClosingInSpeed = 0;
+				if (closedIn)
+				{
+					_opponentAttackStats.ClosingInSpeed = .25f;
 				}
 				
 				break;

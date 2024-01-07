@@ -152,6 +152,9 @@ public partial class Actor : CharacterBody3D
 
 		GD.Print($"{Name} was hit for {AttackStats.DamageReactMutliplier} damage " +
 				 $"and {finalKnock} knock");
+
+		if (CurrentKnock == 0) return;
+		State = "stun";
 	}
 	
 	// get hurt by another actor and change angle
@@ -268,7 +271,7 @@ public partial class Actor : CharacterBody3D
 		bool positiveKnock = CurrentKnock > 0;
 
 		// move knock value to zero
-		CurrentKnock -= delta * _stats.KnockReactDeceleration
+		CurrentKnock -= delta * _stats.KnockReactDeceleration * _stats.KnockReactMultiplier
 								  * (positiveKnock ? 1 : -1);
 
 		bool newPositiveKnock = CurrentKnock > 0;
