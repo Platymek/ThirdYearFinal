@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2pyi8a6dyeab"]
+
+[ext_resource type="PackedScene" uid="uid://dy03t573vy3a2" path="res://Scenes/Game/SubScenes/Actors/Player/Model/Model.fbx" id="1_iud7f"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/ActorModel.cs" id="2_60y3b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_64gg3"]
+radius = 0.00989652
+
+[node name="Model" node_paths=PackedStringArray("_leftHandHurtbox", "_rightHandHurtbox") instance=ExtResource("1_iud7f")]
+script = ExtResource("2_60y3b")
+_animationPrefix = "Armature|"
+_leftHandHurtbox = NodePath("RootNode/Armature/Skeleton3D/LeftHandHurtbox/Hurtbox")
+_rightHandHurtbox = NodePath("RootNode/Armature/Skeleton3D/RightHandHurtbox/Hurtbox")
+
+[node name="Armature" parent="RootNode" index="0"]
+transform = Transform3D(100, 8.96831e-42, 0, 0, -4.37114e-06, -100, -8.96831e-42, 100, -4.37114e-06, 2.54481e-06, 1.07339e-05, -5.75264)
+
+[node name="Skeleton3D" parent="RootNode/Armature" index="0"]
+bones/0/rotation = Quaternion(-0.117363, 0.646321, 0.745503, -0.112781)
+bones/1/rotation = Quaternion(0.221585, -0.136948, -0.821283, 0.507582)
+bones/2/rotation = Quaternion(-0.144849, -0.0147699, -0.483266, 0.863281)
+bones/3/rotation = Quaternion(-0.136221, 0.00105367, 0.0555771, 0.989118)
+bones/6/rotation = Quaternion(-0.221585, -0.136948, 0.821283, 0.507582)
+bones/7/rotation = Quaternion(0.017605, 0.00794488, 0.401385, 0.915706)
+bones/8/rotation = Quaternion(-0.0344106, -6.85761e-05, 0.0299598, 0.998959)
+bones/14/rotation = Quaternion(-0.112781, 0.745503, -0.646321, 0.117362)
+bones/15/rotation = Quaternion(0.0456215, 0.770575, -0.00484389, 0.635696)
+bones/17/rotation = Quaternion(-0.00167789, 0.00137987, 0.676713, 0.736244)
+bones/19/rotation = Quaternion(0.0408, -0.737864, -0.0399926, 0.672527)
+bones/20/rotation = Quaternion(1.73447e-06, -3.11711e-08, 0.101532, 0.994832)
+bones/21/rotation = Quaternion(-1.8031e-06, -6.31545e-07, -0.707107, 0.707106)
+
+[node name="LeftHandHurtbox" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D" index="5"]
+transform = Transform3D(0.959615, 0.192626, 0.205039, -0.220724, 0.0636006, 0.973259, 0.174434, -0.979206, 0.103549, 0.0308743, 0.00361007, 0.0294888)
+bone_name = "LeftHand_end"
+bone_idx = 10
+
+[node name="Hurtbox" type="Area3D" parent="RootNode/Armature/Skeleton3D/LeftHandHurtbox" index="0"]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/Armature/Skeleton3D/LeftHandHurtbox/Hurtbox" index="0"]
+transform = Transform3D(1, -5.68434e-14, 0, 0, 1, -1.4517e-11, 0, 1.45419e-11, 1, 0, 0, 0)
+shape = SubResource("SphereShape3D_64gg3")
+
+[node name="RightHandHurtbox" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D" index="6"]
+transform = Transform3D(0.97205, -0.231064, -0.0415249, -0.0418841, -0.344733, 0.937766, -0.230997, -0.909818, -0.344771, 0.00123126, -0.00451485, 0.0345346)
+bone_name = "RightHand"
+bone_idx = 4
+
+[node name="Hurtbox" type="Area3D" parent="RootNode/Armature/Skeleton3D/RightHandHurtbox" index="0"]
+transform = Transform3D(1, -2.98023e-08, -2.98023e-08, 0, 1, -1.86265e-08, -2.23517e-08, 1.49012e-08, 1, 0, 0, 0)
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/Armature/Skeleton3D/RightHandHurtbox/Hurtbox" index="0"]
+transform = Transform3D(1, -7.45058e-09, 2.98023e-08, 7.45058e-09, 0.999999, 1.86265e-08, -5.96046e-08, -4.47035e-08, 1, 0.000529536, 0.00604977, -0.000345834)
+shape = SubResource("SphereShape3D_64gg3")

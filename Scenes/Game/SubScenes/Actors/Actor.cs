@@ -12,10 +12,13 @@ public partial class Actor : CharacterBody3D
 	private AnimationPlayer _animationPlayer;
 	protected AttackStats AttackStats;
 
-	protected string Animation
+	protected virtual string Animation
 	{
 		get => _animationPlayer.CurrentAnimation;
-		set => _animationPlayer?.Play(value);
+		set
+		{
+			_animationPlayer?.Play(value);
+		}
 	}
 	
 	// the state the actor is in

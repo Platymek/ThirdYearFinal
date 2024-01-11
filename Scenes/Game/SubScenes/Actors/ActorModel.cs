@@ -11,6 +11,8 @@ public partial class ActorModel : Node
 	[Export] private bool _checkLeftFoot = false;
 	[Export] private bool _checkRightFoot = false;
 
+	[Export] private string _animationPrefix;
+
 	[Export] public string Animation
 	{
 		get => _animationPlayer.CurrentAnimation;
@@ -18,16 +20,17 @@ public partial class ActorModel : Node
 		set
 		{
 			_animationPlayer.Stop();
-			_animationPlayer.Play("Animation/" + value);
+			GD.Print($"Animation Played: {value}");
+			_animationPlayer.Play($"{_animationPrefix}{value}");
 		}
 	}
 
 
-	private Area3D _leftHandHurtbox;
-	private Area3D _rightHandHurtbox;
+	[Export] private Area3D _leftHandHurtbox;
+	[Export] private Area3D _rightHandHurtbox;
 
-	private Area3D _leftFootHurtbox;
-	private Area3D _rightFootHurtbox;
+	[Export] private Area3D _leftFootHurtbox;
+	[Export] private Area3D _rightFootHurtbox;
 
 	private AnimationPlayer _animationPlayer;
 
@@ -41,14 +44,8 @@ public partial class ActorModel : Node
 	{
 		base._Ready();
 
-		
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-
-		_leftHandHurtbox  = GetNode<Area3D>("RootNode/Skeleton3D/LeftHandHurtbox/Hurtbox");
-		_rightHandHurtbox = GetNode<Area3D>("RootNode/Skeleton3D/RightHandHurtbox/Hurtbox");
-
-		//_leftFootHurtbox  = GetNode<Area3D>("RootNode/Skeleton3D/LeftFootHurtbox/Hurtbox");
-		//_rightFootHurtbox = GetNode<Area3D>("RootNode/Skeleton3D/RightFootHurtbox/Hurtbox");
+		Animation = "idle";
 	}
 
 	public override void _Process(double delta)

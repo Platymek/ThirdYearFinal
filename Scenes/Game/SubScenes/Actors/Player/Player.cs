@@ -38,14 +38,23 @@ public partial class Player : Actor
 					GetNode<Timer>("DodgeStunTimer").Start();
 					break;
 			}
-			
+
 			base.State = state;
+		}
+	}
+
+	protected override string Animation 
+	{ 
+		get => base.Animation; 
+		set
+		{
+			base.Animation = value;
 		}
 	}
 
 
 	// Node Functions //
-	
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

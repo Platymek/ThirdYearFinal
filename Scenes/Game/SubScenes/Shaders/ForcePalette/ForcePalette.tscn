@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2a0x5ks6qtqc"]
+
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.cs" id="1_1xq57"]
+[ext_resource type="Shader" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.gdshader" id="2_to5jr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2e66a"]
+shader = ExtResource("2_to5jr")
+shader_parameter/colors = PackedFloat32Array()
+
+[node name="ForcePalette" type="CanvasLayer"]
+script = ExtResource("1_1xq57")
+_colors = PackedColorArray(0, 0, 0, 1, 0.113725, 0.168627, 0.32549, 1, 0.494118, 0.145098, 0.32549, 1, 0, 0.529412, 0.317647, 1, 0.670588, 0.321569, 0.211765, 1, 0.372549, 0.341176, 0.309804, 1, 0.760784, 0.764706, 0.780392, 1, 1, 0.945098, 0.909804, 1, 1, 0, 0.301961, 1, 1, 0.639216, 0, 1, 1, 0.92549, 0.152941, 1, 0, 0.894118, 0.211765, 1, 0.160784, 0.678431, 1, 1, 0.513726, 0.462745, 0.611765, 1, 1, 0.466667, 0.658824, 1, 1, 0.8, 0.666667, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_2e66a")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
