@@ -5,7 +5,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2e66a"]
 shader = ExtResource("2_to5jr")
-shader_parameter/colors = PackedFloat32Array()
+shader_parameter/colors = null
+shader_parameter/brightness = 1.0
 
 [node name="ForcePalette" type="CanvasLayer"]
 script = ExtResource("1_1xq57")
