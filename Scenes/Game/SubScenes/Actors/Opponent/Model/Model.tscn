@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://goixjvylabf5"]
+
+[ext_resource type="PackedScene" uid="uid://ca45sbq72mjyg" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Oponnent.glb" id="1_ec03a"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/ActorModel.cs" id="2_1bc0r"]
+
+[node name="Model" instance=ExtResource("1_ec03a")]
+script = ExtResource("2_1bc0r")
+
+[node name="Head" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="UpperChest" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(1.78814e-07, 0, 1, 0, 1, 0, -1, 0, 1.78814e-07, 0, 0.2, 0)
+
+[node name="LowerChest" parent="Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)

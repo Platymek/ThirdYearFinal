@@ -20,6 +20,8 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=360
 window/size/viewport_height=360
+window/size/mode=3
+window/size/borderless=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/vsync/vsync_mode=0

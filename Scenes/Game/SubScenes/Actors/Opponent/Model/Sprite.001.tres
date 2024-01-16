@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cjt33a646jmpy"]
+
+[ext_resource type="Texture2D" uid="uid://cg3g640rf8wb8" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Oponnent_OpponentTexture.png" id="1_fa7yw"]
+
+[resource]
+resource_name = "Sprite.001"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("1_fa7yw")
+texture_filter = 2

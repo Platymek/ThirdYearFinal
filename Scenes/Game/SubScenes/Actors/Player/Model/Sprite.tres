@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://divogn1y31rrl"]
+
+[ext_resource type="Texture2D" uid="uid://owtlth5tdxx7" path="res://Scenes/Game/SubScenes/Actors/Player/Model/GlbModel_GlbModel_Sprite.png" id="1_87ffb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nq2h"]
+
+[resource]
+resource_name = "Sprite"
+next_pass = SubResource("ShaderMaterial_5nq2h")
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_87ffb")
+texture_filter = 2
+disable_receive_shadows = true
+billboard_keep_scale = true
