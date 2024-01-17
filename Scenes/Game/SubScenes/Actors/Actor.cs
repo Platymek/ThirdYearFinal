@@ -176,7 +176,7 @@ public partial class Actor : CharacterBody3D
 		float angleDifference = angle - Rotation.Y;
 		float hurtAngle = angle + angleDifference;
 		
-		Hurt(_previousDamage, -CurrentKnock, hurtAngle);
+		Hurt(_previousDamage, -CurrentKnock / (_stats.KnockReactMultiplier * AttackStats.KnockReactMutliplier), hurtAngle);
 		State = "stun";
 			
 		GD.Print($"Actor {Name} Wall Bounced!");

@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_obj5t")
-DodgeSpeedMultiplier = 6.0
-DodgeDuration = 0.3
+DodgeSpeedMultiplier = 4.0
+DodgeDuration = 0.4
 DodgeStunDuration = 0.8
 MaxHealth = 1.0
 Speed = 1.0

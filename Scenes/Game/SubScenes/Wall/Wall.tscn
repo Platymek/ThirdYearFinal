@@ -1,20 +1,39 @@
-[gd_scene load_steps=6 format=3 uid="uid://c54376f7qc04q"]
+[gd_scene load_steps=9 format=3 uid="uid://c54376f7qc04q"]
 
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Wall/Wall.cs" id="1_g42kf"]
 [ext_resource type="Texture2D" uid="uid://c3d6lbcsgmfmw" path="res://Scenes/Game/SubScenes/Wall/Rope.png" id="2_6bn2f"]
+[ext_resource type="Texture2D" uid="uid://bhqicy03kkt2m" path="res://Scenes/Game/SubScenes/Wall/Corner.png" id="3_gpe1w"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ux0re"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lqxun"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
 shading_mode = 0
 albedo_texture = ExtResource("2_6bn2f")
-uv1_scale = Vector3(8, 8, 8)
+uv1_scale = Vector3(8, 2, 8)
 uv1_triplanar = true
+texture_filter = 0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lvxkd"]
 material = SubResource("StandardMaterial3D_lqxun")
+size = Vector2(10, 1)
+orientation = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itsl8"]
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("3_gpe1w")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v52j0"]
+material = SubResource("StandardMaterial3D_itsl8")
 flip_faces = true
-size = Vector2(16, 2)
+size = Vector2(1, 2)
 orientation = 2
 
 [node name="Wall" type="StaticBody3D"]
@@ -26,9 +45,13 @@ script = ExtResource("1_g42kf")
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_ux0re")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="Rope" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("PlaneMesh_lvxkd")
+
+[node name="Corner" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 5.3, 1, 0.3)
+mesh = SubResource("PlaneMesh_v52j0")
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01)

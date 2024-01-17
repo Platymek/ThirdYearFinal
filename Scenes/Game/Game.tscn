@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bcwut0htsf36f"]
+[gd_scene load_steps=12 format=3 uid="uid://bcwut0htsf36f"]
 
 [ext_resource type="PackedScene" uid="uid://drf2gde56141u" path="res://Scenes/Game/SubScenes/Actors/Player/Player.tscn" id="1_cxp7k"]
 [ext_resource type="Script" path="res://Scenes/Game/Game.cs" id="1_sanpw"]
@@ -9,31 +9,31 @@
 [ext_resource type="PackedScene" uid="uid://bwy3f26ko0tq" path="res://Scenes/Menus/Pause/Pause.tscn" id="6_7ls6m"]
 [ext_resource type="PackedScene" uid="uid://b2a0x5ks6qtqc" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.tscn" id="8_45i1n"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_y7lpy"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_4m8fo"]
-sky_material = SubResource("ProceduralSkyMaterial_y7lpy")
-
 [sub_resource type="Environment" id="Environment_57cls"]
-background_mode = 2
-sky = SubResource("Sky_4m8fo")
-ambient_light_source = 3
-reflected_light_source = 1
+background_mode = 1
+background_color = Color(0.160784, 0.678431, 1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.2
+adjustment_enabled = true
+adjustment_saturation = 1.5
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_l68op"]
-size = Vector2(10, 10)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tyk7"]
+albedo_color = Color(1, 0.945098, 0.909804, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dkrsf"]
+material = SubResource("StandardMaterial3D_0tyk7")
+size = Vector3(11, 1, 11)
 
 [node name="Game" type="Node3D"]
 process_mode = 3
 script = ExtResource("1_sanpw")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_57cls")
-
 [node name="ForcePalette" parent="." instance=ExtResource("8_45i1n")]
 layer = 10
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_57cls")
 
 [node name="Actors" type="Node3D" parent="."]
 process_mode = 1
@@ -49,7 +49,8 @@ Target = NodePath("../Player")
 [node name="Map" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Map"]
-mesh = SubResource("PlaneMesh_l68op")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_dkrsf")
 
 [node name="Walls" type="Node3D" parent="Map"]
 
@@ -82,11 +83,59 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
 [node name="Lights" type="Node3D" parent="Map"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Map/Lights"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4, 0)
-light_energy = 5.0
+transform = Transform3D(0.707107, -0.5, -0.5, 0, -0.707107, 0.707107, -0.707107, -0.5, -0.5, -5.5, 4, -5.5)
+visible = false
+light_energy = 3.0
+light_indirect_energy = 2.0
 shadow_enabled = true
 spot_range = 20.0
-spot_angle = 80.0
+spot_angle = 60.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Map/Lights"]
+transform = Transform3D(0.707107, 0.5, 0.5, 0, -0.707107, 0.707107, 0.707107, -0.5, -0.5, 5.5, 4, -5.5)
+visible = false
+light_energy = 3.0
+light_indirect_energy = 2.0
+shadow_enabled = true
+spot_range = 20.0
+spot_angle = 60.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Map/Lights"]
+transform = Transform3D(-0.707107, -0.5, -0.5, 0, -0.707107, 0.707107, -0.707107, 0.5, 0.5, -5.5, 4, 5.5)
+visible = false
+light_energy = 3.0
+light_indirect_energy = 2.0
+shadow_enabled = true
+spot_range = 20.0
+spot_angle = 60.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="Map/Lights"]
+transform = Transform3D(-0.707107, 0.5, 0.5, 0, -0.707107, 0.707107, 0.707107, 0.5, 0.5, 5.5, 4, 5.5)
+visible = false
+light_energy = 3.0
+light_indirect_energy = 2.0
+shadow_enabled = true
+spot_range = 20.0
+spot_angle = 60.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Map/Lights"]
+transform = Transform3D(-1.78814e-07, -0.866025, -0.5, -5.64659e-09, -0.5, 0.866025, -1, 1.57681e-07, 8.45169e-08, 0, 4, 0)
+light_energy = 0.75
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Map/Lights"]
+transform = Transform3D(0.707107, 3.09087e-08, -0.707107, 0.707107, -3.09087e-08, 0.707107, 1.40785e-15, -1, -4.37114e-08, 0, 4, 0)
+visible = false
+light_energy = 0.2
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="Map/Lights"]
+transform = Transform3D(1, 8.57915e-16, 2.90415e-22, -6.06637e-16, 0.707107, 0.707107, 6.06637e-16, -0.707107, 0.707107, 0, 4, 0)
+visible = false
+light_energy = 0.2
+
+[node name="DirectionalLight3D4" type="DirectionalLight3D" parent="Map/Lights"]
+transform = Transform3D(1, 8.57915e-16, -3.00031e-22, 6.06637e-16, -0.707107, 0.707107, 6.06637e-16, -0.707107, -0.707107, 0, 4, 0)
+visible = false
+light_energy = 0.2
 
 [node name="CameraAnchor" parent="." node_paths=PackedStringArray("_player", "_target") instance=ExtResource("3_gshri")]
 _player = NodePath("../Actors/Player")

@@ -87,7 +87,6 @@ public partial class ActorModel : Node
 			{
 				EmitSignal(SignalName.ActorHurt, actor);
 			}
-
 		}
 	}
 }
