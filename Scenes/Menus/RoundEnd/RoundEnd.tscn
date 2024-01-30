@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk71j3ri0yohv"]
+
+[ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_jq4dd"]
+
+[node name="Menu" instance=ExtResource("1_jq4dd")]
+
+[node name="Description" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "Well Done!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="2"]
+custom_minimum_size = Vector2(0, 16)
+
+[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#Continue" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
+layout_mode = 2
+text = "Continue to next round
+"
+
+[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#Split" type="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#SaveAndExit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
+layout_mode = 2
+theme_type_variation = &"RiskButton"
+text = "Save and Exit *"
+
+[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#Split2" type="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3"]
+layout_mode = 2
+
+[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#SaveExplanation" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
+layout_mode = 2
+theme_type_variation = &"SmallFont"
+theme_override_font_sizes/font_size = 0
+text = "* Your game will be saved and you will be taken to the main menu. The save will be deleted when you continue the game again."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

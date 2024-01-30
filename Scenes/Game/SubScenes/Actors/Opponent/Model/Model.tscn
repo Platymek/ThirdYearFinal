@@ -6,11 +6,30 @@
 [node name="Model" instance=ExtResource("1_ec03a")]
 script = ExtResource("2_1bc0r")
 
-[node name="Head" parent="Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+[node name="Skeleton3D" parent="Armature" index="0"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
+bones/0/scale = Vector3(1.00572, 1.00572, 1.00572)
+bones/1/scale = Vector3(0.983887, 0.983887, 0.983887)
+bones/2/rotation = Quaternion(0, 7.10543e-15, 0, 1)
+bones/3/rotation = Quaternion(-2.50762e-07, 3.65964e-07, -0.707107, 0.707107)
+bones/3/scale = Vector3(0.973604, 0.973604, 0.973604)
+bones/4/rotation = Quaternion(4.88041e-08, -8.94068e-08, 5.23125e-07, 1)
+bones/4/scale = Vector3(1.06041, 1.06041, 1.06041)
+bones/5/rotation = Quaternion(-5.32184e-09, -7.10543e-15, -2.32625e-16, 1)
+bones/5/scale = Vector3(0.979742, 0.979742, 0.979742)
+bones/6/rotation = Quaternion(-4.59228e-07, 9.98054e-08, 0.707107, 0.707107)
+bones/6/scale = Vector3(0.973604, 0.973604, 0.973604)
+bones/7/rotation = Quaternion(1.17711e-07, 5.66244e-07, 1.86302e-07, 1)
+bones/7/scale = Vector3(1.06041, 1.06041, 1.06041)
+bones/8/scale = Vector3(0.979738, 0.979738, 0.979738)
+bones/9/rotation = Quaternion(-5.26838e-09, 0.707107, 1.05367e-08, 0.707107)
+bones/9/scale = Vector3(0.5, 0.5, 0.5)
+bones/11/rotation = Quaternion(6.18171e-08, -0.707107, 6.18171e-08, 0.707107)
+bones/12/rotation = Quaternion(9.93477e-08, 1.78814e-07, 1.94708e-07, 1)
+bones/13/rotation = Quaternion(-5.96046e-08, -2.60537e-15, 1.19608e-14, 1)
+bones/14/rotation = Quaternion(-5.34094e-14, 0.707107, 5.34094e-14, 0.707107)
+bones/15/rotation = Quaternion(4.37114e-08, -1.17225e-07, 2.12904e-14, 1)
+bones/16/rotation = Quaternion(3.57628e-07, 3.78924e-15, -2.38419e-07, 1)
 
-[node name="UpperChest" parent="Armature/Skeleton3D" index="1"]
-transform = Transform3D(1.78814e-07, 0, 1, 0, 1, 0, -1, 0, 1.78814e-07, 0, 0.2, 0)
-
-[node name="LowerChest" parent="Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+[node name="UpperChest" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(0, -1.12398e-08, 0.50286, 3.74657e-09, 0.50286, 1.12398e-08, -0.50286, 3.74657e-09, 0, -2.1, 1.00057, 0.00014291)

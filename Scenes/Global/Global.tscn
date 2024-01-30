@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgt3o7vwccp4b"]
+
+[ext_resource type="Script" path="res://Scenes/Global/Global.cs" id="1_mbovf"]
+[ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="2_lj5dc"]
+[ext_resource type="Resource" uid="uid://d0x4kt3xr13g6" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStatsDefault.tres" id="3_ll254"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Wall/Subscenes/Attack.cs" id="4_twu5d"]
+
+[node name="Global" type="Node"]
+process_mode = 3
+script = ExtResource("1_mbovf")
+PlayerStats = ExtResource("2_lj5dc")
+OpponentStats = ExtResource("3_ll254")
+
+[node name="OpponentUniqueAttacks" type="Node" parent="."]
+
+[node name="CloseToWall" type="Node" parent="OpponentUniqueAttacks"]
+
+[node name="SumoPressure" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+script = ExtResource("4_twu5d")
+
+[node name="LivingWall" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+script = ExtResource("4_twu5d")
+
+[node name="FarFromWall" type="Node" parent="OpponentUniqueAttacks"]
+
+[node name="InstantTeleport" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
+script = ExtResource("4_twu5d")
+
+[node name="Reversal" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
+script = ExtResource("4_twu5d")
+
+[node name="BigPush" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
+script = ExtResource("4_twu5d")
+
+[node name="Neutral" type="Node" parent="OpponentUniqueAttacks"]
+
+[node name="SumoAdvance" type="Node" parent="OpponentUniqueAttacks/Neutral"]
+script = ExtResource("4_twu5d")
+
+[node name="MixUp" type="Node" parent="OpponentUniqueAttacks"]
+
+[node name="AroundTheWorld" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+script = ExtResource("4_twu5d")
+
+[node name="BigChop" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+script = ExtResource("4_twu5d")
+
+[node name="3HitCombo" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+script = ExtResource("4_twu5d")

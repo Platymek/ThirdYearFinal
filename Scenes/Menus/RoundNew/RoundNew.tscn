@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvuf3gl7jpj3b"]
+
+[ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_rx7xy"]
+[ext_resource type="PackedScene" uid="uid://dmsbht843ohqy" path="res://Scenes/Menus/RoundNew/Attack/Attack.tscn" id="2_14qsx"]
+
+[node name="RoundNew" instance=ExtResource("1_rx7xy")]
+
+[node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
+text = "- Pick an Attack! -"
+
+[node name="Description" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "The selected attack will be added to the opponent's moveset in the next round."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="2"]
+custom_minimum_size = Vector2(0, 8)
+
+[node name="Attack" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0" instance=ExtResource("2_14qsx")]
+layout_mode = 2
+
+[node name="Or" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+text = "or..."
+horizontal_alignment = 1
+
+[node name="Container2" type="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="Attack2" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3" instance=ExtResource("2_14qsx")]
+layout_mode = 2

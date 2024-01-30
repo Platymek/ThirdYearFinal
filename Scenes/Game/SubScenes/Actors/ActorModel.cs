@@ -13,6 +13,8 @@ public partial class ActorModel : Node
 
 	[Export] private string _animationPrefix;
 
+	[Export] public float NextAnimationLength = 0;
+
 	[Export] public string Animation
 	{
 		get => _animationPlayer.CurrentAnimation;
@@ -20,11 +22,23 @@ public partial class ActorModel : Node
 		set
 		{
 			_animationPlayer.Stop();
+
 			GD.Print($"Animation Played: {value}");
+
 			_animationPlayer.Play($"{_animationPrefix}{value}");
+
+			if (NextAnimationLength > 0)
+			{
+				_animationPlayer.SpeedScale = (float)(_animationPlayer.CurrentAnimationLength
+					/ NextAnimationLength);
+
+				GD.Print($"Animation Speed: {_animationPlayer.CurrentAnimationLength} / {NextAnimationLength}" +
+					$"= {(float)(_animationPlayer.CurrentAnimationLength / NextAnimationLength)}");
+
+				NextAnimationLength = 0;
+			}
 		}
 	}
-
 
 	[Export] private Area3D _leftHandHurtbox;
 	[Export] private Area3D _rightHandHurtbox;

@@ -12,6 +12,8 @@ public partial class Actor : CharacterBody3D
 	private AnimationPlayer _animationPlayer;
 	protected AttackStats AttackStats;
 
+	private Label3D _stateLabel;
+
 	protected virtual string Animation
 	{
 		get => _animationPlayer.CurrentAnimation;
@@ -33,9 +35,11 @@ public partial class Actor : CharacterBody3D
 		protected set
 		{
 			if (_state == value) return;
-			
+
 			_state = value;
 			Animation = value;
+			_stateLabel.Text = value;
+
 
 			switch (value)
 			{
@@ -97,8 +101,12 @@ public partial class Actor : CharacterBody3D
 		// get nodes
 		AttackStats = GetNode<AttackStats>("AttackStats");
 
+		_stateLabel = GetNode<Label3D>("StateLabel");
+
 		// initialise variables
-		Health = _stats.MaxHealth;
+
+		Health = 1;
+
 		CurrentKnock = 0;
 		_justJustHit = false;
 		JustHit = false;

@@ -4,23 +4,28 @@
 
 [node name="MainMenu" instance=ExtResource("1_j2a6o")]
 
-[node name="Title" parent="AspectRatioContainer/CenterContainer/VBoxContainer" index="0"]
-text = "Main Menu"
+[node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
+text = "- Main Menu -"
 
-[node name="Play" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="0"]
+[node name="Play" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
 layout_mode = 2
 text = "Play
 "
 
-[node name="Settings" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="1"]
+[node name="Continue" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+text = "Continue Last Save"
+
+[node name="Settings" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
 layout_mode = 2
 text = "Settings
 "
 
-[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="2"]
+[node name="Container" type="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3"]
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
-text = "Exit"
 
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Play" to="." method="OnPlayPressed"]
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Settings" to="." method="OnSettingsPressed"]
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Exit" to="." method="OnExitPressed"]
+[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
+layout_mode = 2
+theme_type_variation = &"RiskButton"
+text = "Exit"

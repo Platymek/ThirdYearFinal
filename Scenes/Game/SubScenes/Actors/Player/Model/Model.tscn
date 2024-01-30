@@ -8,6 +8,7 @@ radius = 1.0
 
 [node name="Model" node_paths=PackedStringArray("_leftHandHurtbox", "_rightHandHurtbox") instance=ExtResource("1_fisah")]
 script = ExtResource("2_24s7b")
+Animation = "idle"
 _leftHandHurtbox = NodePath("Armature/Skeleton3D/LeftHandHurtbox/Hurtbox")
 _rightHandHurtbox = NodePath("Armature/Skeleton3D/RightHandHurtbox/Hurtbox")
 

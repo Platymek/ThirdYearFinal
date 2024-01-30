@@ -1,17 +1,43 @@
-[gd_scene load_steps=7 format=3 uid="uid://f0emr35uydsf"]
+[gd_scene load_steps=8 format=3 uid="uid://f0emr35uydsf"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_2y64p"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/Opponent.cs" id="2_oqqya"]
-[ext_resource type="Resource" uid="uid://d0x4kt3xr13g6" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStatsDefault.tres" id="3_g0s6t"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentAttackStats.cs" id="4_m6ksn"]
 [ext_resource type="PackedScene" uid="uid://goixjvylabf5" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Model.tscn" id="5_kgm2n"]
+
+[sub_resource type="Animation" id="Animation_j30e7"]
+resource_name = "idle"
+length = 8.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:Animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bq7h1"]
+_data = {
+"idle": SubResource("Animation_j30e7")
+}
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jscm4"]
 height = 3.0
 
 [node name="Opponent" instance=ExtResource("1_2y64p")]
 script = ExtResource("2_oqqya")
-_stats = ExtResource("3_g0s6t")
+_stats = null
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_bq7h1")
+}
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")
@@ -25,8 +51,21 @@ shape = SubResource("CylinderShape3D_jscm4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 shape = SubResource("CylinderShape3D_jscm4")
 
+[node name="DropShadow" parent="." index="4"]
+transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)
+
 [node name="IdleTimer" type="Timer" parent="." index="5"]
 one_shot = true
 
 [node name="Model" parent="." index="6" instance=ExtResource("5_kgm2n")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 1.8, 0)
+transform = Transform3D(1.64446, 0, -0.598535, 0, 1.75, 0, 0.598535, 0, 1.64446, -0.3, 0.2, 0)
+Animation = "idle"
+
+[node name="StateLabel" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, -1)
+
+[node name="UniqueAttackLabel" type="Label3D" parent="." index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, -1)
+billboard = 2
+text = "Unique Attack
+"

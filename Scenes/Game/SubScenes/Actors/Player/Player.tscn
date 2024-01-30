@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://drf2gde56141u"]
+[gd_scene load_steps=7 format=3 uid="uid://drf2gde56141u"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_5sbhb"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Player/Player.cs" id="2_njyg1"]
-[ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="3_8bij5"]
 [ext_resource type="AnimationLibrary" uid="uid://dea7f0twtn25o" path="res://Scenes/Game/SubScenes/Actors/Player/Animations.res" id="4_0fpgj"]
 [ext_resource type="PackedScene" uid="uid://brt7nsq0kx1lg" path="res://Scenes/Game/SubScenes/Actors/Player/Model/Model.tscn" id="5_pdhgb"]
 
@@ -15,8 +14,9 @@ height = 1.5
 radius = 0.25
 
 [node name="Player" instance=ExtResource("1_5sbhb")]
+transform = Transform3D(0.995582, 0, 0, 0, 0.995582, 0, 0, 0, 0.995582, 0, 0, 0)
 script = ExtResource("2_njyg1")
-_stats = ExtResource("3_8bij5")
+_stats = null
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
@@ -26,8 +26,9 @@ libraries = {
 [node name="AttackStats" parent="." index="1"]
 Damage = 1.0
 Knock = 1.0
-DamageReactMutliplier = 0.0
-KnockReactMutliplier = 0.0
+CheckDamage = true
+DamageReactMutliplier = 0.18
+KnockReactMutliplier = 0.3
 
 [node name="CollisionBox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -52,11 +53,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 shape = SubResource("CylinderShape3D_qbww1")
 
-[node name="Sprite3D" parent="." index="7"]
-visible = false
+[node name="DropShadow" parent="." index="7"]
+transform = Transform3D(-3, 2.62268e-07, 3.82137e-15, 0, -1.31134e-07, 1, 2.62268e-07, 3, 4.37114e-08, 0, 0.01, 0)
 
 [node name="Model" parent="." index="8" instance=ExtResource("5_pdhgb")]
-Animation = "block_start"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
+Animation = "charge_light"
+
+[node name="StateLabel" parent="." index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.497781)
 
 [connection signal="timeout" from="DodgeTimer" to="." method="OnDodgeEnd"]
 [connection signal="timeout" from="DodgeStunTimer" to="." method="OnDodgeStunEnd"]

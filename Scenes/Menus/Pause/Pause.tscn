@@ -4,13 +4,16 @@
 
 [node name="Pause" instance=ExtResource("1_2yide")]
 
-[node name="Menu" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="0"]
-layout_mode = 2
-text = "Back to Menu"
+[node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
+text = "- Pause -"
 
-[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons" index="1"]
+[node name="Button" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
 layout_mode = 2
-text = "Exit"
+text = "Resume"
 
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Menu" to="." method="OnMenuPressed"]
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons/Exit" to="." method="OnExitPressed"]
+[node name="BackToMenu" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+theme_type_variation = &"RiskButton"
+text = "Exit without saving"
+
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/BackToMenu" to="." method="OnExitPressed"]

@@ -10,6 +10,8 @@ public partial class Opponent : Actor
 
 	[Export] private Node _cornersNode;
 
+	private Label3D _uniqueAttackLabel;
+
 	public override string State
 	{
 		get => base.State;
@@ -41,11 +43,23 @@ public partial class Opponent : Actor
 	{
 		base._Ready();
 		
-		_opponentStats = _stats as OpponentStats;
+		if (_stats == null)
+		{
+			_opponentStats = GetNode<Global>("/root/Global").OpponentStats;
+			_stats = _opponentStats;
+		}
+		else
+		{
+			_opponentStats = _stats as OpponentStats;
+		}
+
+		Health = _stats.MaxHealth;
 		_opponentAttackStats = AttackStats as OpponentAttackStats;
 		
 		_idleTimer = GetNode<Timer>("IdleTimer");
 		_idleTimer.WaitTime = _opponentStats.IdleDuration;
+
+		_uniqueAttackLabel = GetNode<Label3D>("UniqueAttackLabel");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -59,44 +73,6 @@ public partial class Opponent : Actor
 		switch (State)
 		{
 			case "idle":
-
-				/*
-				if (_cornersNode != null)
-				{
-					Node3D closestCorner = _cornersNode.GetChild<Node3D>(0);
-					float distanceToClosest = 9999;
-					
-					// find the closest corner
-					foreach (Node3D corner in _cornersNode.GetChildren())
-					{
-						float distanceToTarget = Target.Position
-							.DistanceSquaredTo(corner.Position);
-						
-						// if the new corner is closer than the supposed closest, replace
-						if (distanceToClosest < distanceToTarget) continue;
-					
-						GD.Print(closestCorner.Position);
-						
-						closestCorner = corner;
-						distanceToClosest = distanceToTarget;
-					}
-					
-					// get angle difference (the smallest angle to the corner)
-
-					float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
-						closestCorner.Position, 0.1f);
-
-					switch (angleToTarget)
-					{
-						case > 0:
-							Move(Vector2.Right);
-							break;
-						case < 0:
-							Move(Vector2.Left);
-							break;
-					}
-				}
-				*/
 				
 				_opponentAttackStats.ClosingInSpeed = 1;
 
@@ -107,8 +83,10 @@ public partial class Opponent : Actor
 				float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
 					Vector3.Zero, 0.1f);
 
+				float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
+
 				// try to move with back turned to center of ring if a certain distance away from ring
-				if (Position2D.DistanceTo(Vector2.Zero) > _opponentStats.CenterStrafingDistance)
+				if (distanceFromCentre > _opponentStats.CenterStrafingDistance)
 				{
 					switch (angleToTarget)
 					{
@@ -124,6 +102,21 @@ public partial class Opponent : Actor
 				if (closedIn)
 				{
 					_opponentAttackStats.ClosingInSpeed = .25f;
+				}
+
+
+				_uniqueAttackLabel.Text = "Neutral";
+
+				if (distanceFromCentre > _opponentStats.CloseToWallDistance)
+				{
+					if (angleToTarget < Math.PI * 0.25f | angleToTarget > Math.PI * -0.25f)
+					{
+						_uniqueAttackLabel.Text = "CloseToWall";
+					}
+					else if (angleToTarget > Math.PI * 0.75f | angleToTarget < Math.PI * -0.75f)
+					{
+						_uniqueAttackLabel.Text = "FarFromWall";
+					}
 				}
 				
 				break;
