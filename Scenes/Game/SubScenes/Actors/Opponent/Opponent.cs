@@ -8,8 +8,6 @@ public partial class Opponent : Actor
 	private OpponentStats _opponentStats;
 	private OpponentAttackStats _opponentAttackStats;
 
-	[Export] private Node _cornersNode;
-
 	private Label3D _uniqueAttackLabel;
 
 	public override string State

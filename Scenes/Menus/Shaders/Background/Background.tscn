@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dubn6b5okxq11"]
+
+[ext_resource type="Shader" path="res://Scenes/Menus/Shaders/Background/Background.gdshader" id="1_vjbvx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b4u85"]
+shader = ExtResource("1_vjbvx")
+shader_parameter/color1 = Color(1, 0.639216, 0, 1)
+shader_parameter/color2 = Color(0.670588, 0.321569, 0.211765, 1)
+
+[sub_resource type="Gradient" id="Gradient_l2ufp"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n4wbu"]
+gradient = SubResource("Gradient_l2ufp")
+
+[node name="Background" type="TextureRect"]
+material = SubResource("ShaderMaterial_b4u85")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_n4wbu")

@@ -2,12 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_2yide"]
 
-[node name="Pause" instance=ExtResource("1_2yide")]
+[node name="Pause" node_paths=PackedStringArray("initialButton") instance=ExtResource("1_2yide")]
+initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Resume")
+
+[node name="Background" parent="." index="0"]
+visible = false
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
 text = "- Pause -"
 
-[node name="Button" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
+[node name="Resume" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
 layout_mode = 2
 text = "Resume"
 
@@ -16,4 +20,5 @@ layout_mode = 2
 theme_type_variation = &"RiskButton"
 text = "Exit without saving"
 
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/BackToMenu" to="." method="OnExitPressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Resume" to="." method="OnResumePressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/BackToMenu" to="." method="OnMenuPressed"]

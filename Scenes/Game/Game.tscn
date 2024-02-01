@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bcwut0htsf36f"]
+[gd_scene load_steps=15 format=3 uid="uid://bcwut0htsf36f"]
 
 [ext_resource type="PackedScene" uid="uid://drf2gde56141u" path="res://Scenes/Game/SubScenes/Actors/Player/Player.tscn" id="1_cxp7k"]
 [ext_resource type="Script" path="res://Scenes/Game/Game.cs" id="1_sanpw"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="4_opjmh"]
 [ext_resource type="PackedScene" uid="uid://bt437vsmw6isq" path="res://Scenes/Game/SubScenes/UI/HUD/HUD.tscn" id="5_3dvb1"]
 [ext_resource type="PackedScene" uid="uid://bwy3f26ko0tq" path="res://Scenes/Menus/Pause/Pause.tscn" id="6_7ls6m"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStats.cs" id="6_7w2j2"]
 [ext_resource type="PackedScene" uid="uid://b2a0x5ks6qtqc" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.tscn" id="8_45i1n"]
 
 [sub_resource type="Environment" id="Environment_57cls"]
@@ -18,6 +19,25 @@ ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.2
 adjustment_enabled = true
 adjustment_saturation = 1.5
+
+[sub_resource type="Resource" id="Resource_s4duq"]
+script = ExtResource("6_7w2j2")
+CenterStrafingDistance = 1.0
+ClosingInDistance = 2.0
+CloseToWallAttacks = Array[String]([])
+FarFromWallAttacks = Array[String]([])
+NeutralAttacks = Array[String]([])
+MixUpAttacks = Array[String]([])
+IdleDuration = 2.0
+CloseToWallDistance = 3.0
+MaxHealth = 0.2
+Speed = 0.5
+TrackSpeed = 1.0
+DamageMultiplier = 1.0
+DamageReactMultiplier = 1.0
+KnockMultiplier = 1.0
+KnockReactMultiplier = 3.0
+KnockReactDeceleration = 3.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tyk7"]
 albedo_color = Color(1, 0.945098, 0.909804, 1)
@@ -32,6 +52,7 @@ script = ExtResource("1_sanpw")
 
 [node name="ForcePalette" parent="." instance=ExtResource("8_45i1n")]
 layer = 10
+_colors = PackedColorArray(0.113725, 0.168627, 0.32549, 1, 0.494118, 0.145098, 0.32549, 1, 0, 0.529412, 0.317647, 1, 0.670588, 0.321569, 0.211765, 1, 0.372549, 0.341176, 0.309804, 1, 0.760784, 0.764706, 0.780392, 1, 1, 0.945098, 0.909804, 1, 1, 0, 0.301961, 1, 1, 0.639216, 0, 1, 1, 0.92549, 0.152941, 1, 0, 0.894118, 0.211765, 1, 0.160784, 0.678431, 1, 1, 0.513726, 0.462745, 0.611765, 1, 1, 0.466667, 0.658824, 1, 1, 0.8, 0.666667, 1, 0, 0, 0, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_57cls")
@@ -44,9 +65,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
 Target = NodePath("../Opponent")
 _stats = ExtResource("4_opjmh")
 
-[node name="Opponent" parent="Actors" node_paths=PackedStringArray("_cornersNode", "Target") instance=ExtResource("2_5hirn")]
-_cornersNode = NodePath("../../Map/Corners")
+[node name="Opponent" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("2_5hirn")]
 Target = NodePath("../Player")
+_stats = SubResource("Resource_s4duq")
 
 [node name="Map" type="Node3D" parent="."]
 
@@ -68,76 +89,11 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="Wall4" parent="Map/Walls" instance=ExtResource("3_o07bf")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -5, 0, 0)
 
-[node name="Corners" type="Node3D" parent="Map"]
-
-[node name="XZ" type="Node3D" parent="Map/Corners"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
-
-[node name="Xn" type="Node3D" parent="Map/Corners"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
-
-[node name="nn" type="Node3D" parent="Map/Corners"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
-
-[node name="nZ" type="Node3D" parent="Map/Corners"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
-
 [node name="Lights" type="Node3D" parent="Map"]
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Map/Lights"]
-transform = Transform3D(0.707107, -0.5, -0.5, 0, -0.707107, 0.707107, -0.707107, -0.5, -0.5, -5.5, 4, -5.5)
-visible = false
-light_energy = 3.0
-light_indirect_energy = 2.0
-shadow_enabled = true
-spot_range = 20.0
-spot_angle = 60.0
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="Map/Lights"]
-transform = Transform3D(0.707107, 0.5, 0.5, 0, -0.707107, 0.707107, 0.707107, -0.5, -0.5, 5.5, 4, -5.5)
-visible = false
-light_energy = 3.0
-light_indirect_energy = 2.0
-shadow_enabled = true
-spot_range = 20.0
-spot_angle = 60.0
-
-[node name="SpotLight3D3" type="SpotLight3D" parent="Map/Lights"]
-transform = Transform3D(-0.707107, -0.5, -0.5, 0, -0.707107, 0.707107, -0.707107, 0.5, 0.5, -5.5, 4, 5.5)
-visible = false
-light_energy = 3.0
-light_indirect_energy = 2.0
-shadow_enabled = true
-spot_range = 20.0
-spot_angle = 60.0
-
-[node name="SpotLight3D4" type="SpotLight3D" parent="Map/Lights"]
-transform = Transform3D(-0.707107, 0.5, 0.5, 0, -0.707107, 0.707107, 0.707107, 0.5, 0.5, 5.5, 4, 5.5)
-visible = false
-light_energy = 3.0
-light_indirect_energy = 2.0
-shadow_enabled = true
-spot_range = 20.0
-spot_angle = 60.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Map/Lights"]
 transform = Transform3D(-1.78814e-07, -0.866025, -0.5, -5.64659e-09, -0.5, 0.866025, -1, 1.57681e-07, 8.45169e-08, 0, 4, 0)
 light_energy = 0.75
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Map/Lights"]
-transform = Transform3D(0.707107, 3.09087e-08, -0.707107, 0.707107, -3.09087e-08, 0.707107, 1.40785e-15, -1, -4.37114e-08, 0, 4, 0)
-visible = false
-light_energy = 0.2
-
-[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="Map/Lights"]
-transform = Transform3D(1, 8.57915e-16, 2.90415e-22, -6.06637e-16, 0.707107, 0.707107, 6.06637e-16, -0.707107, 0.707107, 0, 4, 0)
-visible = false
-light_energy = 0.2
-
-[node name="DirectionalLight3D4" type="DirectionalLight3D" parent="Map/Lights"]
-transform = Transform3D(1, 8.57915e-16, -3.00031e-22, 6.06637e-16, -0.707107, 0.707107, 6.06637e-16, -0.707107, -0.707107, 0, 4, 0)
-visible = false
-light_energy = 0.2
 
 [node name="CameraAnchor" parent="." node_paths=PackedStringArray("_player", "_target") instance=ExtResource("3_gshri")]
 _player = NodePath("../Actors/Player")
@@ -154,3 +110,6 @@ Opponent = NodePath("../../Actors/Opponent")
 [node name="Pause" parent="HUD" instance=ExtResource("6_7ls6m")]
 process_mode = 2
 visible = false
+
+[connection signal="Death" from="Actors/Player" to="." method="OnPlayerDeath"]
+[connection signal="Death" from="Actors/Opponent" to="." method="OnOpponentDeath"]

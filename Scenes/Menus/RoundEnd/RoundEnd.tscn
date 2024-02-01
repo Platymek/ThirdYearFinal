@@ -2,7 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_jq4dd"]
 
-[node name="Menu" instance=ExtResource("1_jq4dd")]
+[node name="Menu" node_paths=PackedStringArray("initialButton") instance=ExtResource("1_jq4dd")]
+initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
+
+[node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
+text = "- Round Won -"
 
 [node name="Description" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="1"]
 layout_mode = 2
@@ -15,7 +19,7 @@ autowrap_mode = 2
 [node name="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="2"]
 custom_minimum_size = Vector2(0, 16)
 
-[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#Continue" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
+[node name="Continue" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
 layout_mode = 2
 text = "Continue to next round
 "
@@ -24,7 +28,7 @@ text = "Continue to next round
 custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
 
-[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#SaveAndExit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
+[node name="SaveAndExit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
 layout_mode = 2
 theme_type_variation = &"RiskButton"
 text = "Save and Exit *"
@@ -32,7 +36,7 @@ text = "Save and Exit *"
 [node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#Split2" type="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3"]
 layout_mode = 2
 
-[node name="AspectRatioContainer_CenterContainer_VBoxContainer_Container_Buttons#SaveExplanation" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
+[node name="SaveExplanation" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
 layout_mode = 2
 theme_type_variation = &"SmallFont"
 theme_override_font_sizes/font_size = 0
@@ -40,3 +44,6 @@ text = "* Your game will be saved and you will be taken to the main menu. The sa
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue" to="." method="OnContinuePressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/SaveAndExit" to="." method="OnMenuPressed"]

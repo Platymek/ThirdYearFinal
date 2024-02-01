@@ -3,7 +3,12 @@ using System;
 
 public partial class Game : Node3D
 {
+	// Properties //
+
 	Menu _pause;
+
+
+	// Node Functions //
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -26,5 +31,18 @@ public partial class Game : Node3D
 			_pause.Visible = GetTree().Paused;
 			_pause.Focus();
 		}
+	}
+
+
+	// Signals //
+
+	private void OnOpponentDeath()
+	{
+		GetNode<Global>("/root/Global").EndRoundWin();
+	}
+
+	private void OnPlayerDeath()
+	{
+		GetNode<Global>("/root/Global").EndRoundLoss();
 	}
 }

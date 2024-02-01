@@ -5,7 +5,7 @@ public partial class Menu : Control
 {
 	// Properties //
 
-	private Control _buttons;
+	[Export] private Control initialButton;
 
 
 	// Node Functions //
@@ -14,8 +14,7 @@ public partial class Menu : Control
 	{
 		base._Ready();
 
-		// focus the first button in the menu so that a controller can be used
-		_buttons = GetNode<Control>("AspectRatioContainer/CenterContainer/VBoxContainer/Container/Buttons");
+		// focus the specified button
 		Focus();
 	}
 
@@ -24,6 +23,7 @@ public partial class Menu : Control
 
 	private void OnPlayPressed()
 	{
+		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
 	}
 
@@ -42,11 +42,22 @@ public partial class Menu : Control
 		GetTree().ChangeSceneToFile("res://Scenes/Menus/Settings/Settings.tscn");
 	}
 
+	private void OnResumePressed()
+	{
+		GetTree().Paused = false;
+	}
+
+	private void OnContinuePressed()
+	{
+		GetNode<Global>("/root/Global").Load();
+		GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundNew/RoundNew.tscn");
+	}
+
 
 	// Other Functions //
 
 	public void Focus()
 	{
-		_buttons.GetChild<Button>(0).GrabFocus();
+		initialButton.GrabFocus();
 	}
 }

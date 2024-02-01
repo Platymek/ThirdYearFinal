@@ -15,35 +15,43 @@ OpponentStats = ExtResource("3_ll254")
 
 [node name="CloseToWall" type="Node" parent="OpponentUniqueAttacks"]
 
-[node name="SumoPressure" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+[node name="Sumo Pressure" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
 script = ExtResource("4_twu5d")
+Description = "Funny Monkey"
 
-[node name="LivingWall" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+[node name="Living Wall" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
 script = ExtResource("4_twu5d")
 
 [node name="FarFromWall" type="Node" parent="OpponentUniqueAttacks"]
 
-[node name="InstantTeleport" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
+[node name="Instant Teleport" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
 script = ExtResource("4_twu5d")
+AttackType = 1
 
 [node name="Reversal" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
 script = ExtResource("4_twu5d")
+AttackType = 1
 
-[node name="BigPush" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
+[node name="Big Push" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
 script = ExtResource("4_twu5d")
+AttackType = 1
 
 [node name="Neutral" type="Node" parent="OpponentUniqueAttacks"]
 
-[node name="SumoAdvance" type="Node" parent="OpponentUniqueAttacks/Neutral"]
+[node name="Sumo Advance" type="Node" parent="OpponentUniqueAttacks/Neutral"]
 script = ExtResource("4_twu5d")
+AttackType = 2
 
 [node name="MixUp" type="Node" parent="OpponentUniqueAttacks"]
 
-[node name="AroundTheWorld" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+[node name="Around The World" type="Node" parent="OpponentUniqueAttacks/MixUp"]
 script = ExtResource("4_twu5d")
+AttackType = 3
 
-[node name="BigChop" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+[node name="Big Chop" type="Node" parent="OpponentUniqueAttacks/MixUp"]
 script = ExtResource("4_twu5d")
+AttackType = 3
 
-[node name="3HitCombo" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+[node name="3 Hit Combo" type="Node" parent="OpponentUniqueAttacks/MixUp"]
 script = ExtResource("4_twu5d")
+AttackType = 3

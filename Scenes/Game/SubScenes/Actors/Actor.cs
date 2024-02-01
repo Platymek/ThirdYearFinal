@@ -6,6 +6,8 @@ public partial class Actor : CharacterBody3D
 {
 	// Properties //
 
+	[Signal] public delegate void DeathEventHandler();
+
 	[Export] public Node3D Target { protected set; get; }
 	[Export] protected ActorStats _stats;
 	
@@ -163,6 +165,11 @@ public partial class Actor : CharacterBody3D
 
 		GD.Print($"{Name} was hit for {AttackStats.DamageReactMutliplier} damage " +
 				 $"and {finalKnock} knock");
+
+		if (Health <= 0)
+		{
+			EmitSignal(SignalName.Death);
+		}
 
 		if (CurrentKnock == 0) return;
 		State = "stun";

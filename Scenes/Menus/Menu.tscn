@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwjeb0d0sl7bh"]
+[gd_scene load_steps=4 format=3 uid="uid://dwjeb0d0sl7bh"]
 
 [ext_resource type="Theme" uid="uid://cv6onwi1btrjl" path="res://Scenes/Menus/Theme/Theme.tres" id="1_uav01"]
 [ext_resource type="Script" path="res://Scenes/Menus/Menu.cs" id="1_wv4jm"]
+[ext_resource type="PackedScene" uid="uid://dubn6b5okxq11" path="res://Scenes/Menus/Shaders/Background/Background.tscn" id="3_0ntvn"]
 
 [node name="Menu" type="Control"]
 process_mode = 3
@@ -13,6 +14,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_uav01")
 script = ExtResource("1_wv4jm")
+
+[node name="Background" parent="." instance=ExtResource("3_0ntvn")]
+visible = false
+layout_mode = 1
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
 layout_mode = 1
