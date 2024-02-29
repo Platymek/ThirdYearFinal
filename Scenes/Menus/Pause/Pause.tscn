@@ -5,9 +5,6 @@
 [node name="Pause" node_paths=PackedStringArray("initialButton") instance=ExtResource("1_2yide")]
 initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Resume")
 
-[node name="Background" parent="." index="0"]
-visible = false
-
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
 text = "- Pause -"
 

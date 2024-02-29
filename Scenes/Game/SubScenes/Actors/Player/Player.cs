@@ -6,6 +6,7 @@ public partial class Player : Actor
 	// Properties //
 	
 	private PlayerStats _playerStats;
+	private PlayerAttackStats _playerAttackStats;
 	private ActorModel _model;
 
 	private Timer _dodgeTimer;
@@ -24,18 +25,58 @@ public partial class Player : Actor
 		{
 			string state = value;
 
+			if (_model != null)
+			{
+				_model.NextAnimationLength = 0;
+			}
+
 			switch (value)
 			{
 				case "dodge_left":
+
+					_model.Animation = "dodge_left";
+
+					goto case "dodge";
+
 				case "dodge_right":
+
+					_model.Animation = "dodge_right";
+
+					goto case "dodge";
+
 				case "dodge_down":
 
+					_model.Animation = "dodge_back";
+
+					goto case "dodge";
+
+				case "dodge":
+
+					_model.NextAnimationLength = (float)_dodgeTimer.WaitTime;
 					Animation = "dodge";
 
 					break;
 				
 				case "dodge_stun":
+
 					GetNode<Timer>("DodgeStunTimer").Start();
+
+					break;
+
+				case "charge":
+
+					Animation = "charge";
+
+					_model.NextAnimationLength = 6f;
+					_model.Animation = "charge";
+
+					break;
+
+				case "heavyPunch":
+
+					_model.NextAnimationLength = 2.4f;
+					_model.Animation = "punch_heavy";
+
 					break;
 			}
 
@@ -61,7 +102,8 @@ public partial class Player : Actor
 		base._Ready();
 
 		_playerStats = _stats as PlayerStats;
-		_model = GetNode <ActorModel>("Model");
+        _playerAttackStats = AttackStats as PlayerAttackStats;
+        _model = GetNode <ActorModel>("Model");
 
 		_bufferedAction = null;
 		
@@ -106,28 +148,30 @@ public partial class Player : Actor
 	
 				Move(move);
 
-				float angle = move.Rotated(-Mathf.Pi * .5f).Angle();
+				float halfPi = Mathf.Pi * .5f;
+
+				float angle = move.Rotated(-halfPi).Angle();
 
 				if (move != Vector2.Zero)
 				{
-					if (Animation != "walk")
+					switch (Mathf.RoundToInt(angle / halfPi))
 					{
-						Animation = "walk";
-					}
+						case 1:
+							_model.Animation = "walk_left";
+							break;
 
-					/*
-						switch (Mathf.RoundToInt(angle / halfPi))
-						{
-							case 1: Animation = "move_up";
-								break;
-							case 0: Animation = "move_right";
-								break;
-							case-1: Animation = "move_down";
-								break;
-							case 2: Animation = "move_left";
-								break;
-						}
-					*/
+						case 0:
+							_model.Animation = "walk_forward";
+							break;
+
+						case-1:
+							_model.Animation = "walk_right";
+							break;
+
+						case 2:
+							_model.Animation = "walk_back";
+							break;
+					}
 				}
 				else
 				{
@@ -164,7 +208,7 @@ public partial class Player : Actor
 					}
 					else if (_bufferedAction == "punch")
 					{
-						State = "charge_start";
+						State = "charge";
 					}
 
 
@@ -197,21 +241,35 @@ public partial class Player : Actor
 				break;
 
 
-			case "charge_light":
+			case "charge":
 
-				if (!Input.IsActionPressed("punch"))
+				if (_playerAttackStats.PunchChargeState 
+					!= PlayerAttackStats.PunchChargeStates.None
+					&& !Input.IsActionPressed("punch"))
 				{
-					State = "punch_light";
-					_bufferedAction = null;
-				}
+					switch (_playerAttackStats.PunchChargeState)
+					{
+						case PlayerAttackStats.PunchChargeStates.Light:
 
-				break;
+                            State = "punch_light";
+							break;
 
-			case "charge_medium":
+                        case PlayerAttackStats.PunchChargeStates.Medium:
 
-				if (!Input.IsActionPressed("punch"))
-				{
-					State = "punch_medium";
+                            State = "punch_medium";
+
+                            _model.NextAnimationLength = 1.9f;
+                            _model.Animation = "punch_medium";
+
+                            break;
+
+                        case PlayerAttackStats.PunchChargeStates.Heavy:
+
+                            State = "punch_heavy";
+
+                            break;
+                    }
+
 					_bufferedAction = null;
 				}
 
