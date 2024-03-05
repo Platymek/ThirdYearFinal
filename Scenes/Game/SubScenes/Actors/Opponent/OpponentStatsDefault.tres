@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_scfv2")
 CenterStrafingDistance = 1.0
-ClosingInDistance = 2.0
+ClosingInDistance = 5.0
 CloseToWallAttacks = Array[String]([])
 FarFromWallAttacks = Array[String]([])
 NeutralAttacks = Array[String]([])

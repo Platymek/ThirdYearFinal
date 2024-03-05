@@ -597,7 +597,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.497781)
 visible = false
 
 [node name="Model" parent="." index="8" instance=ExtResource("5_pdhgb")]
-_checkRightHand = true
 NextAnimationLength = 0.9
 Animation = "punch_medium"
 

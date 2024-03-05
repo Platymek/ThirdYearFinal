@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://f0emr35uydsf"]
+[gd_scene load_steps=12 format=3 uid="uid://f0emr35uydsf"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_2y64p"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/Opponent.cs" id="2_oqqya"]
@@ -7,24 +7,34 @@
 
 [sub_resource type="Animation" id="Animation_j30e7"]
 resource_name = "idle"
-length = 8.5
+length = 11.85
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Model:Animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["idle"]
-}
+
+[sub_resource type="Animation" id="Animation_noi37"]
+resource_name = "walk_forward"
+length = 3.3
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_t7xny"]
+resource_name = "walk_back"
+length = 5.3
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_inmv2"]
+resource_name = "walk_left"
+length = 4.8
+
+[sub_resource type="Animation" id="Animation_y7c6x"]
+resource_name = "walk_right"
+length = 3.5
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bq7h1"]
 _data = {
-"idle": SubResource("Animation_j30e7")
+"idle": SubResource("Animation_j30e7"),
+"walk_back": SubResource("Animation_t7xny"),
+"walk_forward": SubResource("Animation_noi37"),
+"walk_left": SubResource("Animation_inmv2"),
+"walk_right": SubResource("Animation_y7c6x")
 }
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jscm4"]
@@ -39,6 +49,7 @@ _stats = null
 libraries = {
 "": SubResource("AnimationLibrary_bq7h1")
 }
+autoplay = "idle"
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")

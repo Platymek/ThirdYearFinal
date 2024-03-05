@@ -7,8 +7,8 @@ public partial class Opponent : Actor
 	
 	private OpponentStats _opponentStats;
 	private OpponentAttackStats _opponentAttackStats;
-
 	private Label3D _uniqueAttackLabel;
+	private ActorModel _model;
 
 	public override string State
 	{
@@ -22,8 +22,25 @@ public partial class Opponent : Actor
 		}
 	}
 
-	// types of attack
-	public enum AttackTypes
+    protected override string Animation
+    {
+        get => base.Animation;
+        set
+        {
+            if (_model == null) return;
+
+			if (value != _model.Animation)
+            {
+                _model.NextAnimationLength = (float)GetAnimationCurrentLength();
+                _model.Animation = value;
+            }
+
+            base.Animation = value;
+        }
+    }
+
+    // types of attack
+    public enum AttackTypes
 	{
 		CloseToWall, // performed when target is close to wall
 		FarFromWall, // performed when I am close to wall
@@ -58,7 +75,8 @@ public partial class Opponent : Actor
 		_idleTimer.WaitTime = _opponentStats.IdleDuration;
 
 		_uniqueAttackLabel = GetNode<Label3D>("UniqueAttackLabel");
-	}
+        _model = GetNode<ActorModel>("Model");
+    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -83,16 +101,30 @@ public partial class Opponent : Actor
 
 				float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
 
-				// try to move with back turned to center of ring if a certain distance away from ring
-				if (distanceFromCentre > _opponentStats.CenterStrafingDistance)
+				// set animation when closing in
+                switch (_opponentAttackStats.ClosingInSpeed)
+                {
+                    case > 0.25f:
+                        Animation = "walk_forward"; break;
+                    case < 0.25f:
+                        Animation = "walk_back"; break;
+                    default:
+                        Animation = "idle"; break;
+                }
+
+
+                // try to move with back turned to center of ring if a certain distance away from ring
+                if (distanceFromCentre > _opponentStats.CenterStrafingDistance)
 				{
 					switch (angleToTarget)
 					{
 						case > 0:
-							Move(Vector2.Left * (closedIn ? 1 : .25f));
+                            Animation = "walk_left";
+                            Move(Vector2.Left * (closedIn ? 1 : .25f));
 							break;
 						case < 0:
-							Move(Vector2.Right);
+                            Animation = "walk_right";
+                            Move(Vector2.Right * (closedIn ? 1 : .25f));
 							break;
 					}
 				}
