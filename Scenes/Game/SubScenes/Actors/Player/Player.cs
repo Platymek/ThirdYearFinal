@@ -90,6 +90,11 @@ public partial class Player : Actor
 		set
 		{
 			base.Animation = value;
+
+			if (_model == null) return;
+
+			_model.NextAnimationLength = (float)GetAnimationCurrentLength();
+			_model.Animation = value;
 		}
 	}
 
@@ -102,8 +107,8 @@ public partial class Player : Actor
 		base._Ready();
 
 		_playerStats = _stats as PlayerStats;
-        _playerAttackStats = AttackStats as PlayerAttackStats;
-        _model = GetNode <ActorModel>("Model");
+		_playerAttackStats = AttackStats as PlayerAttackStats;
+		_model = GetNode <ActorModel>("Model");
 
 		_bufferedAction = null;
 		
@@ -138,10 +143,6 @@ public partial class Player : Actor
 		switch (State)
 		{
 			case "idle":
-			case "move_up":
-			case "move_down":
-			case "move_left":
-			case "move_right":
 
 				Vector2 move = Input.GetVector("move_left", "move_right", 
 					"move_down", "move_up");
@@ -171,13 +172,6 @@ public partial class Player : Actor
 						case 2:
 							_model.Animation = "walk_back";
 							break;
-					}
-				}
-				else
-				{
-					if (Animation != "idle")
-					{
-						Animation = "idle";
 					}
 				}
 
@@ -251,24 +245,24 @@ public partial class Player : Actor
 					{
 						case PlayerAttackStats.PunchChargeStates.Light:
 
-                            State = "punch_light";
+							State = "punch_light";
 							break;
 
-                        case PlayerAttackStats.PunchChargeStates.Medium:
+						case PlayerAttackStats.PunchChargeStates.Medium:
 
-                            State = "punch_medium";
+							State = "punch_medium";
 
-                            _model.NextAnimationLength = 1.9f;
-                            _model.Animation = "punch_medium";
+							_model.NextAnimationLength = 1.9f;
+							_model.Animation = "punch_medium";
 
-                            break;
+							break;
 
-                        case PlayerAttackStats.PunchChargeStates.Heavy:
+						case PlayerAttackStats.PunchChargeStates.Heavy:
 
-                            State = "punch_heavy";
+							State = "punch_heavy";
 
-                            break;
-                    }
+							break;
+					}
 
 					_bufferedAction = null;
 				}
@@ -280,7 +274,7 @@ public partial class Player : Actor
 
 				if (!Input.IsActionPressed("block"))
 				{
-					State = "idle";
+					State = "block_end";
 					_bufferedAction = null;
 				}
 

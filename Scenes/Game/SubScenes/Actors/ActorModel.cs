@@ -21,10 +21,6 @@ public partial class ActorModel : Node
 
 		set
 		{
-			_animationPlayer.Stop();
-
-			GD.Print($"Animation Played: {value}");
-
 			_animationPlayer.Play($"{_animationPrefix}{value}");
 
 			if (NextAnimationLength > 0)
@@ -37,6 +33,10 @@ public partial class ActorModel : Node
 
 				NextAnimationLength = 0;
 			}
+			else
+            {
+				_animationPlayer.SpeedScale = 1;
+            }
 		}
 	}
 

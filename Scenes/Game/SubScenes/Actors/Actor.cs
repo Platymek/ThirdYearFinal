@@ -24,6 +24,11 @@ public partial class Actor : CharacterBody3D
 			_animationPlayer?.Play(value);
 		}
 	}
+
+	protected double GetAnimationCurrentLength()
+	{
+		return _animationPlayer.CurrentAnimationLength;
+	}
 	
 	// the state the actor is in
 	private string _state;

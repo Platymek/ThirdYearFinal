@@ -29,6 +29,7 @@ _data = {
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jscm4"]
 height = 3.0
+radius = 0.9
 
 [node name="Opponent" instance=ExtResource("1_2y64p")]
 script = ExtResource("2_oqqya")
@@ -51,18 +52,18 @@ shape = SubResource("CylinderShape3D_jscm4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 shape = SubResource("CylinderShape3D_jscm4")
 
-[node name="DropShadow" parent="." index="4"]
-transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)
+[node name="StateLabel" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, -1)
 
 [node name="IdleTimer" type="Timer" parent="." index="5"]
 one_shot = true
 
 [node name="Model" parent="." index="6" instance=ExtResource("5_kgm2n")]
-transform = Transform3D(1.64446, 0, -0.598535, 0, 1.75, 0, 0.598535, 0, 1.64446, -0.3, 0.2, 0)
+transform = Transform3D(1.64446, 0, -0.598535, 0, 1.75, 0, 0.598535, 0, 1.64446, -0.5, 0.1, 0)
 Animation = "idle"
 
-[node name="StateLabel" parent="." index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, -1)
+[node name="DropShadow" parent="." index="7"]
+transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)
 
 [node name="UniqueAttackLabel" type="Label3D" parent="." index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, -1)

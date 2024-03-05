@@ -4,14 +4,14 @@
 [ext_resource type="Resource" uid="uid://chvbm8nykabkg" path="res://Scenes/Game/SubScenes/Actors/ActorStats.tres" id="2_jnwxs"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/AttackStats.cs" id="2_r16ci"]
 
-[sub_resource type="Gradient" id="Gradient_nrwyx"]
-offsets = PackedFloat32Array(0.2, 0.25)
+[sub_resource type="Gradient" id="Gradient_se1ft"]
+offsets = PackedFloat32Array(0.3, 0.4)
 colors = PackedColorArray(0.113725, 0.168627, 0.32549, 1, 0.113725, 0.168627, 0.32549, 0)
 metadata/_snap_enabled = true
 metadata/_snap_count = 20
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5xbfn"]
-gradient = SubResource("Gradient_nrwyx")
+gradient = SubResource("Gradient_se1ft")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -29,13 +29,13 @@ script = ExtResource("2_r16ci")
 
 [node name="Hitbox" type="Area3D" parent="."]
 
-[node name="DropShadow" type="Sprite3D" parent="."]
-transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 0.01, 0)
-modulate = Color(1, 1, 1, 0.784314)
-texture = SubResource("GradientTexture2D_5xbfn")
-
 [node name="StateLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 billboard = 2
 text = "State
 "
+
+[node name="DropShadow" type="Sprite3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 0.01, 0)
+modulate = Color(1, 1, 1, 0.784314)
+texture = SubResource("GradientTexture2D_5xbfn")

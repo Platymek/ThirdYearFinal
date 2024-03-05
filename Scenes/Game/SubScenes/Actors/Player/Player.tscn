@@ -29,6 +29,9 @@ script = ExtResource("4_7fncs")
 PunchChargeState = 2
 Damage = 1.0
 Knock = 1.0
+CheckDamage = true
+DamageReactMutliplier = 0.0
+KnockReactMutliplier = 0.0
 
 [node name="CollisionBox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -53,15 +56,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 shape = SubResource("CylinderShape3D_qbww1")
 
-[node name="DropShadow" parent="." index="7"]
-transform = Transform3D(-3, 2.62268e-07, 3.82137e-15, 0, -1.31134e-07, 1, 2.62268e-07, 3, 4.37114e-08, 0, 0.01, 0)
-
-[node name="Model" parent="." index="8" instance=ExtResource("5_pdhgb")]
-Animation = "punch_medium"
-
-[node name="StateLabel" parent="." index="9"]
+[node name="StateLabel" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.497781)
 visible = false
+
+[node name="Model" parent="." index="8" instance=ExtResource("5_pdhgb")]
+_checkRightHand = true
+Animation = "punch_heavy"
+
+[node name="DropShadow" parent="." index="9"]
+transform = Transform3D(-3, 2.62268e-07, 3.82137e-15, 0, -1.31134e-07, 1, 2.62268e-07, 3, 4.37114e-08, 0, 0.01, 0)
 
 [connection signal="timeout" from="DodgeTimer" to="." method="OnDodgeEnd"]
 [connection signal="timeout" from="DodgeStunTimer" to="." method="OnDodgeStunEnd"]
