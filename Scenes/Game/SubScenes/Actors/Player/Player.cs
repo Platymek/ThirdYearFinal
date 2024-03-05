@@ -32,50 +32,9 @@ public partial class Player : Actor
 
 			switch (value)
 			{
-				case "dodge_left":
-
-					_model.Animation = "dodge_left";
-
-					goto case "dodge";
-
-				case "dodge_right":
-
-					_model.Animation = "dodge_right";
-
-					goto case "dodge";
-
-				case "dodge_down":
-
-					_model.Animation = "dodge_back";
-
-					goto case "dodge";
-
-				case "dodge":
-
-					_model.NextAnimationLength = (float)_dodgeTimer.WaitTime;
-					Animation = "dodge";
-
-					break;
-				
 				case "dodge_stun":
 
 					GetNode<Timer>("DodgeStunTimer").Start();
-
-					break;
-
-				case "charge":
-
-					Animation = "charge";
-
-					_model.NextAnimationLength = 6f;
-					_model.Animation = "charge";
-
-					break;
-
-				case "heavyPunch":
-
-					_model.NextAnimationLength = 2.4f;
-					_model.Animation = "punch_heavy";
 
 					break;
 			}
@@ -174,12 +133,18 @@ public partial class Player : Actor
 							break;
 					}
 				}
+				else
+				{
+					_model.Animation = "idle";
+				}
 
 				if (_bufferedAction != null)
 				{
 					// only dodge if the user is pointing the stick in a direction they can dodge in
 					if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .2f or < Mathf.Pi * -.2f))
 					{
+						_model.NextAnimationLength = (float)_dodgeTimer.WaitTime + (float)_dodgeStunTimer.WaitTime;
+
 						switch (angle)
 						{
 							// if the stick is pointing backwards, dodge back
@@ -187,14 +152,19 @@ public partial class Player : Actor
 							case < Mathf.Pi * -.6f:
 							case 0:
 								State = "dodge_down";
+								_model.Animation = "dodge_down";
 								break;
+
 							// otherwise, if the stick is pointing right, dodge right
 							case < 0:
 								State = "dodge_right";
+								_model.Animation = "dodge_right";
 								break;
+
 							// else, dodge left
 							default:
 								State = "dodge_left";
+								_model.Animation = "dodge_left";
 								break;
 						}
 
@@ -234,6 +204,12 @@ public partial class Player : Actor
 
 				break;
 
+			case "punch_heavy":
+
+				Move(Vector2.Down);
+
+				break;
+
 
 			case "charge":
 
@@ -246,14 +222,12 @@ public partial class Player : Actor
 						case PlayerAttackStats.PunchChargeStates.Light:
 
 							State = "punch_light";
+
 							break;
 
 						case PlayerAttackStats.PunchChargeStates.Medium:
 
 							State = "punch_medium";
-
-							_model.NextAnimationLength = 1.9f;
-							_model.Animation = "punch_medium";
 
 							break;
 

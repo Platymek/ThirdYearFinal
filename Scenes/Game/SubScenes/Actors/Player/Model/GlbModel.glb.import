@@ -33,7 +33,7 @@ _subresources={
 "animations": {
 "block": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/block.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -1832,7 +1832,7 @@ _subresources={
 },
 "block_end": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/block_end.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -3631,7 +3631,7 @@ _subresources={
 },
 "block_start": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/block_start.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -5430,7 +5430,7 @@ _subresources={
 },
 "charge": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/charge.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -7229,7 +7229,7 @@ _subresources={
 },
 "death": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/death.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -9028,7 +9028,7 @@ _subresources={
 },
 "dodge_back": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/dodge_back.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -10827,7 +10827,7 @@ _subresources={
 },
 "dodge_left": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/dodge_left.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -12626,7 +12626,7 @@ _subresources={
 },
 "dodge_right": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/dodge_right.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -14425,7 +14425,7 @@ _subresources={
 },
 "hurt": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/hurt.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -16224,9 +16224,9 @@ _subresources={
 },
 "idle": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/idle.res",
-"settings/loop_mode": 0,
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
@@ -18023,7 +18023,7 @@ _subresources={
 },
 "knock_back": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/knock_back.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -19822,7 +19822,7 @@ _subresources={
 },
 "knock_back_start": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/knock_back_start.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -21621,7 +21621,7 @@ _subresources={
 },
 "knock_forward": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/knock_forward.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -23420,7 +23420,7 @@ _subresources={
 },
 "knock_forward_start": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/knock_forward_start.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -25219,7 +25219,7 @@ _subresources={
 },
 "punch_heavy": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/punch_heavy.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -27018,7 +27018,7 @@ _subresources={
 },
 "punch_light": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/punch_light.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -28817,7 +28817,7 @@ _subresources={
 },
 "punch_medium": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/punch_medium.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -30616,7 +30616,7 @@ _subresources={
 },
 "walk_back": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/walk_back.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -32415,7 +32415,7 @@ _subresources={
 },
 "walk_forward": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/walk_forward.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -34214,7 +34214,7 @@ _subresources={
 },
 "walk_forwards": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/walk_forwards.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -36013,7 +36013,7 @@ _subresources={
 },
 "walk_left": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/walk_left.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
@@ -37812,7 +37812,7 @@ _subresources={
 },
 "walk_right": {
 "save_to_file/enabled": true,
-"save_to_file/keep_custom_tracks": "",
+"save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "res://Scenes/Game/SubScenes/Actors/Player/Model/Animations/walk_right.res",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
