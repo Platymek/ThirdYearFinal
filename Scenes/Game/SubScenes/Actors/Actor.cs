@@ -41,24 +41,29 @@ public partial class Actor : CharacterBody3D
 
 		protected set
 		{
-			if (_state == value) return;
-
 			_state = value;
 			Animation = value;
-			_stateLabel.Text = value;
-
-
-			switch (value)
+			
+			if (_stateLabel != null)
 			{
-				case "idle":
-					AttackStats.TrackSpeedMultiplier = 1;
-					break;
-				
-				case "stun":
-					AttackStats.TrackSpeedMultiplier = 0;
-					break;
+				_stateLabel.Text = value;
+            }
+
+			
+			if (AttackStats != null)
+			{
+				switch (value)
+				{
+					case "idle":
+						AttackStats.TrackSpeedMultiplier = 1;
+						break;
+					
+					case "stun_start":
+						AttackStats.TrackSpeedMultiplier = 0;
+						break;
+				}
 			}
-				
+			
 			GD.Print($"{Name} change State to {value}");
 		}
 	}
@@ -107,7 +112,6 @@ public partial class Actor : CharacterBody3D
 
 		// get nodes
 		AttackStats = GetNode<AttackStats>("AttackStats");
-
 		_stateLabel = GetNode<Label3D>("StateLabel");
 
 		// initialise variables
@@ -120,7 +124,6 @@ public partial class Actor : CharacterBody3D
 		
 		// get animation player and start animation based on starting state
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		Animation = State;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -145,6 +148,7 @@ public partial class Actor : CharacterBody3D
 			JustHit = false;
 		}
 
+
 		float fDelta = (float)delta;
 
 		if (CurrentKnock != 0)
@@ -152,8 +156,9 @@ public partial class Actor : CharacterBody3D
 			ProcessKnock(fDelta);
 		}
 		
+
 		TrackTarget(fDelta);
-	}
+    }
 	
 	// get hurt by another actor
 	protected void Hurt(float damage, float knock)
@@ -177,7 +182,7 @@ public partial class Actor : CharacterBody3D
 		}
 
 		if (CurrentKnock == 0) return;
-		State = "stun";
+		State = "stun_start";
 	}
 	
 	// get hurt by another actor and change angle
@@ -305,7 +310,7 @@ public partial class Actor : CharacterBody3D
 			CurrentKnock = 0;
 
 			// if the actor's state is 'stun', turn the player back to idle
-			if (State == "stun")
+			if (State == "stun" || State == "stun_start")
 			{
 				State = "idle";
 			}
@@ -317,8 +322,8 @@ public partial class Actor : CharacterBody3D
 		// if actor is self or not checking for damage currently, return
 		if (actor.Name == Name || !AttackStats.CheckDamage) return;
 
-		// stop checking damage
-		AttackStats.CheckDamage = false;
+        // stop checking damage
+        AttackStats.CheckDamage = false;
 		
 		// hurt actor
 		actor.Hurt(

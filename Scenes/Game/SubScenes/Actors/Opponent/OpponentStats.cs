@@ -21,8 +21,6 @@ public partial class OpponentStats : ActorStats
             { Opponent.AttackTypes.MixUp, new Array<string>() },
         };
 
-
-    
     [Export] public Array<string> CloseToWallAttacks
     {
         get => CurrentUniqueAttacks[Opponent.AttackTypes.CloseToWall];
@@ -46,7 +44,5 @@ public partial class OpponentStats : ActorStats
 
     // how long to wait in idle before performing the next attack
     [Export] public float IdleDuration = 2f;
-
-
     [Export] public float CloseToWallDistance = 6f;
 }

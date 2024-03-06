@@ -1,14 +1,19 @@
 using Godot;
+using Godot.Collections;
 using System;
+using System.Collections.Generic;
 
 public partial class Opponent : Actor
 {
 	// Properties //
+
+	[Export] private string _startState;
 	
 	private OpponentStats _opponentStats;
 	private OpponentAttackStats _opponentAttackStats;
 	private Label3D _uniqueAttackLabel;
 	private ActorModel _model;
+	private AttackTypes _currentAttackType;
 
 	public override string State
 	{
@@ -16,31 +21,56 @@ public partial class Opponent : Actor
 		
 		protected set
 		{
+			if (_opponentAttackStats == null) return;
+
+            _opponentAttackStats.ClosingInSpeed = 0;
+            _opponentAttackStats.StrafingSpeed = 0;
+
+			bool stunEnded = false;
+
+            switch (value)
+			{
+				case "idle":
+
+					_idleTimer.Start();
+					_opponentAttackStats.ClosingInSpeed = 1;
+					
+					if (State == "stun")
+					{
+						stunEnded = true;
+                    }
+
+					break;
+			}
+
 			base.State = value;
-			
-			_opponentAttackStats.ClosingInSpeed = 1;
+
+			if (stunEnded)
+			{
+				Animation = "stun_end";
+			}
 		}
 	}
 
-    protected override string Animation
-    {
-        get => base.Animation;
-        set
-        {
-            if (_model == null) return;
+	protected override string Animation
+	{
+		get => base.Animation;
+		set
+		{
+			if (_model == null) return;
 
+			base.Animation = value;
+			
 			if (value != _model.Animation)
-            {
-                _model.NextAnimationLength = (float)GetAnimationCurrentLength();
-                _model.Animation = value;
-            }
+			{
+				_model.NextAnimationLength = (float)GetAnimationCurrentLength();
+				_model.Animation = value;
+			}
+		}
+	}
 
-            base.Animation = value;
-        }
-    }
-
-    // types of attack
-    public enum AttackTypes
+	// types of attack
+	public enum AttackTypes
 	{
 		CloseToWall, // performed when target is close to wall
 		FarFromWall, // performed when I am close to wall
@@ -75,8 +105,14 @@ public partial class Opponent : Actor
 		_idleTimer.WaitTime = _opponentStats.IdleDuration;
 
 		_uniqueAttackLabel = GetNode<Label3D>("UniqueAttackLabel");
-        _model = GetNode<ActorModel>("Model");
-    }
+		_model = GetNode<ActorModel>("Model");
+
+		// set state property now that everything has been loaded
+		if (_startState != null)
+		{
+			State = _startState;
+		}
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -92,66 +128,90 @@ public partial class Opponent : Actor
 				
 				_opponentAttackStats.ClosingInSpeed = 1;
 
-				bool closedIn = Position2D.DistanceTo(Vector3To2D(Target.Position))
-					< _opponentStats.ClosingInDistance;
-
 				// get angle difference from centre of ring, which is the origin of the world
 				float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
-					Vector3.Zero, 0.1f);
+					Vector3.Zero, 0.2f);
 
 				float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
 
-				// set animation when closing in
-                switch (_opponentAttackStats.ClosingInSpeed)
-                {
-                    case > 0.25f:
-                        Animation = "walk_forward"; break;
-                    case < 0.25f:
-                        Animation = "walk_back"; break;
-                    default:
-                        Animation = "idle"; break;
-                }
+				switch (_opponentAttackStats.ClosingInSpeed)
+				{
+					case > 0.25f:
+						Animation = "walk_forward"; break;
+					case < -0.25f:
+						Animation = "walk_back"; break;
+					default:
+						Animation = "idle"; break;
+				}
 
-
-                // try to move with back turned to center of ring if a certain distance away from ring
-                if (distanceFromCentre > _opponentStats.CenterStrafingDistance)
+				// try to move with back turned to center of ring if a certain distance away from ring
+				if (distanceFromCentre > _opponentStats.CenterStrafingDistance)
 				{
 					switch (angleToTarget)
 					{
 						case > 0:
-                            Animation = "walk_left";
-                            Move(Vector2.Left * (closedIn ? 1 : .25f));
+                            _opponentAttackStats.StrafingSpeed = -1;
 							break;
 						case < 0:
-                            Animation = "walk_right";
-                            Move(Vector2.Right * (closedIn ? 1 : .25f));
-							break;
+                            _opponentAttackStats.StrafingSpeed = 1;
+                            break;
 					}
 				}
-					
-				if (closedIn)
-				{
-					_opponentAttackStats.ClosingInSpeed = .25f;
-				}
 
 
-				_uniqueAttackLabel.Text = "Neutral";
+                _currentAttackType = AttackTypes.Neutral;
 
-				if (distanceFromCentre > _opponentStats.CloseToWallDistance)
+                if (distanceFromCentre > _opponentStats.CloseToWallDistance)
 				{
 					if (angleToTarget < Math.PI * 0.25f | angleToTarget > Math.PI * -0.25f)
 					{
-						_uniqueAttackLabel.Text = "CloseToWall";
+                        _currentAttackType = AttackTypes.CloseToWall;
 					}
 					else if (angleToTarget > Math.PI * 0.75f | angleToTarget < Math.PI * -0.75f)
-					{
-						_uniqueAttackLabel.Text = "FarFromWall";
-					}
+                    {
+                        _currentAttackType = AttackTypes.FarFromWall;
+                    }
 				}
-				
-				break;
+
+                _uniqueAttackLabel.Text = _currentAttackType.ToString();
+
+
+				// if withing attacking range, attack
+                if (Position2D.DistanceTo(Vector3To2D(Target.Position))
+					< _opponentStats.ClosingInDistance)
+				{
+					StartAttack();
+                }
+
+                break;
 		}
 		
 		Move(Vector2.Down * _opponentAttackStats.ClosingInSpeed);
+        Move(Vector2.Right * _opponentAttackStats.StrafingSpeed);
+    }
+
+
+	// Other Functions //
+
+	private void StartAttack()
+	{
+		GD.Randomize();
+
+		float attackChance = GD.Randf();
+
+		Array<string> attackList = _opponentStats.CurrentUniqueAttacks[
+			_currentAttackType];
+
+		bool mixUpChosen = attackChance >= 0.5f || attackList.Count == 0;
+
+
+        if (mixUpChosen)
+		{
+			State = _opponentStats.MixUpAttacks.PickRandom();
+        }
+		else
+        {
+            State = attackList.PickRandom();
+        }
 	}
 }

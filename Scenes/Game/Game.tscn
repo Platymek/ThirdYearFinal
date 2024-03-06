@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bcwut0htsf36f"]
+[gd_scene load_steps=14 format=3 uid="uid://bcwut0htsf36f"]
 
 [ext_resource type="PackedScene" uid="uid://drf2gde56141u" path="res://Scenes/Game/SubScenes/Actors/Player/Player.tscn" id="1_cxp7k"]
 [ext_resource type="Script" path="res://Scenes/Game/Game.cs" id="1_sanpw"]
@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="4_opjmh"]
 [ext_resource type="PackedScene" uid="uid://bt437vsmw6isq" path="res://Scenes/Game/SubScenes/UI/HUD/HUD.tscn" id="5_3dvb1"]
 [ext_resource type="PackedScene" uid="uid://bwy3f26ko0tq" path="res://Scenes/Menus/Pause/Pause.tscn" id="6_7ls6m"]
-[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStats.cs" id="6_7w2j2"]
+[ext_resource type="Resource" uid="uid://d0x4kt3xr13g6" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStatsDefault.tres" id="6_k4x2s"]
 [ext_resource type="PackedScene" uid="uid://b2a0x5ks6qtqc" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.tscn" id="8_45i1n"]
 
 [sub_resource type="Environment" id="Environment_57cls"]
@@ -19,25 +19,6 @@ ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.2
 adjustment_enabled = true
 adjustment_saturation = 1.5
-
-[sub_resource type="Resource" id="Resource_s4duq"]
-script = ExtResource("6_7w2j2")
-CenterStrafingDistance = 1.0
-ClosingInDistance = 2.0
-CloseToWallAttacks = Array[String]([])
-FarFromWallAttacks = Array[String]([])
-NeutralAttacks = Array[String]([])
-MixUpAttacks = Array[String]([])
-IdleDuration = 2.0
-CloseToWallDistance = 3.0
-MaxHealth = 1.0
-Speed = 0.5
-TrackSpeed = 1.0
-DamageMultiplier = 1.0
-DamageReactMultiplier = 1.0
-KnockMultiplier = 1.0
-KnockReactMultiplier = 3.0
-KnockReactDeceleration = 3.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tyk7"]
 albedo_color = Color(1, 0.945098, 0.909804, 1)
@@ -66,8 +47,11 @@ Target = NodePath("../Opponent")
 _stats = ExtResource("4_opjmh")
 
 [node name="Opponent" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("2_5hirn")]
+transform = Transform3D(-0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, -0.422618, 1.9, 0, 1.7)
+_startState = "big_chop_start"
 Target = NodePath("../Player")
-_stats = SubResource("Resource_s4duq")
+_stats = ExtResource("6_k4x2s")
+State = "big_chop_start"
 
 [node name="Map" type="Node3D" parent="."]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://drf2gde56141u"]
+[gd_scene load_steps=24 format=3 uid="uid://drf2gde56141u"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_5sbhb"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Player/Player.cs" id="2_njyg1"]
@@ -75,7 +75,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
+"update": 1,
 "values": [0.0, 0.3]
 }
 tracks/1/type = "value"
@@ -99,13 +99,13 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
+"update": 1,
 "values": [0.0, 0.5]
 }
 
 [sub_resource type="Animation" id="Animation_xmv2j"]
 resource_name = "charge"
-length = 4.0
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -113,7 +113,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(3),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["punch_heavy"]
@@ -125,7 +125,7 @@ tracks/1/path = NodePath("AttackStats:PunchChargeState")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1, 2, 4),
+"times": PackedFloat32Array(0, 0.7, 1.5, 3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -526,6 +526,26 @@ tracks/0/keys = {
 "values": ["walk"]
 }
 
+[sub_resource type="Animation" id="Animation_rsumg"]
+resource_name = "stun"
+length = 8.3
+
+[sub_resource type="Animation" id="Animation_hocls"]
+resource_name = "stun_start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:State")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["stun"]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nwfrk"]
 _data = {
 "RESET": SubResource("Animation_ss1g7"),
@@ -541,6 +561,8 @@ _data = {
 "punch_heavy": SubResource("Animation_8ejjl"),
 "punch_light": SubResource("Animation_tx1tu"),
 "punch_medium": SubResource("Animation_ff4ab"),
+"stun": SubResource("Animation_rsumg"),
+"stun_start": SubResource("Animation_hocls"),
 "walk": SubResource("Animation_nfals")
 }
 
@@ -564,10 +586,12 @@ libraries = {
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_7fncs")
-PunchChargeState = 2
+PunchChargeState = 1
 Damage = 1.0
 Knock = 1.0
 CheckDamage = true
+DamageReactMutliplier = 0.21
+KnockReactMutliplier = 0.35
 
 [node name="CollisionBox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

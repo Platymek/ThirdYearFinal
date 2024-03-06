@@ -5,7 +5,7 @@ public partial class ActorModel : Node
 {
 	// Properties //
 
-	[Export] private bool _checkLeftHand = false;
+	[Export] public bool _checkLeftHand = false;
 	[Export] private bool _checkRightHand = false;
 
 	[Export] private bool _checkLeftFoot = false;
@@ -21,7 +21,9 @@ public partial class ActorModel : Node
 
 		set
 		{
-			_animationPlayer.Play($"{_animationPrefix}{value}");
+			if (_animationPlayer == null) return;
+
+			_animationPlayer?.Play($"{_animationPrefix}{value}");
 
 			if (NextAnimationLength > 0)
 			{
@@ -34,9 +36,9 @@ public partial class ActorModel : Node
 				NextAnimationLength = 0;
 			}
 			else
-            {
+			{
 				_animationPlayer.SpeedScale = 1;
-            }
+			}
 		}
 	}
 
