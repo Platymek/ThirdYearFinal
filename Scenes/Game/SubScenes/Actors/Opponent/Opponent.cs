@@ -27,6 +27,7 @@ public partial class Opponent : Actor
             _opponentAttackStats.StrafingSpeed = 0;
 
 			bool stunEnded = false;
+			string state = value;
 
             switch (value)
 			{
@@ -41,9 +42,14 @@ public partial class Opponent : Actor
                     }
 
 					break;
+				
+				case "Big Chop":
+
+					state = "big_chop_start";
+					break;
 			}
 
-			base.State = value;
+			base.State = state;
 
 			if (stunEnded)
 			{

@@ -48,7 +48,7 @@ _stats = ExtResource("4_opjmh")
 
 [node name="Opponent" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("2_5hirn")]
 transform = Transform3D(-0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, -0.422618, 1.9, 0, 1.7)
-_startState = "big_chop_start"
+_startState = "Big Chop"
 Target = NodePath("../Player")
 _stats = ExtResource("6_k4x2s")
 State = "big_chop_start"
