@@ -2,7 +2,6 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
-using static Godot.WebSocketPeer;
 
 public partial class Opponent : Actor
 {
@@ -28,7 +27,6 @@ public partial class Opponent : Actor
             _opponentAttackStats.StrafingSpeed = 0;
 
 			bool stunEnded = false;
-			string state = value;
 
             switch (value)
 			{
@@ -43,6 +41,11 @@ public partial class Opponent : Actor
                     }
 
 					break;
+				
+				case "Big Chop":
+
+					state = "big_chop_start";
+					break;
 
                 case "3 Hit Combo":
 
@@ -56,7 +59,7 @@ public partial class Opponent : Actor
                     break;
             }
 
-			base.State = state;
+			base.State = value;
 
 			if (stunEnded)
 			{

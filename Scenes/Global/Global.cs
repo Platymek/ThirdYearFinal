@@ -162,7 +162,7 @@ public partial class Global : Node
 	public void AddOpponentAttack(Attack attack)
 	{
 		LastAddedAttack = attack;
-		OpponentStats.CurrentUniqueAttacks[attack.AttackType].Add(attack.StartState);
+		OpponentStats.CurrentUniqueAttacks[attack.AttackType].Add(attack.Name);
 	}
 
 	public void AddOpponentAttack(Attack attack, float healthBonus)
