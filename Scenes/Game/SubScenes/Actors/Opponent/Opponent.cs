@@ -27,6 +27,7 @@ public partial class Opponent : Actor
             _opponentAttackStats.StrafingSpeed = 0;
 
 			bool stunEnded = false;
+			string state = value;
 
             switch (value)
 			{
@@ -59,7 +60,7 @@ public partial class Opponent : Actor
                     break;
             }
 
-			base.State = value;
+			base.State = state;
 
 			if (stunEnded)
 			{
