@@ -1,7 +1,6 @@
 using Godot;
 using Godot.Collections;
 using System;
-using System.Collections.Generic;
 
 public partial class Opponent : Actor
 {
@@ -14,6 +13,7 @@ public partial class Opponent : Actor
 	private Label3D _uniqueAttackLabel;
 	private ActorModel _model;
 	private AttackTypes _currentAttackType;
+	private bool strafeRight = false;
 
 	public override string State
 	{
@@ -35,8 +35,9 @@ public partial class Opponent : Actor
 
 					_idleTimer.Start();
 					_opponentAttackStats.ClosingInSpeed = 1;
-					
-					if (State == "stun")
+                    _opponentAttackStats.StrafingSpeed = 1;
+
+                    if (State == "stun")
 					{
 						stunEnded = true;
                     }
@@ -52,11 +53,41 @@ public partial class Opponent : Actor
 
                     GD.Randomize();
 
-					string[] states = new string[] { "3_hit_combo_1hit", 
-						"3_hit_combo_2hit", "3_hit_combo_3hit" };
+                    string[] states = new string[] { "3_hit_combo_1hit",
+                        "3_hit_combo_2hit", "3_hit_combo_3hit" };
 
                     state = states[GD.RandRange(0, states.Length)];
 
+                    break;
+
+                case "Around the World":
+
+					if (strafeRight)
+					{
+						state = "around_the_world_right";
+					}
+					else
+					{
+						state = "around_the_world_left";
+					}
+
+					_opponentAttackStats.StrafingSpeed = 4;
+
+                    break;
+
+                case "Big Push":
+
+                    state = "big_push";
+                    break;
+
+                case "Dig Up Jump":
+
+                    state = "dig_up_jump_dig_up";
+                    break;
+
+                case "Jump Back Slam":
+
+                    state = "jump_back_slam_jump_back";
                     break;
             }
 
@@ -139,17 +170,35 @@ public partial class Opponent : Actor
 		// do not process anything after this point if there is not target
 		if (Target == null) return;
 
-		switch (State)
+
+        // get angle difference from centre of ring, which is the origin of the world
+        float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
+            Vector3.Zero, 0.2f);
+
+        float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
+		float distanceFromTarget = 100;
+
+        if (Target is Actor a)
+        {
+            distanceFromTarget = Position2D.DistanceTo(a.Position2D);
+        }
+
+        strafeRight = angleToTarget < 0;
+
+
+        switch (State)
 		{
 			case "idle":
-				
-				_opponentAttackStats.ClosingInSpeed = 1;
 
-				// get angle difference from centre of ring, which is the origin of the world
-				float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
-					Vector3.Zero, 0.2f);
-
-				float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
+				if (Target is Player p)
+                {
+					_opponentAttackStats.ClosingInSpeed =
+						p.State == "charge" || p.State == "punch_medium" || p.State == "punch_heavy"
+                        ? (distanceFromTarget > 2 
+							? 0 
+							: -1)
+						: 1;
+                }
 
 				switch (_opponentAttackStats.ClosingInSpeed)
 				{
@@ -159,20 +208,6 @@ public partial class Opponent : Actor
 						Animation = "walk_back"; break;
 					default:
 						Animation = "idle"; break;
-				}
-
-				// try to move with back turned to center of ring if a certain distance away from ring
-				if (distanceFromCentre > _opponentStats.CenterStrafingDistance)
-				{
-					switch (angleToTarget)
-					{
-						case > 0:
-                            _opponentAttackStats.StrafingSpeed = -1;
-							break;
-						case < 0:
-                            _opponentAttackStats.StrafingSpeed = 1;
-                            break;
-					}
 				}
 
 
@@ -204,7 +239,7 @@ public partial class Opponent : Actor
 		}
 		
 		Move(Vector2.Down * _opponentAttackStats.ClosingInSpeed);
-        Move(Vector2.Right * _opponentAttackStats.StrafingSpeed);
+        Move(Vector2.Right * _opponentAttackStats.StrafingSpeed * (strafeRight ? 1 : -1));
     }
 
 
