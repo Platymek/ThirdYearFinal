@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://drf2gde56141u"]
+[gd_scene load_steps=28 format=3 uid="uid://drf2gde56141u"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_5sbhb"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Player/Player.cs" id="2_njyg1"]
+[ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="3_f1kjg"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerAttackStats.cs" id="4_7fncs"]
 [ext_resource type="PackedScene" uid="uid://brt7nsq0kx1lg" path="res://Scenes/Game/SubScenes/Actors/Player/Model/Model.tscn" id="5_pdhgb"]
 
@@ -63,6 +64,30 @@ tracks/0/keys = {
 "update": 1,
 "values": ["idle"]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackStats:DamageReactMutliplier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackStats:Knock")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="Animation" id="Animation_uvaw3"]
 resource_name = "block_start"
@@ -73,10 +98,10 @@ tracks/0/path = NodePath("AttackStats:DamageReactMutliplier")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0.0, 0.3]
+"values": [0.5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -97,10 +122,10 @@ tracks/2/path = NodePath("AttackStats:KnockReactMutliplier")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0.0, 0.5]
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_xmv2j"]
@@ -510,22 +535,6 @@ tracks/4/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_nfals"]
-resource_name = "walk"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Model:Animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["walk"]
-}
-
 [sub_resource type="Animation" id="Animation_rsumg"]
 resource_name = "stun"
 length = 8.3
@@ -546,6 +555,31 @@ tracks/0/keys = {
 "values": ["stun"]
 }
 
+[sub_resource type="Animation" id="Animation_nfals"]
+resource_name = "walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:Animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["walk"]
+}
+
+[sub_resource type="Animation" id="Animation_i2bhw"]
+resource_name = "dodge_left"
+
+[sub_resource type="Animation" id="Animation_f7dd4"]
+resource_name = "dodge_right"
+
+[sub_resource type="Animation" id="Animation_lwksm"]
+resource_name = "dodge_back"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nwfrk"]
 _data = {
 "RESET": SubResource("Animation_ss1g7"),
@@ -556,6 +590,9 @@ _data = {
 "charge_light": SubResource("Animation_db2d8"),
 "charge_medium": SubResource("Animation_2th2s"),
 "charge_start": SubResource("Animation_i7kmr"),
+"dodge_back": SubResource("Animation_lwksm"),
+"dodge_left": SubResource("Animation_i2bhw"),
+"dodge_right": SubResource("Animation_f7dd4"),
 "idle": SubResource("Animation_yqqnu"),
 "punch": SubResource("Animation_3gy2g"),
 "punch_heavy": SubResource("Animation_8ejjl"),
@@ -577,7 +614,7 @@ radius = 0.25
 [node name="Player" instance=ExtResource("1_5sbhb")]
 transform = Transform3D(0.995582, 0, 0, 0, 0.995582, 0, 0, 0, 0.995582, 0, 0, 0)
 script = ExtResource("2_njyg1")
-_stats = null
+_stats = ExtResource("3_f1kjg")
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
@@ -590,8 +627,6 @@ PunchChargeState = 1
 Damage = 1.0
 Knock = 1.0
 CheckDamage = true
-DamageReactMutliplier = 0.21
-KnockReactMutliplier = 0.35
 
 [node name="CollisionBox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

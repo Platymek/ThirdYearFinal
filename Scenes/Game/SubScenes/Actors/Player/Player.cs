@@ -151,20 +151,17 @@ public partial class Player : Actor
 							case > Mathf.Pi * .6f:
 							case < Mathf.Pi * -.6f:
 							case 0:
-								State = "dodge_down";
-								_model.Animation = "dodge_down";
+								State = "dodge_back";
 								break;
 
 							// otherwise, if the stick is pointing right, dodge right
 							case < 0:
 								State = "dodge_right";
-								_model.Animation = "dodge_right";
 								break;
 
 							// else, dodge left
 							default:
 								State = "dodge_left";
-								_model.Animation = "dodge_left";
 								break;
 						}
 
@@ -194,7 +191,7 @@ public partial class Player : Actor
 			case "dodge_right": ProcessDodge(Vector2.Right);
 				break;
 			
-			case "dodge_down": ProcessDodge(Vector2.Up);
+			case "dodge_back": ProcessDodge(Vector2.Up);
 				break;
 
 

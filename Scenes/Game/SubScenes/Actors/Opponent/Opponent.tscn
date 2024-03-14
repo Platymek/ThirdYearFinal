@@ -1,76 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://f0emr35uydsf"]
+[gd_scene load_steps=21 format=3 uid="uid://f0emr35uydsf"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_2y64p"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/Opponent.cs" id="2_oqqya"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentAttackStats.cs" id="4_m6ksn"]
 [ext_resource type="PackedScene" uid="uid://goixjvylabf5" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Model.tscn" id="5_kgm2n"]
-
-[sub_resource type="Animation" id="Animation_j30e7"]
-resource_name = "idle"
-length = 11.85
-loop_mode = 1
-
-[sub_resource type="Animation" id="Animation_t7xny"]
-resource_name = "walk_back"
-length = 5.3
-loop_mode = 1
-
-[sub_resource type="Animation" id="Animation_noi37"]
-resource_name = "walk_forward"
-length = 3.3
-loop_mode = 1
-
-[sub_resource type="Animation" id="Animation_inmv2"]
-resource_name = "walk_left"
-length = 4.8
-
-[sub_resource type="Animation" id="Animation_y7c6x"]
-resource_name = "walk_right"
-length = 3.5
-
-[sub_resource type="Animation" id="Animation_3tcfg"]
-resource_name = "big_chop_start"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AttackStats:TrackSpeedMultiplier")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:State")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(2),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["big_chop"]
-}
-
-[sub_resource type="Animation" id="Animation_iq6tv"]
-resource_name = "big_chop_end"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:State")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(3),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["idle"]
-}
 
 [sub_resource type="Animation" id="Animation_fjnlq"]
 resource_name = "big_chop"
@@ -148,6 +81,75 @@ tracks/5/keys = {
 "values": ["big_chop_end"]
 }
 
+[sub_resource type="Animation" id="Animation_iq6tv"]
+resource_name = "big_chop_end"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:State")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
+}
+
+[sub_resource type="Animation" id="Animation_3tcfg"]
+resource_name = "big_chop_start"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackStats:TrackSpeedMultiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:State")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["big_chop"]
+}
+
+[sub_resource type="Animation" id="Animation_j30e7"]
+resource_name = "idle"
+length = 11.85
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_ilm6n"]
+resource_name = "stun"
+length = 6.0
+
+[sub_resource type="Animation" id="Animation_fx8t0"]
+resource_name = "stun_end"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:State")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
+}
+
 [sub_resource type="Animation" id="Animation_q1m6t"]
 resource_name = "stun_start"
 length = 0.5
@@ -176,21 +178,223 @@ tracks/1/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_ilm6n"]
-resource_name = "stun"
-length = 6.0
+[sub_resource type="Animation" id="Animation_t7xny"]
+resource_name = "walk_back"
+length = 5.3
+loop_mode = 1
 
-[sub_resource type="Animation" id="Animation_fx8t0"]
-resource_name = "stun_end"
-length = 2.0
+[sub_resource type="Animation" id="Animation_noi37"]
+resource_name = "walk_forward"
+length = 3.3
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_inmv2"]
+resource_name = "walk_left"
+length = 4.8
+
+[sub_resource type="Animation" id="Animation_y7c6x"]
+resource_name = "walk_right"
+length = 3.5
+
+[sub_resource type="Animation" id="Animation_y2qe3"]
+resource_name = "3_hit_combo_1hit"
+length = 2.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:State")
+tracks/0/path = NodePath("Model:_checkLeftHand")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(2),
+"times": PackedFloat32Array(0.8, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackStats:CheckDamage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackStats:Damage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackStats:Knock")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:State")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
+}
+
+[sub_resource type="Animation" id="Animation_up7gf"]
+resource_name = "3_hit_combo_2hit"
+length = 4.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:_checkLeftHand")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.8, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackStats:CheckDamage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8, 1.5, 2.1, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackStats:Damage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1, 0.2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackStats:Knock")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:State")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(4.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
+}
+
+[sub_resource type="Animation" id="Animation_2wvuu"]
+resource_name = "3_hit_combo_3hit"
+length = 6.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:_checkLeftHand")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 4.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackStats:CheckDamage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 1.5, 2.1, 2.6, 4.3, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Model:_checkRightHand")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4.3, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackStats:Damage")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.9, 2, 4.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.1, 0.2, 0.3]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackStats:Knock")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.9, 2, 4.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.5, 0.5, 4.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:State")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(6.3),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -198,6 +402,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bq7h1"]
 _data = {
+"3_hit_combo_1hit": SubResource("Animation_y2qe3"),
+"3_hit_combo_2hit": SubResource("Animation_up7gf"),
+"3_hit_combo_3hit": SubResource("Animation_2wvuu"),
 "big_chop": SubResource("Animation_fjnlq"),
 "big_chop_end": SubResource("Animation_iq6tv"),
 "big_chop_start": SubResource("Animation_3tcfg"),
@@ -219,7 +426,6 @@ radius = 0.9
 script = ExtResource("2_oqqya")
 _startState = ""
 _stats = null
-State = "stun"
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
@@ -231,8 +437,7 @@ autoplay = "idle"
 script = ExtResource("4_m6ksn")
 ClosingInSpeed = 0.0
 StrafingSpeed = 0.25
-Damage = 0.3
-Knock = 2.0
+Damage = 0.1
 TrackSpeedMultiplier = 2.0
 
 [node name="CollisionBox" parent="." index="2"]
@@ -251,6 +456,7 @@ one_shot = true
 
 [node name="Model" parent="." index="6" instance=ExtResource("5_kgm2n")]
 transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 0, 0)
+_checkLeftHand = true
 
 [node name="DropShadow" parent="." index="7"]
 transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)

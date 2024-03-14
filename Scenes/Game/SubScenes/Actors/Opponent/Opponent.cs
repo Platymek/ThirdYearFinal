@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using static Godot.WebSocketPeer;
 
 public partial class Opponent : Actor
 {
@@ -27,6 +28,7 @@ public partial class Opponent : Actor
             _opponentAttackStats.StrafingSpeed = 0;
 
 			bool stunEnded = false;
+			string state = value;
 
             switch (value)
 			{
@@ -41,9 +43,20 @@ public partial class Opponent : Actor
                     }
 
 					break;
-			}
 
-			base.State = value;
+                case "3 Hit Combo":
+
+                    GD.Randomize();
+
+					string[] states = new string[] { "3_hit_combo_1hit", 
+						"3_hit_combo_2hit", "3_hit_combo_3hit" };
+
+                    state = states[GD.RandRange(0, states.Length)];
+
+                    break;
+            }
+
+			base.State = state;
 
 			if (stunEnded)
 			{
