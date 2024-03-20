@@ -45,9 +45,19 @@ script = ExtResource("4_twu5d")
 Description = "A big push followed by a following jump. They'll let out there inner forest spirit!"
 AttackType = 3
 
-[node name="MixUp" type="Node" parent="OpponentUniqueAttacks"]
-
-[node name="Jump Back Slam" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+[node name="Jump Back Slam" type="Node" parent="OpponentUniqueAttacks/Neutral"]
 script = ExtResource("4_twu5d")
 Description = "The machine strikes, propelling itself backwards. Then, dives in for a big strike!"
+AttackType = 3
+
+[node name="Sumo Advance" type="Node" parent="OpponentUniqueAttacks/Neutral"]
+script = ExtResource("4_twu5d")
+Description = "The machine pushes you with continous slaps. Can you keep your ground?"
+AttackType = 3
+
+[node name="MixUp" type="Node" parent="OpponentUniqueAttacks"]
+
+[node name="The Crab" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+script = ExtResource("4_twu5d")
+Description = "The machine enters Crab Mode - he scuttles around you to find the perfect angle, and then strikes!"
 AttackType = 3

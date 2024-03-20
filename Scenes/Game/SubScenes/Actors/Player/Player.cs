@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 public partial class Player : Actor
 {
 	// Properties //
@@ -25,18 +26,35 @@ public partial class Player : Actor
 		{
 			string state = value;
 
-			if (_model != null)
+
+            if (_playerAttackStats != null)
+            {
+                _playerAttackStats.Cancellable = false;
+            }
+
+            if (_model != null)
 			{
 				_model.NextAnimationLength = 0;
 			}
 
+
 			switch (value)
 			{
+				case "idle":
+
+					if (_playerAttackStats != null)
+                    {
+                        _playerAttackStats.Cancellable = true;
+                    }
+
+					break;
+
 				case "dodge_stun":
 
 					GetNode<Timer>("DodgeStunTimer").Start();
+                    _playerAttackStats.Cancellable = true;
 
-					break;
+                    break;
 			}
 
 			base.State = state;
@@ -99,18 +117,19 @@ public partial class Player : Actor
 
 		float fDelta = (float)delta;
 
-		switch (State)
+        Vector2 move = Input.GetVector("move_left", "move_right",
+            "move_down", "move_up");
+
+        float halfPi = Mathf.Pi * .5f;
+
+        float angle = move.Rotated(-halfPi).Angle();
+
+
+        switch (State)
 		{
 			case "idle":
 
-				Vector2 move = Input.GetVector("move_left", "move_right", 
-					"move_down", "move_up");
-	
-				Move(move);
-
-				float halfPi = Mathf.Pi * .5f;
-
-				float angle = move.Rotated(-halfPi).Angle();
+                Move(move);
 
 				if (move != Vector2.Zero)
 				{
@@ -136,50 +155,6 @@ public partial class Player : Actor
 				else
 				{
 					_model.Animation = "idle";
-				}
-
-				if (_bufferedAction != null)
-				{
-					// only dodge if the user is pointing the stick in a direction they can dodge in
-					if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .2f or < Mathf.Pi * -.2f))
-					{
-						_model.NextAnimationLength = (float)_dodgeTimer.WaitTime + (float)_dodgeStunTimer.WaitTime;
-
-						switch (angle)
-						{
-							// if the stick is pointing backwards, dodge back
-							case > Mathf.Pi * .6f:
-							case < Mathf.Pi * -.6f:
-							case 0:
-								State = "dodge_back";
-								break;
-
-							// otherwise, if the stick is pointing right, dodge right
-							case < 0:
-								State = "dodge_right";
-								break;
-
-							// else, dodge left
-							default:
-								State = "dodge_left";
-								break;
-						}
-
-						_dodgeTimer.Start();
-					}
-					else if (_bufferedAction == "punch")
-					{
-						State = "charge";
-					}
-
-
-					else if (_bufferedAction == "block")
-					{
-						State = "block_start";
-					}
-
-
-					_bufferedAction = null;
 				}
 				
 				break;
@@ -234,8 +209,6 @@ public partial class Player : Actor
 
 							break;
 					}
-
-					_bufferedAction = null;
 				}
 
 				break;
@@ -246,12 +219,57 @@ public partial class Player : Actor
 				if (!Input.IsActionPressed("block"))
 				{
 					State = "block_end";
-					_bufferedAction = null;
 				}
 
 				break;
 		}
-	}
+
+
+		// check buffered action
+        if (_bufferedAction != null && _playerAttackStats.Cancellable)
+        {
+            // only dodge if the user is pointing the stick in a direction they can dodge in
+            if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .2f or < Mathf.Pi * -.2f))
+            {
+                _model.NextAnimationLength = (float)_dodgeTimer.WaitTime + (float)_dodgeStunTimer.WaitTime;
+
+                switch (angle)
+                {
+                    // if the stick is pointing backwards, dodge back
+                    case > Mathf.Pi * .6f:
+                    case < Mathf.Pi * -.6f:
+                    case 0:
+                        State = "dodge_back";
+                        break;
+
+                    // otherwise, if the stick is pointing right, dodge right
+                    case < 0:
+                        State = "dodge_right";
+                        break;
+
+                    // else, dodge left
+                    default:
+                        State = "dodge_left";
+                        break;
+                }
+
+                _dodgeTimer.Start();
+            }
+            else if (_bufferedAction == "punch")
+            {
+                State = "charge";
+            }
+
+
+            else if (_bufferedAction == "block")
+            {
+                State = "block_start";
+            }
+
+
+            _bufferedAction = null;
+        }
+    }
 	
 	
 	// Other Functions //

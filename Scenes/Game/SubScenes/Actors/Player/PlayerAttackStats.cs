@@ -12,4 +12,5 @@ public partial class PlayerAttackStats : AttackStats
     }
 
     [Export] public PunchChargeStates PunchChargeState;
+    [Export] public bool Cancellable = true;
 }

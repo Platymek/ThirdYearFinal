@@ -15,6 +15,9 @@ public partial class Opponent : Actor
 	private AttackTypes _currentAttackType;
 	private bool strafeRight = false;
 
+	private int _sumoCount;
+	private int _sumoLimit;
+
 	public override string State
 	{
 		get => base.State;
@@ -43,11 +46,20 @@ public partial class Opponent : Actor
                     }
 
 					break;
+
+
+				case "stun":
+
+					Animation = "RESET";
+
+					break;
 				
+
 				case "Big Chop":
 
 					state = "big_chop_start";
 					break;
+
 
                 case "3 Hit Combo":
 
@@ -59,6 +71,7 @@ public partial class Opponent : Actor
                     state = states[GD.RandRange(0, states.Length)];
 
                     break;
+
 
                 case "Around the World":
 
@@ -75,20 +88,49 @@ public partial class Opponent : Actor
 
                     break;
 
+
                 case "Big Push":
 
                     state = "big_push";
                     break;
+
 
                 case "Dig Up Jump":
 
                     state = "dig_up_jump_dig_up";
                     break;
 
+
                 case "Jump Back Slam":
 
                     state = "jump_back_slam_jump_back";
                     break;
+
+
+				case "Sumo Advance":
+
+					_sumoCount = 0;
+					_sumoLimit = 6;
+					state = "sumo_advance_start";
+					break;
+
+
+				case "sumo_advance_next":
+
+					_sumoCount++;
+
+					state = _sumoCount >= _sumoLimit
+						? "sumo_advance_end"
+						: State == "sumo_advance_right"
+							? "sumo_advance_left"
+							: "sumo_advance_right";
+					break;
+
+
+				case "The Crab":
+
+					state = "the_crab_start";
+					break;
             }
 
 			base.State = state;

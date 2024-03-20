@@ -240,6 +240,15 @@ tracks/1/keys = {
 "values": ["charge_start"]
 }
 
+[sub_resource type="Animation" id="Animation_lwksm"]
+resource_name = "dodge_back"
+
+[sub_resource type="Animation" id="Animation_i2bhw"]
+resource_name = "dodge_left"
+
+[sub_resource type="Animation" id="Animation_f7dd4"]
+resource_name = "dodge_right"
+
 [sub_resource type="Animation" id="Animation_yqqnu"]
 resource_name = "idle"
 length = 11.0
@@ -571,15 +580,6 @@ tracks/0/keys = {
 "values": ["walk"]
 }
 
-[sub_resource type="Animation" id="Animation_i2bhw"]
-resource_name = "dodge_left"
-
-[sub_resource type="Animation" id="Animation_f7dd4"]
-resource_name = "dodge_right"
-
-[sub_resource type="Animation" id="Animation_lwksm"]
-resource_name = "dodge_back"
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nwfrk"]
 _data = {
 "RESET": SubResource("Animation_ss1g7"),
@@ -624,6 +624,7 @@ libraries = {
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_7fncs")
 PunchChargeState = 1
+Cancellable = true
 Damage = 1.0
 Knock = 1.0
 
