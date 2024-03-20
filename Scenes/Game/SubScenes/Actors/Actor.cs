@@ -41,6 +41,9 @@ public partial class Actor : CharacterBody3D
 
 		protected set
 		{
+			if (_state == "death") return;
+
+
 			_state = value;
 			Animation = value;
 			
@@ -174,11 +177,11 @@ public partial class Actor : CharacterBody3D
 		_previousKnock = knock;
 
 		GD.Print($"{Name} was hit for {AttackStats.DamageReactMutliplier} damage " +
-				 $"and {finalKnock} knock");
+				 $"and {finalKnock} knock, with only {HealthPercentage}% health left");
 
 		if (Health <= 0)
 		{
-			EmitSignal(SignalName.Death);
+			State = "death";
 		}
 
 		if (CurrentKnock == 0) return;
@@ -329,5 +332,10 @@ public partial class Actor : CharacterBody3D
 		actor.Hurt(
 			_stats.DamageMultiplier * AttackStats.Damage,
 			_stats.KnockMultiplier * AttackStats.Knock);
+	}
+
+	private void EmitDeathSignal()
+	{
+		EmitSignal(SignalName.Death);
 	}
 }

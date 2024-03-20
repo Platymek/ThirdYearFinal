@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://drf2gde56141u"]
+[gd_scene load_steps=29 format=3 uid="uid://drf2gde56141u"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_5sbhb"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Player/Player.cs" id="2_njyg1"]
@@ -581,6 +581,24 @@ tracks/0/keys = {
 "values": ["walk"]
 }
 
+[sub_resource type="Animation" id="Animation_iuflq"]
+resource_name = "death"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EmitDeathSignal"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nwfrk"]
 _data = {
 "RESET": SubResource("Animation_ss1g7"),
@@ -591,6 +609,7 @@ _data = {
 "charge_light": SubResource("Animation_db2d8"),
 "charge_medium": SubResource("Animation_2th2s"),
 "charge_start": SubResource("Animation_i7kmr"),
+"death": SubResource("Animation_iuflq"),
 "dodge_back": SubResource("Animation_lwksm"),
 "dodge_left": SubResource("Animation_i2bhw"),
 "dodge_right": SubResource("Animation_f7dd4"),
