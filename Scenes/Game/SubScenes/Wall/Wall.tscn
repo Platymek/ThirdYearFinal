@@ -19,7 +19,7 @@ texture_filter = 0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lvxkd"]
 material = SubResource("StandardMaterial3D_lqxun")
-size = Vector2(10, 1)
+size = Vector2(6, 1)
 orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itsl8"]
@@ -50,7 +50,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("PlaneMesh_lvxkd")
 
 [node name="Corner" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 5.3, 1, 0.3)
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 3.3, 1, 0.3)
 mesh = SubResource("PlaneMesh_v52j0")
 
 [node name="Area3D" type="Area3D" parent="."]

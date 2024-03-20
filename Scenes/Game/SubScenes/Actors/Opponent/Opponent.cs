@@ -7,7 +7,7 @@ public partial class Opponent : Actor
 	// Properties //
 
 	[Export] private string _startState;
-	
+
 	private OpponentStats _opponentStats;
 	private OpponentAttackStats _opponentAttackStats;
 	private Label3D _uniqueAttackLabel;
@@ -131,14 +131,47 @@ public partial class Opponent : Actor
 
 					state = "the_crab_start";
 					break;
+
+
+				case "Wastin Time":
+
+					state = "wastin_time_start";
+
+					break;
+					
+
+                case "Sumo Pressure":
+
+                    _sumoCount = 0;
+                    _sumoLimit = 10;
+                    state = "sumo_pressure";
+                    break;
+
+
+                case "sumo_pressure_next":
+
+                    _sumoCount++;
+
+                    state = _sumoCount > _sumoLimit
+                        ? "sumo_pressure_end"
+                        : State == "sumo_pressure_right"
+                            ? "sumo_pressure_left"
+                            : "sumo_pressure_right";
+                    break;
+
+
+                case "Instant Teleport":
+
+					state = "instant_teleport";
+                    break;
             }
 
 			base.State = state;
 
-			if (stunEnded)
-			{
-				Animation = "stun_end";
-			}
+			//if (stunEnded)
+			//{
+			//	Animation = "stun_end";
+			//}
 		}
 	}
 
@@ -308,4 +341,18 @@ public partial class Opponent : Actor
             State = attackList.PickRandom();
         }
 	}
+
+    protected override void Hurt(float damage, float knock)
+    {
+		float d = damage;
+		float k = knock;
+
+		if (State == "instant_teleport")
+		{
+			State = "idle";
+			k = 2;
+		}
+
+        base.Hurt(d, k);
+    }
 }

@@ -45,6 +45,8 @@ public partial class Player : Actor
 					if (_playerAttackStats != null)
                     {
                         _playerAttackStats.Cancellable = true;
+                        _playerAttackStats.DamageReactMutliplier = 1;
+                        _playerAttackStats.KnockReactMutliplier = 1;
                     }
 
 					break;
@@ -108,7 +110,7 @@ public partial class Player : Actor
 
 		foreach (string action in _bufferableActions)
 		{
-			if (Input.IsActionPressed(action))
+			if (Input.IsActionJustPressed(action))
 			{
 				_inputBufferTimer.Start();
 				_bufferedAction = action;
@@ -259,8 +261,6 @@ public partial class Player : Actor
             {
                 State = "charge";
             }
-
-
             else if (_bufferedAction == "block")
             {
                 State = "block_start";
@@ -293,4 +293,15 @@ public partial class Player : Actor
 	{
 		_bufferedAction = null;
 	}
+
+    protected override void Hurt(float damage, float knock)
+    {
+        base.Hurt(damage, knock);
+
+		if (State == "block_start")
+		{
+			State = "idle";
+			_bufferedAction = null;
+		}
+    }
 }

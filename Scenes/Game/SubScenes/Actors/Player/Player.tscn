@@ -91,6 +91,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_uvaw3"]
 resource_name = "block_start"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -101,7 +102,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0.5]
+"values": [0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -110,7 +111,7 @@ tracks/1/path = NodePath(".:State")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["block"]
@@ -138,7 +139,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(3),
+"times": PackedFloat32Array(2.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["punch_heavy"]
@@ -150,7 +151,7 @@ tracks/1/path = NodePath("AttackStats:PunchChargeState")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7, 1.5, 3),
+"times": PackedFloat32Array(0, 0.5, 1.2, 2.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -462,7 +463,7 @@ tracks/3/path = NodePath("AttackStats:CheckDamage")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.2, 0.5),
+"times": PackedFloat32Array(0.2, 0.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -474,7 +475,7 @@ tracks/4/path = NodePath("Model:_checkLeftHand")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.2, 0.5),
+"times": PackedFloat32Array(0.2, 0.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -623,7 +624,7 @@ libraries = {
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_7fncs")
-PunchChargeState = 1
+PunchChargeState = 0
 Cancellable = true
 Damage = 1.0
 Knock = 1.0
@@ -656,10 +657,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.497781)
 visible = false
 
 [node name="Model" parent="." index="8" instance=ExtResource("5_pdhgb")]
-_checkLeftHand = true
 _checkRightHand = true
 NextAnimationLength = 0.9
-Animation = "punch_heavy"
+Animation = "charge_light"
 
 [node name="DropShadow" parent="." index="9"]
 transform = Transform3D(-3, 2.62268e-07, 3.82137e-15, 0, -1.31134e-07, 1, 2.62268e-07, 3, 4.37114e-08, 0, 0.01, 0)

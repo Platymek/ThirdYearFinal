@@ -161,7 +161,7 @@ public partial class Actor : CharacterBody3D
     }
 	
 	// get hurt by another actor
-	protected void Hurt(float damage, float knock)
+	protected virtual void Hurt(float damage, float knock)
 	{
 		float finalDamage = damage * _stats.DamageReactMultiplier * AttackStats.DamageReactMutliplier;
 		float finalKnock = knock * _stats.KnockReactMultiplier * AttackStats.KnockReactMutliplier;

@@ -150,8 +150,8 @@ public partial class Global : Node
 
 	public float GetHealthBonus(Opponent.AttackTypes category)
 	{
-		int numberOfUniqueAttacks = OpponentStats.CurrentUniqueAttacks[category].Count;
-		return 0.1f * numberOfUniqueAttacks;
+		int numberOfUniqueAttacks = OpponentStats.CurrentUniqueAttacks[category].Count + 1;
+		return 0.25f * numberOfUniqueAttacks;
 	}
 
 	public float GetCurrentOpponentHealth()

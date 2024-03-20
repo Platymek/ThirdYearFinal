@@ -18,5 +18,5 @@ TrackSpeed = 0.25
 DamageMultiplier = 1.0
 DamageReactMultiplier = 1.0
 KnockMultiplier = 1.0
-KnockReactMultiplier = 1.0
+KnockReactMultiplier = 3.0
 KnockReactDeceleration = 1.0

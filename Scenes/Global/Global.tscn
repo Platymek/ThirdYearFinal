@@ -15,49 +15,60 @@ OpponentStats = ExtResource("3_ll254")
 
 [node name="CloseToWall" type="Node" parent="OpponentUniqueAttacks"]
 
+[node name="Sumo Pressure" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+script = ExtResource("4_twu5d")
+Description = "If being against a wall seemed bad enough, the machine's going to try to keep you there with their high pressure moves!"
+
+[node name="Jump Back Slam" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+script = ExtResource("4_twu5d")
+Description = "The machine strikes, propelling itself backwards. Then, dives in for a big strike!"
+
+[node name="The Crab" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+script = ExtResource("4_twu5d")
+Description = "The machine enters Crab Mode - he scuttles around you to find the perfect angle, and then strikes!"
+
 [node name="FarFromWall" type="Node" parent="OpponentUniqueAttacks"]
+
+[node name="Instant Teleport" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
+script = ExtResource("4_twu5d")
+Description = "The machine has learnt from a rat in the lab's yard. We don't know how they move around so quickly but we also make sure to catch them before they do it."
+AttackType = 1
 
 [node name="Big Push" type="Node" parent="OpponentUniqueAttacks/FarFromWall"]
 script = ExtResource("4_twu5d")
 Description = "A final attempt to push you away. Don't let it hit you or you'll be back to the center!"
-AttackType = 3
+AttackType = 1
 
 [node name="Neutral" type="Node" parent="OpponentUniqueAttacks"]
-
-[node name="Big Chop" type="Node" parent="OpponentUniqueAttacks/Neutral"]
-script = ExtResource("4_twu5d")
-Description = "A big chop with a big startup for big damage! Don't get hit or you'll be sent straight to the barriers."
-AttackType = 3
-StartState = "big_chop_start"
-
-[node name="Around the World" type="Node" parent="OpponentUniqueAttacks/Neutral"]
-script = ExtResource("4_twu5d")
-Description = "Be careful! This attack will reposition the enemy to a better angle, and ends in a jab."
-AttackType = 3
-
-[node name="3 Hit Combo" type="Node" parent="OpponentUniqueAttacks/Neutral"]
-script = ExtResource("4_twu5d")
-Description = "A combo of 1 to 3 hits. Sometimes they'll do the full combo, so watch out!"
-AttackType = 3
 
 [node name="Dig Up Jump" type="Node" parent="OpponentUniqueAttacks/Neutral"]
 script = ExtResource("4_twu5d")
 Description = "A big push followed by a following jump. They'll let out there inner forest spirit!"
-AttackType = 3
+AttackType = 2
 
-[node name="Jump Back Slam" type="Node" parent="OpponentUniqueAttacks/Neutral"]
+[node name="Wastin Time" type="Node" parent="OpponentUniqueAttacks/Neutral"]
 script = ExtResource("4_twu5d")
-Description = "The machine strikes, propelling itself backwards. Then, dives in for a big strike!"
-AttackType = 3
+Description = "The machine thinks it's funny. It isn't."
+AttackType = 2
 
 [node name="Sumo Advance" type="Node" parent="OpponentUniqueAttacks/Neutral"]
 script = ExtResource("4_twu5d")
 Description = "The machine pushes you with continous slaps. Can you keep your ground?"
-AttackType = 3
+AttackType = 2
 
 [node name="MixUp" type="Node" parent="OpponentUniqueAttacks"]
 
-[node name="The Crab" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+[node name="Around the World" type="Node" parent="OpponentUniqueAttacks/MixUp"]
 script = ExtResource("4_twu5d")
-Description = "The machine enters Crab Mode - he scuttles around you to find the perfect angle, and then strikes!"
+Description = "Be careful! This attack will reposition the enemy to a better angle, and ends in a jab."
+AttackType = 3
+
+[node name="3 Hit Combo" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+script = ExtResource("4_twu5d")
+Description = "A combo of 1 to 3 hits. Sometimes they'll do the full combo, so watch out!"
+AttackType = 3
+
+[node name="Big Chop" type="Node" parent="OpponentUniqueAttacks/MixUp"]
+script = ExtResource("4_twu5d")
+Description = "A big chop with a big startup for big damage! Don't get hit or you'll be sent straight to the barriers."
 AttackType = 3
