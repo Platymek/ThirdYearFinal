@@ -39,7 +39,7 @@ bones/16/scale = Vector3(1, 1, 1)
 bones/17/rotation = Quaternion(-0.0752416, -0.0637553, -0.76725, 0.633721)
 
 [node name="LeftHand" type="BoneAttachment3D" parent="Player/Skeleton3D" index="6"]
-transform = Transform3D(-0.73346, 0.675591, 0.0749245, -0.338421, -0.267351, -0.902217, -0.589498, -0.687096, 0.424725, -0.849379, 3.33486, -2.40445)
+transform = Transform3D(-0.73346, 0.675591, 0.0749237, -0.338421, -0.267352, -0.902216, -0.589498, -0.687095, 0.424726, -0.849378, 3.33487, -2.40444)
 bone_name = "LeftHand"
 bone_idx = 8
 
@@ -50,7 +50,7 @@ transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, -4.65661e-10, -1.86265e-09,
 shape = SubResource("SphereShape3D_jsopu")
 
 [node name="RightHand" type="BoneAttachment3D" parent="Player/Skeleton3D" index="7"]
-transform = Transform3D(-0.942641, -0.0488095, 0.330219, 0.326828, -0.336177, 0.883272, 0.0679, 0.940533, 0.332846, 1.00468, 4.52261, -0.75862)
+transform = Transform3D(-0.942641, -0.0488101, 0.330219, 0.326828, -0.336176, 0.883272, 0.0678992, 0.940533, 0.332846, 1.00468, 4.52262, -0.758618)
 bone_name = "RightHand"
 bone_idx = 4
 
@@ -65,4 +65,4 @@ libraries = {
 "": ExtResource("3_3cf5t")
 }
 playback_default_blend_time = 0.5
-blend_times = [&"stun", &"idle", 2.0, &"block_end", &"idle", 0.5, &"charge", &"punch_heavy", 0.5, &"charge", &"punch_light", 0.25, &"charge", &"punch_medium", 0.5, &"punch_heavy", &"idle", 1.0, &"punch_light", &"idle", 1.0, &"punch_medium", &"stun", 1.0, &"punch_medium", &"hurt", 1.0, &"punch_medium", &"idle", 2.0, &"block", &"block_end", 0.25, &"idle", &"stun", 0.25, &"idle", &"stun_start", 0.25, &"idle", &"walk_left", 0.25, &"idle", &"block_end", 0.25, &"idle", &"charge", 1.0, &"idle", &"block_start", 0.25, &"idle", &"dodge_right", 0.1, &"idle", &"hurt", 0.25, &"idle", &"dodge_back", 0.1, &"idle", &"dodge_left", 0.1, &"idle", &"punch_heavy", 0.25, &"idle", &"knock_forward_start", 0.25, &"idle", &"death", 0.25, &"idle", &"knock_forward", 0.25, &"idle", &"punch_light", 0.25, &"idle", &"punch_medium", 0.25, &"idle", &"walk_back", 0.25, &"idle", &"walk_forward", 0.25, &"idle", &"block", 0.25, &"idle", &"walk_forwards", 0.25, &"idle", &"walk_right", 0.25, &"idle", &"idle", 0.25]
+blend_times = [&"idle", &"idle", 0.25, &"idle", &"hurt", 0.25, &"idle", &"death", 0.25, &"idle", &"block_start", 0.25, &"idle", &"dodge_back", 0.1, &"idle", &"block_end", 0.25, &"idle", &"charge", 1.0, &"idle", &"stun_start", 0.25, &"idle", &"block", 0.25, &"idle", &"stun", 0.25, &"idle", &"knock_forward", 0.25, &"idle", &"walk_left", 0.25, &"idle", &"walk_forwards", 0.25, &"idle", &"dodge_left", 0.1, &"idle", &"knock_forward_start", 0.25, &"idle", &"walk_forward", 0.25, &"idle", &"punch_light", 0.25, &"idle", &"walk_right", 0.25, &"idle", &"punch_medium", 0.25, &"idle", &"walk_back", 0.25, &"idle", &"dodge_right", 0.1, &"idle", &"punch_heavy", 0.25, &"block_end", &"idle", 0.5, &"charge", &"punch_light", 0.25, &"charge", &"punch_medium", 0.5, &"charge", &"punch_heavy", 0.5, &"block", &"block_end", 0.25, &"stun", &"idle", 2.0, &"punch_light", &"idle", 1.0, &"punch_medium", &"idle", 2.0, &"punch_medium", &"hurt", 1.0, &"punch_medium", &"stun", 1.0, &"punch_heavy", &"idle", 1.0]

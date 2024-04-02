@@ -13,7 +13,7 @@ public partial class Opponent : Actor
 	private Label3D _uniqueAttackLabel;
 	private ActorModel _model;
 	private AttackTypes _currentAttackType;
-	private bool strafeRight = false;
+	private bool _strafeRight;
 
 	private int _sumoCount;
 	private int _sumoLimit;
@@ -25,6 +25,7 @@ public partial class Opponent : Actor
 		protected set
 		{
 			if (_opponentAttackStats == null) return;
+			if (State == "death") return;
 
             _opponentAttackStats.ClosingInSpeed = 0;
             _opponentAttackStats.StrafingSpeed = 0;
@@ -68,21 +69,17 @@ public partial class Opponent : Actor
                     string[] states = new string[] { "3_hit_combo_1hit",
                         "3_hit_combo_2hit", "3_hit_combo_3hit" };
 
-                    state = states[GD.RandRange(0, states.Length)];
+                    state = states[GD.RandRange(0, states.Length - 1)];
+                    GD.Print(State);
 
                     break;
 
 
                 case "Around the World":
 
-					if (strafeRight)
-					{
-						state = "around_the_world_right";
-					}
-					else
-					{
-						state = "around_the_world_left";
-					}
+					state = _strafeRight 
+						? "around_the_world_right"
+						: "around_the_world_left";
 
 					_opponentAttackStats.StrafingSpeed = 4;
 
@@ -247,7 +244,7 @@ public partial class Opponent : Actor
 
 
         // get angle difference from centre of ring, which is the origin of the world
-        float angleToTarget = GetAngleDifference(Target.Position, Rotation.Y,
+        float angleToCentre = GetAngleDifference(Position, Rotation.Y,
             Vector3.Zero, 0.2f);
 
         float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
@@ -257,8 +254,6 @@ public partial class Opponent : Actor
         {
             distanceFromTarget = Position2D.DistanceTo(a.Position2D);
         }
-
-        strafeRight = angleToTarget < 0;
 
 
         switch (State)
@@ -286,17 +281,24 @@ public partial class Opponent : Actor
 				}
 
 
+				_strafeRight = angleToCentre < 0;
                 _currentAttackType = AttackTypes.Neutral;
 
                 if (distanceFromCentre > _opponentStats.CloseToWallDistance)
 				{
-					if (angleToTarget < Math.PI * 0.25f | angleToTarget > Math.PI * -0.25f)
+					float angleToCentrePercentage = angleToCentre / Mathf.Pi;
+					
+					if (angleToCentrePercentage 
+					   is < 0.25f 
+					   and > -0.25f)
 					{
-                        _currentAttackType = AttackTypes.CloseToWall;
-					}
-					else if (angleToTarget > Math.PI * 0.75f | angleToTarget < Math.PI * -0.75f)
-                    {
                         _currentAttackType = AttackTypes.FarFromWall;
+					}
+					else if (angleToCentrePercentage 
+					         is > 0.75f 
+					         or < -0.75f)
+                    {
+                        _currentAttackType = AttackTypes.CloseToWall;
                     }
 				}
 
@@ -314,7 +316,7 @@ public partial class Opponent : Actor
 		}
 		
 		Move(Vector2.Down * _opponentAttackStats.ClosingInSpeed);
-        Move(Vector2.Right * _opponentAttackStats.StrafingSpeed * (strafeRight ? 1 : -1));
+        Move(Vector2.Right * _opponentAttackStats.StrafingSpeed * (_strafeRight ? 1 : -1));
     }
 
 
@@ -329,7 +331,8 @@ public partial class Opponent : Actor
 		Array<string> attackList = _opponentStats.CurrentUniqueAttacks[
 			_currentAttackType];
 
-		bool mixUpChosen = attackChance >= 0.5f || attackList.Count == 0;
+		bool mixUpChosen = (attackChance >= 0.5f || attackList.Count == 0)
+			&& _opponentStats.MixUpAttacks.Count != 0;
 
 
         if (mixUpChosen)

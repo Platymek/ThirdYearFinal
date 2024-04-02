@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bcwut0htsf36f"]
+[gd_scene load_steps=14 format=3 uid="uid://bcwut0htsf36f"]
 
 [ext_resource type="PackedScene" uid="uid://drf2gde56141u" path="res://Scenes/Game/SubScenes/Actors/Player/Player.tscn" id="1_cxp7k"]
 [ext_resource type="Script" path="res://Scenes/Game/Game.cs" id="1_sanpw"]
@@ -9,7 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://bwy3f26ko0tq" path="res://Scenes/Menus/Pause/Pause.tscn" id="6_7ls6m"]
 [ext_resource type="PackedScene" uid="uid://b2a0x5ks6qtqc" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.tscn" id="8_45i1n"]
 
-[sub_resource type="Environment" id="Environment_57cls"]
+[sub_resource type="Gradient" id="Gradient_1tk40"]
+offsets = PackedFloat32Array(0.22619, 1)
+colors = PackedColorArray(0.113725, 0.168627, 0.32549, 1, 1, 0.945098, 0.909804, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_shay0"]
+gradient = SubResource("Gradient_1tk40")
+
+[sub_resource type="Environment" id="Environment_42hdb"]
 background_mode = 1
 background_color = Color(0.160784, 0.678431, 1, 1)
 ambient_light_source = 2
@@ -17,6 +24,7 @@ ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.2
 adjustment_enabled = true
 adjustment_saturation = 1.5
+adjustment_color_correction = SubResource("GradientTexture1D_shay0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tyk7"]
 albedo_color = Color(1, 0.945098, 0.909804, 1)
@@ -34,7 +42,7 @@ layer = 10
 _colors = PackedColorArray(0.113725, 0.168627, 0.32549, 1, 0.494118, 0.145098, 0.32549, 1, 0, 0.529412, 0.317647, 1, 0.670588, 0.321569, 0.211765, 1, 0.372549, 0.341176, 0.309804, 1, 0.760784, 0.764706, 0.780392, 1, 1, 0.945098, 0.909804, 1, 1, 0, 0.301961, 1, 1, 0.639216, 0, 1, 1, 0.92549, 0.152941, 1, 0, 0.894118, 0.211765, 1, 0.160784, 0.678431, 1, 1, 0.513726, 0.462745, 0.611765, 1, 1, 0.466667, 0.658824, 1, 1, 0.8, 0.666667, 1, 0, 0, 0, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_57cls")
+environment = SubResource("Environment_42hdb")
 
 [node name="Actors" type="Node3D" parent="."]
 process_mode = 1
@@ -47,7 +55,6 @@ Target = NodePath("../Opponent")
 transform = Transform3D(-0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, -0.422618, -1.1, 0, -1.3)
 _startState = "idle"
 Target = NodePath("../Player")
-_stats = null
 
 [node name="Map" type="Node3D" parent="."]
 
@@ -72,14 +79,14 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -3, 0, 0
 [node name="Lights" type="Node3D" parent="Map"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Map/Lights"]
-transform = Transform3D(-1.78814e-07, -0.866025, -0.5, -5.64659e-09, -0.5, 0.866025, -1, 1.57681e-07, 8.45169e-08, 0, 4, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4, 0)
 light_energy = 0.75
 
 [node name="CameraAnchor" parent="." node_paths=PackedStringArray("_player", "_target") instance=ExtResource("3_gshri")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 _player = NodePath("../Actors/Player")
 _target = NodePath("../Actors/Opponent")
-_angleOffset = -30
+_angleOffset = -25
 _turnSpeed = 0.5
 
 [node name="HUD" type="CanvasLayer" parent="."]
