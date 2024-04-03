@@ -45,4 +45,5 @@ public partial class OpponentStats : ActorStats
     // how long to wait in idle before performing the next attack
     [Export] public float IdleDuration = 2f;
     [Export] public float CloseToWallDistance = 6f;
+    [Export] public float MixUpChance = .5f;
 }

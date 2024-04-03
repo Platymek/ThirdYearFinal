@@ -284,6 +284,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackStats:Knock")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_ai1qg"]
 resource_name = "around_the_world_left"
@@ -348,6 +360,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [0.0, 0.0, 3.0, 0.0]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AttackStats:Knock")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="Animation" id="Animation_8k7im"]
 resource_name = "around_the_world_right"
@@ -411,6 +435,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0.0, 0.0, 3.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AttackStats:Knock")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
 }
 
 [sub_resource type="Animation" id="Animation_fjnlq"]
@@ -1168,7 +1204,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.5]
+"values": [0.75]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -1256,7 +1292,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.5]
+"values": [0.75]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -1729,18 +1765,19 @@ radius = 0.9
 script = ExtResource("2_oqqya")
 _startState = ""
 _stats = ExtResource("3_v06ba")
+State = "sumo_advance_next"
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
 "": SubResource("AnimationLibrary_bq7h1")
 }
 autoplay = "idle"
-blend_times = [&"sumo_advance_left", &"sumo_advance_right", 0.01, &"sumo_advance_right", &"sumo_advance_left", 0.01]
+blend_times = [&"sumo_advance_right", &"sumo_advance_left", 0.01, &"sumo_advance_left", &"sumo_advance_right", 0.01]
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")
 ClosingInSpeed = 4.0
-StrafingSpeed = 0.0
+StrafingSpeed = 3.0
 Damage = 0.1
 
 [node name="CollisionBox" parent="." index="2"]
@@ -1760,8 +1797,6 @@ one_shot = true
 
 [node name="Model" parent="." index="6" instance=ExtResource("5_kgm2n")]
 transform = Transform3D(1.58603, 0, -0.739582, 0, 1.75, 0, 0.739582, 0, 1.58603, -0.3, 0, 0.5)
-_checkLeftHand = true
-_checkRightHand = true
 
 [node name="DropShadow" parent="." index="7"]
 transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)

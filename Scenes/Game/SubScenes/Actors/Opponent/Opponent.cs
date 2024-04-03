@@ -164,11 +164,6 @@ public partial class Opponent : Actor
             }
 
 			base.State = state;
-
-			//if (stunEnded)
-			//{
-			//	Animation = "stun_end";
-			//}
 		}
 	}
 
@@ -263,7 +258,9 @@ public partial class Opponent : Actor
 				if (Target is Player p)
                 {
 					_opponentAttackStats.ClosingInSpeed =
-						p.State == "charge" || p.State == "punch_medium" || p.State == "punch_heavy"
+						p.State is "charge" 
+							or "punch_medium" 
+							or "punch_heavy"
                         ? (distanceFromTarget > 2 
 							? 0 
 							: -1)
@@ -282,18 +279,23 @@ public partial class Opponent : Actor
 
 
 				_strafeRight = angleToCentre < 0;
+				
+				// initialise as Neutral
                 _currentAttackType = AttackTypes.Neutral;
-
+				
+				// only change attack type if the following conditions are met
                 if (distanceFromCentre > _opponentStats.CloseToWallDistance)
 				{
 					float angleToCentrePercentage = angleToCentre / Mathf.Pi;
 					
+					// must be backed up
 					if (angleToCentrePercentage 
 					   is < 0.25f 
 					   and > -0.25f)
 					{
                         _currentAttackType = AttackTypes.FarFromWall;
 					}
+					// must have backed the Player up
 					else if (angleToCentrePercentage 
 					         is > 0.75f 
 					         or < -0.75f)
@@ -330,19 +332,19 @@ public partial class Opponent : Actor
 
 		Array<string> attackList = _opponentStats.CurrentUniqueAttacks[
 			_currentAttackType];
+		
+		Array<string> mixUpList = _opponentStats.CurrentUniqueAttacks[
+			AttackTypes.MixUp];
 
-		bool mixUpChosen = (attackChance >= 0.5f || attackList.Count == 0)
-			&& _opponentStats.MixUpAttacks.Count != 0;
+		if (attackList.Count == 0 && mixUpList.Count == 0) return;
 
-
-        if (mixUpChosen)
+        if (attackChance <= _opponentStats.MixUpChance 
+            || attackList.Count == 0);
 		{
-			State = _opponentStats.MixUpAttacks.PickRandom();
+			State = mixUpList.PickRandom();
         }
-		else
-        {
-            State = attackList.PickRandom();
-        }
+        
+        State = attackList.PickRandom();
 	}
 
     protected override void Hurt(float damage, float knock)
