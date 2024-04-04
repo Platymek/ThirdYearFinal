@@ -15,31 +15,31 @@ _rightHandHurtbox = NodePath("Player/Skeleton3D/RightHand/Area3D")
 
 [node name="Skeleton3D" parent="Player" index="0"]
 transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, 0, -0.2, -1)
-bones/0/position = Vector3(-0.227761, 4.65829, -1.79646)
-bones/0/rotation = Quaternion(-0.866689, -0.183545, 0.0321107, 0.462742)
-bones/1/rotation = Quaternion(-0.296965, -0.0416711, -0.863937, 0.404584)
-bones/2/rotation = Quaternion(-0.298903, 0.0461238, -0.0904316, 0.948869)
-bones/3/rotation = Quaternion(-0.220102, 0.0721791, -0.0163334, 0.972666)
-bones/4/rotation = Quaternion(-0.00264038, -8.53836e-05, 0.0323331, 0.999474)
-bones/5/rotation = Quaternion(-0.162439, 0.148879, 0.823821, 0.522271)
-bones/6/rotation = Quaternion(-0.472486, -0.344929, 0.0808813, 0.806994)
-bones/7/rotation = Quaternion(-0.882172, 0.0176378, -0.0331448, 0.469428)
-bones/8/rotation = Quaternion(-0.0236279, 0.00248657, -0.10463, 0.994227)
-bones/9/rotation = Quaternion(-0.350552, 0.085338, 0.10208, 0.927044)
-bones/10/rotation = Quaternion(0.32104, 0.0147831, 0.00298274, 0.946945)
-bones/11/position = Vector3(0.0270915, 4.24774, -2.46492)
-bones/11/rotation = Quaternion(0.315919, -0.0422773, 0.209024, 0.924509)
-bones/12/rotation = Quaternion(0.749411, 0.500242, 0.355159, 0.249005)
-bones/13/rotation = Quaternion(3.25162e-07, 9.02288e-08, -0.9602, 0.279313)
+bones/0/position = Vector3(-0.255509, 4.23114, -3.98999)
+bones/0/rotation = Quaternion(-0.638958, -0.194462, 0.241034, 0.704145)
+bones/1/rotation = Quaternion(-0.0638615, -0.0999641, -0.897544, 0.424668)
+bones/2/rotation = Quaternion(-0.163868, -0.179592, -0.232431, 0.941738)
+bones/3/rotation = Quaternion(-0.848824, 0.102066, -0.177785, 0.487312)
+bones/4/rotation = Quaternion(-0.0533453, 0.00912552, -0.168369, 0.984237)
+bones/5/rotation = Quaternion(-0.0812129, 0.0918592, 0.840921, 0.527085)
+bones/6/rotation = Quaternion(-0.328057, -0.251217, 0.207829, 0.886609)
+bones/7/rotation = Quaternion(-0.887818, -0.0399441, 0.0785135, 0.451686)
+bones/8/rotation = Quaternion(-0.0826195, -0.000384777, 0.00464082, 0.99657)
+bones/9/rotation = Quaternion(0.214356, 0.0897241, -0.00595802, 0.972608)
+bones/10/rotation = Quaternion(-0.121074, 0.132795, 0.0642284, 0.981622)
+bones/11/position = Vector3(-0.354895, 4.37933, -4.80276)
+bones/11/rotation = Quaternion(0.669391, 0.188288, 0.233242, 0.679752)
+bones/12/rotation = Quaternion(-0.0539303, 0.707318, -0.0980784, 0.697978)
+bones/13/rotation = Quaternion(1.23181e-07, 2.83407e-07, -0.0151082, 0.999886)
 bones/13/scale = Vector3(1, 1, 1)
-bones/14/rotation = Quaternion(-0.195062, -0.0601347, 0.873015, 0.442921)
-bones/15/rotation = Quaternion(0.714855, -0.169708, -0.671839, 0.0938826)
-bones/16/rotation = Quaternion(2.32126e-07, -1.60543e-07, 0.819734, 0.572744)
+bones/14/rotation = Quaternion(0.0936083, 0.0879682, 0.80099, 0.584734)
+bones/15/rotation = Quaternion(0.150994, -0.751202, -0.116307, 0.631957)
+bones/16/rotation = Quaternion(1.18153e-07, -1.96502e-07, 0.260482, 0.965479)
 bones/16/scale = Vector3(1, 1, 1)
-bones/17/rotation = Quaternion(-0.0752416, -0.0637553, -0.76725, 0.633721)
+bones/17/rotation = Quaternion(0.0610353, -0.114579, -0.789304, 0.600121)
 
 [node name="LeftHand" type="BoneAttachment3D" parent="Player/Skeleton3D" index="6"]
-transform = Transform3D(-0.73346, 0.675591, 0.0749237, -0.338421, -0.267352, -0.902216, -0.589498, -0.687095, 0.424726, -0.849378, 3.33487, -2.40444)
+transform = Transform3D(-0.73615, 0.412798, 0.536359, -0.489793, 0.222004, -0.8431, -0.467104, -0.883353, 0.0387567, -0.986298, 3.08574, -4.84331)
 bone_name = "LeftHand"
 bone_idx = 8
 
@@ -50,7 +50,7 @@ transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, -4.65661e-10, -1.86265e-09,
 shape = SubResource("SphereShape3D_jsopu")
 
 [node name="RightHand" type="BoneAttachment3D" parent="Player/Skeleton3D" index="7"]
-transform = Transform3D(-0.942641, -0.0488101, 0.330219, 0.326828, -0.336176, 0.883272, 0.0678992, 0.940533, 0.332846, 1.00468, 4.52262, -0.758618)
+transform = Transform3D(-0.910382, -0.406076, -0.0794138, 0.391885, -0.784615, -0.480421, 0.132778, -0.468488, 0.873435, 0.77412, 4.43477, -4.27063)
 bone_name = "RightHand"
 bone_idx = 4
 
@@ -65,4 +65,4 @@ libraries = {
 "": ExtResource("3_3cf5t")
 }
 playback_default_blend_time = 0.5
-blend_times = [&"idle", &"idle", 0.25, &"idle", &"hurt", 0.25, &"idle", &"death", 0.25, &"idle", &"block_start", 0.25, &"idle", &"dodge_back", 0.1, &"idle", &"block_end", 0.25, &"idle", &"charge", 1.0, &"idle", &"stun_start", 0.25, &"idle", &"block", 0.25, &"idle", &"stun", 0.25, &"idle", &"knock_forward", 0.25, &"idle", &"walk_left", 0.25, &"idle", &"walk_forwards", 0.25, &"idle", &"dodge_left", 0.1, &"idle", &"knock_forward_start", 0.25, &"idle", &"walk_forward", 0.25, &"idle", &"punch_light", 0.25, &"idle", &"walk_right", 0.25, &"idle", &"punch_medium", 0.25, &"idle", &"walk_back", 0.25, &"idle", &"dodge_right", 0.1, &"idle", &"punch_heavy", 0.25, &"block_end", &"idle", 0.5, &"charge", &"punch_light", 0.25, &"charge", &"punch_medium", 0.5, &"charge", &"punch_heavy", 0.5, &"block", &"block_end", 0.25, &"stun", &"idle", 2.0, &"punch_light", &"idle", 1.0, &"punch_medium", &"idle", 2.0, &"punch_medium", &"hurt", 1.0, &"punch_medium", &"stun", 1.0, &"punch_heavy", &"idle", 1.0]
+blend_times = [&"idle", &"idle", 0.25, &"idle", &"stun_start", 0.25, &"idle", &"walk_back", 0.25, &"idle", &"punch_heavy", 0.25, &"idle", &"knock_forward", 0.25, &"idle", &"punch_light", 0.25, &"idle", &"block_start", 0.25, &"idle", &"block", 0.25, &"idle", &"punch_medium", 0.25, &"idle", &"dodge_back", 0.1, &"idle", &"walk_left", 0.25, &"idle", &"death", 0.25, &"idle", &"stun", 0.25, &"idle", &"knock_forward_start", 0.25, &"idle", &"walk_right", 0.25, &"idle", &"walk_forwards", 0.25, &"idle", &"dodge_right", 0.1, &"idle", &"walk_forward", 0.25, &"idle", &"charge", 1.0, &"idle", &"hurt", 0.25, &"idle", &"block_end", 0.25, &"idle", &"dodge_left", 0.1, &"punch_heavy", &"idle", 1.0, &"punch_light", &"idle", 1.0, &"block", &"block_end", 0.25, &"punch_medium", &"idle", 2.0, &"punch_medium", &"stun", 1.0, &"punch_medium", &"hurt", 1.0, &"stun", &"idle", 2.0, &"charge", &"punch_heavy", 0.5, &"charge", &"punch_light", 0.25, &"charge", &"punch_medium", 0.5, &"block_end", &"idle", 0.5]

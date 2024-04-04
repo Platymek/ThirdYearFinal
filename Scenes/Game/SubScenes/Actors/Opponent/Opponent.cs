@@ -29,6 +29,8 @@ public partial class Opponent : Actor
 
             _opponentAttackStats.ClosingInSpeed = 0;
             _opponentAttackStats.StrafingSpeed = 0;
+            _opponentAttackStats.DamageReactMutliplier = 1;
+            _opponentAttackStats.KnockReactMutliplier = 1;
 
 			bool stunEnded = false;
 			string state = value;
@@ -40,6 +42,8 @@ public partial class Opponent : Actor
 					_idleTimer.Start();
 					_opponentAttackStats.ClosingInSpeed = 1;
                     _opponentAttackStats.StrafingSpeed = 1;
+					_opponentAttackStats.DamageReactMutliplier = 0;
+					_opponentAttackStats.KnockReactMutliplier = 0;
 
                     if (State == "stun")
 					{
@@ -127,6 +131,15 @@ public partial class Opponent : Actor
 				case "The Crab":
 
 					state = "the_crab_start";
+					break;
+				
+				case "the_crab":
+					
+					float angleToCentre = GetAngleDifference(Position, Rotation.Y,
+						Vector3.Zero, 0.2f);
+					
+					_strafeRight = angleToCentre < 0;
+					
 					break;
 
 
@@ -241,6 +254,8 @@ public partial class Opponent : Actor
         // get angle difference from centre of ring, which is the origin of the world
         float angleToCentre = GetAngleDifference(Position, Rotation.Y,
             Vector3.Zero, 0.2f);
+        
+        float angleToCentrePercentage = angleToCentre / Mathf.Pi;
 
         float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
 		float distanceFromTarget = 100;
@@ -255,18 +270,6 @@ public partial class Opponent : Actor
 		{
 			case "idle":
 
-				if (Target is Player p)
-                {
-					_opponentAttackStats.ClosingInSpeed =
-						p.State is "charge" 
-							or "punch_medium" 
-							or "punch_heavy"
-                        ? (distanceFromTarget > 2 
-							? 0 
-							: -1)
-						: 1;
-                }
-
 				switch (_opponentAttackStats.ClosingInSpeed)
 				{
 					case > 0.25f:
@@ -277,7 +280,7 @@ public partial class Opponent : Actor
 						Animation = "idle"; break;
 				}
 
-
+				// choose which direction to strafe in
 				_strafeRight = angleToCentre < 0;
 				
 				// initialise as Neutral
@@ -286,8 +289,6 @@ public partial class Opponent : Actor
 				// only change attack type if the following conditions are met
                 if (distanceFromCentre > _opponentStats.CloseToWallDistance)
 				{
-					float angleToCentrePercentage = angleToCentre / Mathf.Pi;
-					
 					// must be backed up
 					if (angleToCentrePercentage 
 					   is < 0.25f 
@@ -306,15 +307,40 @@ public partial class Opponent : Actor
 
                 _uniqueAttackLabel.Text = _currentAttackType.ToString();
 
+				
+				bool canAttack = true;
 
+				// don't attack if player is charging an attack up
+				if (Target is Player p)
+				{
+					canAttack = p.State
+						is  not "charge"
+						and not "punch_light"
+						and not "punch_medium"
+						and not "punch_heavy";
+				}
+				
 				// if withing attacking range, attack
                 if (Position2D.DistanceTo(Vector3To2D(Target.Position))
-					< _opponentStats.ClosingInDistance)
+					< _opponentStats.ClosingInDistance
+					&& canAttack)
 				{
 					StartAttack();
                 }
 
                 break;
+			
+			case "the_crab":
+				
+				// if already positioned optimally
+				if (angleToCentrePercentage 
+				    is > 0.9f
+				    or < -0.9f)
+				{
+					State = "the_crab_end_start";
+				}
+				
+				break;
 		}
 		
 		Move(Vector2.Down * _opponentAttackStats.ClosingInSpeed);

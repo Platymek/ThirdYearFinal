@@ -27,12 +27,12 @@ public partial class Player : Actor
 			string state = value;
 
 
-            if (_playerAttackStats != null)
-            {
-                _playerAttackStats.Cancellable = false;
-            }
+			if (_playerAttackStats != null)
+			{
+				_playerAttackStats.Cancellable = false;
+			}
 
-            if (_model != null)
+			if (_model != null)
 			{
 				_model.NextAnimationLength = 0;
 			}
@@ -43,20 +43,31 @@ public partial class Player : Actor
 				case "idle":
 
 					if (_playerAttackStats != null)
-                    {
-                        _playerAttackStats.Cancellable = true;
-                        _playerAttackStats.DamageReactMutliplier = 1;
-                        _playerAttackStats.KnockReactMutliplier = 1;
-                    }
+					{
+						_playerAttackStats.Cancellable = true;
+						_playerAttackStats.DamageReactMutliplier = 1;
+						_playerAttackStats.KnockReactMutliplier = 1;
+					}
 
 					break;
 
+				
 				case "dodge_stun":
 
 					GetNode<Timer>("DodgeStunTimer").Start();
-                    _playerAttackStats.Cancellable = true;
+					_playerAttackStats.Cancellable = true;
 
-                    break;
+					break;
+				
+				
+				case "dodge_left":
+				case "dodge_right":
+				case "dodge_back":
+
+					// cannot cancel dodge into another dodge
+					if (State == "dodge_stun") return;
+					
+					break;
 			}
 
 			base.State = state;
@@ -111,8 +122,9 @@ public partial class Player : Actor
 		foreach (string action in _bufferableActions)
 		{
 			bool actionPressed
-				= (State == action && Input.IsActionJustPressed(action)) 
-				  || (State != action && Input.IsActionPressed(action));
+				= //(State == action &&
+					Input.IsActionJustPressed(action);
+				  //|| (State != action && Input.IsActionPressed(action));
 			
 			if (actionPressed)
 			{
@@ -123,19 +135,19 @@ public partial class Player : Actor
 
 		float fDelta = (float)delta;
 
-        Vector2 move = Input.GetVector("move_left", "move_right",
-            "move_down", "move_up");
+		Vector2 move = Input.GetVector("move_left", "move_right",
+			"move_down", "move_up");
 
-        float halfPi = Mathf.Pi * .5f;
+		float halfPi = Mathf.Pi * .5f;
 
-        float angle = move.Rotated(-halfPi).Angle();
+		float angle = move.Rotated(-halfPi).Angle();
 
 
-        switch (State)
+		switch (State)
 		{
 			case "idle":
 
-                Move(move);
+				Move(move);
 
 				if (move != Vector2.Zero)
 				{
@@ -232,48 +244,48 @@ public partial class Player : Actor
 
 
 		// check buffered action
-        if (_bufferedAction != null && _playerAttackStats.Cancellable)
-        {
-            // only dodge if the user is pointing the stick in a direction they can dodge in
-            if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .2f or < Mathf.Pi * -.2f))
-            {
-                _model.NextAnimationLength = (float)_dodgeTimer.WaitTime + (float)_dodgeStunTimer.WaitTime;
+		if (_bufferedAction != null && _playerAttackStats.Cancellable)
+		{
+			// only dodge if the user is pointing the stick in a direction they can dodge in
+			if (_bufferedAction == "dodge" && (angle is > Mathf.Pi * .2f or < Mathf.Pi * -.2f))
+			{
+				_model.NextAnimationLength = (float)_dodgeTimer.WaitTime + (float)_dodgeStunTimer.WaitTime;
 
-                switch (angle)
-                {
-                    // if the stick is pointing backwards, dodge back
-                    case > Mathf.Pi * .6f:
-                    case < Mathf.Pi * -.6f:
-                    case 0:
-                        State = "dodge_back";
-                        break;
+				switch (angle)
+				{
+					// if the stick is pointing backwards, dodge back
+					case > Mathf.Pi * .6f:
+					case < Mathf.Pi * -.6f:
+					case 0:
+						State = "dodge_back";
+						break;
 
-                    // otherwise, if the stick is pointing right, dodge right
-                    case < 0:
-                        State = "dodge_right";
-                        break;
+					// otherwise, if the stick is pointing right, dodge right
+					case < 0:
+						State = "dodge_right";
+						break;
 
-                    // else, dodge left
-                    default:
-                        State = "dodge_left";
-                        break;
-                }
+					// else, dodge left
+					default:
+						State = "dodge_left";
+						break;
+				}
 
-                _dodgeTimer.Start();
-            }
-            else if (_bufferedAction == "punch")
-            {
-                State = "charge";
-            }
-            else if (_bufferedAction == "block")
-            {
-                State = "block_start";
-            }
+				_dodgeTimer.Start();
+			}
+			else if (_bufferedAction == "punch")
+			{
+				State = "charge";
+			}
+			else if (_bufferedAction == "block")
+			{
+				State = "block_start";
+			}
 
 
-            _bufferedAction = null;
-        }
-    }
+			_bufferedAction = null;
+		}
+	}
 	
 	
 	// Other Functions //
@@ -298,14 +310,14 @@ public partial class Player : Actor
 		_bufferedAction = null;
 	}
 
-    protected override void Hurt(float damage, float knock)
-    {
-        base.Hurt(damage, knock);
+	protected override void Hurt(float damage, float knock)
+	{
+		base.Hurt(damage, knock);
 
 		if (State == "block_start")
 		{
 			State = "idle";
 			_bufferedAction = null;
 		}
-    }
+	}
 }

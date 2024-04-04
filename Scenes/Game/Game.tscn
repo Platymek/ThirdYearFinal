@@ -1,11 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcwut0htsf36f"]
+[gd_scene load_steps=14 format=3 uid="uid://bcwut0htsf36f"]
 
 [ext_resource type="PackedScene" uid="uid://drf2gde56141u" path="res://Scenes/Game/SubScenes/Actors/Player/Player.tscn" id="1_cxp7k"]
 [ext_resource type="Script" path="res://Scenes/Game/Game.cs" id="1_sanpw"]
 [ext_resource type="PackedScene" uid="uid://f0emr35uydsf" path="res://Scenes/Game/SubScenes/Actors/Opponent/Opponent.tscn" id="2_5hirn"]
 [ext_resource type="PackedScene" uid="uid://cvdndu8codtbb" path="res://Scenes/Game/SubScenes/CameraAnchor/CameraAnchor.tscn" id="3_gshri"]
 [ext_resource type="PackedScene" uid="uid://c54376f7qc04q" path="res://Scenes/Game/SubScenes/Wall/Wall.tscn" id="3_o07bf"]
-[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStats.cs" id="5_1cmio"]
 [ext_resource type="PackedScene" uid="uid://bt437vsmw6isq" path="res://Scenes/Game/SubScenes/UI/HUD/HUD.tscn" id="5_3dvb1"]
 [ext_resource type="PackedScene" uid="uid://bwy3f26ko0tq" path="res://Scenes/Menus/Pause/Pause.tscn" id="6_7ls6m"]
 [ext_resource type="PackedScene" uid="uid://b2a0x5ks6qtqc" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.tscn" id="8_45i1n"]
@@ -27,32 +26,12 @@ adjustment_enabled = true
 adjustment_saturation = 1.5
 adjustment_color_correction = SubResource("GradientTexture1D_shay0")
 
-[sub_resource type="Resource" id="Resource_kc2ja"]
-script = ExtResource("5_1cmio")
-CenterStrafingDistance = 0.5
-ClosingInDistance = 1.5
-CloseToWallAttacks = Array[String]([])
-FarFromWallAttacks = Array[String]([])
-NeutralAttacks = Array[String](["Sumo Advance"])
-MixUpAttacks = Array[String]([])
-IdleDuration = 2.0
-CloseToWallDistance = 0.75
-MixUpChance = 0.25
-MaxHealth = 1.0
-Speed = 1.0
-TrackSpeed = 0.25
-DamageMultiplier = 1.0
-DamageReactMultiplier = 1.0
-KnockMultiplier = 1.0
-KnockReactMultiplier = 3.0
-KnockReactDeceleration = 1.0
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tyk7"]
 albedo_color = Color(1, 0.945098, 0.909804, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_dkrsf"]
 material = SubResource("StandardMaterial3D_0tyk7")
-size = Vector3(11, 1, 11)
+size = Vector3(8, 1, 8)
 
 [node name="Game" type="Node3D"]
 process_mode = 3
@@ -69,14 +48,14 @@ environment = SubResource("Environment_42hdb")
 process_mode = 1
 
 [node name="Player" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("1_cxp7k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 Target = NodePath("../Opponent")
 
 [node name="Opponent" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("2_5hirn")]
-transform = Transform3D(-0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, -0.422618, -1.1, 0, -1.3)
+transform = Transform3D(-0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, -0.422618, -2.1, 0, -2.3)
 _startState = "idle"
 Target = NodePath("../Player")
-_stats = SubResource("Resource_kc2ja")
+_stats = null
 
 [node name="Map" type="Node3D" parent="."]
 
@@ -87,16 +66,16 @@ mesh = SubResource("BoxMesh_dkrsf")
 [node name="Walls" type="Node3D" parent="Map"]
 
 [node name="Wall" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, 0, 0, 3)
 
 [node name="Wall2" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 0, 0)
+transform = Transform3D(-4.37114e-08, 0.0871557, 0.996195, 0, 0.996195, -0.0871557, -1, -3.8097e-09, -4.35451e-08, 3, 0, 0)
 
 [node name="Wall3" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -3)
+transform = Transform3D(-1, -1.23384e-15, -8.74228e-08, 7.6194e-09, 0.996195, -0.0871558, 8.70901e-08, -0.0871558, -0.996195, 0, 0, -3)
 
 [node name="Wall4" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -3, 0, 0)
+transform = Transform3D(1.30635e-07, -0.0871557, -0.996195, 1.14291e-08, 0.996195, -0.0871557, 1, 0, 1.31134e-07, -3, 0, 0)
 
 [node name="Lights" type="Node3D" parent="Map"]
 
@@ -109,7 +88,6 @@ transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 
 _player = NodePath("../Actors/Player")
 _target = NodePath("../Actors/Opponent")
 _angleOffset = -25
-_turnSpeed = 0.5
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

@@ -2,11 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://owtlth5tdxx7" path="res://Scenes/Game/SubScenes/Actors/Player/Model/GlbModel_GlbModel_Sprite.png" id="1_87ffb"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nq2h"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dikv"]
+cull_mode = 1
+depth_draw_mode = 2
+shading_mode = 0
+albedo_color = Color(0.113725, 0.168627, 0.32549, 1)
+grow = true
+grow_amount = 0.05
+point_size = 4.2
 
 [resource]
 resource_name = "Sprite"
-next_pass = SubResource("ShaderMaterial_5nq2h")
+next_pass = SubResource("StandardMaterial3D_8dikv")
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
@@ -16,3 +23,4 @@ diffuse_mode = 3
 albedo_texture = ExtResource("1_87ffb")
 texture_filter = 2
 billboard_keep_scale = true
+grow = true

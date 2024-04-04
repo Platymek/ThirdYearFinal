@@ -45,12 +45,16 @@ public partial class Actor : CharacterBody3D
 
 
 			_state = value;
-			Animation = value;
+
+			if (_animationPlayer?.HasAnimation(value) == true)
+			{
+				Animation = value;
+			}
 			
 			if (_stateLabel != null)
 			{
 				_stateLabel.Text = value;
-            }
+			}
 
 			
 			if (AttackStats != null)
@@ -161,7 +165,7 @@ public partial class Actor : CharacterBody3D
 		
 
 		TrackTarget(fDelta);
-    }
+	}
 	
 	// get hurt by another actor
 	protected virtual void Hurt(float damage, float knock)
@@ -325,8 +329,8 @@ public partial class Actor : CharacterBody3D
 		// if actor is self or not checking for damage currently, return
 		if (actor.Name == Name || !AttackStats.CheckDamage) return;
 
-        // stop checking damage
-        AttackStats.CheckDamage = false;
+		// stop checking damage
+		AttackStats.CheckDamage = false;
 		
 		// hurt actor
 		actor.Hurt(

@@ -606,7 +606,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [3.0]
+"values": [2.0]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -654,7 +654,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0.6, 1.6),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, true]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_c3u3p"]
@@ -705,7 +705,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_2mwlu"]
 resource_name = "dig_up_jump_dig_up"
-length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -713,7 +712,7 @@ tracks/0/path = NodePath("Model:_checkLeftHand")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.275),
+"times": PackedFloat32Array(0, 0.8415),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -725,7 +724,7 @@ tracks/1/path = NodePath("Model:_checkRightHand")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.275),
+"times": PackedFloat32Array(0, 0.8415),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -752,7 +751,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.1]
+"values": [0.05]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -773,7 +772,7 @@ tracks/5/path = NodePath(".:State")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(1.5),
+"times": PackedFloat32Array(0.99),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["dig_up_jump_jump"]
@@ -785,10 +784,10 @@ tracks/6/path = NodePath("AttackStats:CheckDamage")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.75, 1.05),
+"times": PackedFloat32Array(0.495, 0.693),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, true]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_3kyj6"]
@@ -838,7 +837,7 @@ loop_mode = 1
 
 [sub_resource type="Animation" id="Animation_a8wem"]
 resource_name = "instant_teleport"
-length = 3.0
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -846,7 +845,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(3),
+"times": PackedFloat32Array(2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -858,7 +857,7 @@ tracks/1/path = NodePath("AttackStats:StrafingSpeed")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5, 2.5),
+"times": PackedFloat32Array(0, 1, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0.0, 10.0, 0.0]
@@ -870,7 +869,7 @@ tracks/2/path = NodePath("AttackStats:TrackSpeedMultiplier")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.5, 2.5),
+"times": PackedFloat32Array(0, 1, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0.0, 10.0, 0.0]
@@ -878,7 +877,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_j2xbm"]
 resource_name = "jump_back_slam_end"
-length = 1.3
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -886,7 +885,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.3),
+"times": PackedFloat32Array(2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -950,7 +949,7 @@ tracks/4/path = NodePath("AttackStats:Damage")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.45),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.1]
@@ -962,10 +961,10 @@ tracks/5/path = NodePath("AttackStats:Knock")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.45),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.5]
+"values": [1.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -1016,7 +1015,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [0.3]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1040,7 +1039,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0.5625),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.3]
+"values": [0.2]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1340,7 +1339,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_7j5i7"]
 resource_name = "sumo_pressure_end"
-length = 2.3
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1348,7 +1347,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(2.3),
+"times": PackedFloat32Array(3),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -1376,7 +1375,7 @@ tracks/1/path = NodePath("AttackStats:CheckDamage")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1388,7 +1387,7 @@ tracks/2/path = NodePath("AttackStats:Damage")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.05]
@@ -1400,7 +1399,7 @@ tracks/3/path = NodePath("AttackStats:Knock")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
@@ -1412,7 +1411,7 @@ tracks/4/path = NodePath("Model:_checkLeftHand")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1440,7 +1439,7 @@ tracks/1/path = NodePath("AttackStats:CheckDamage")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1452,7 +1451,7 @@ tracks/2/path = NodePath("AttackStats:Damage")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.05]
@@ -1464,7 +1463,7 @@ tracks/3/path = NodePath("AttackStats:Knock")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
@@ -1476,7 +1475,7 @@ tracks/4/path = NodePath("Model:_checkRightHand")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1512,7 +1511,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_5dghh"]
 resource_name = "the_crab_end"
-length = 0.8
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1520,7 +1519,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.8),
+"times": PackedFloat32Array(0.4),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["the_crab_end_end"]
@@ -1532,7 +1531,7 @@ tracks/1/path = NodePath("AttackStats:CheckDamage")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7),
+"times": PackedFloat32Array(0, 0.35),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1568,7 +1567,7 @@ tracks/4/path = NodePath("Model:_checkLeftHand")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.7),
+"times": PackedFloat32Array(0, 0.35),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1580,7 +1579,7 @@ tracks/5/path = NodePath("Model:_checkRightHand")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.7),
+"times": PackedFloat32Array(0, 0.35),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1588,22 +1587,6 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id="Animation_swhah"]
 resource_name = "the_crab_end_end"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:State")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(2),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["idle"]
-}
-
-[sub_resource type="Animation" id="Animation_svfkq"]
-resource_name = "the_crab_end_start"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1614,12 +1597,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": ["the_crab_end"]
+"values": ["idle"]
 }
 
-[sub_resource type="Animation" id="Animation_2ws4t"]
-resource_name = "the_crab_start"
-length = 2.5
+[sub_resource type="Animation" id="Animation_svfkq"]
+resource_name = "the_crab_end_start"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1627,7 +1610,22 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(2.5),
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["the_crab_end"]
+}
+
+[sub_resource type="Animation" id="Animation_2ws4t"]
+resource_name = "the_crab_start"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:State")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["the_crab"]
@@ -1765,19 +1763,18 @@ radius = 0.9
 script = ExtResource("2_oqqya")
 _startState = ""
 _stats = ExtResource("3_v06ba")
-State = "sumo_advance_next"
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
 "": SubResource("AnimationLibrary_bq7h1")
 }
 autoplay = "idle"
-blend_times = [&"sumo_advance_right", &"sumo_advance_left", 0.01, &"sumo_advance_left", &"sumo_advance_right", 0.01]
+blend_times = [&"sumo_advance_left", &"sumo_advance_right", 0.01, &"sumo_advance_right", &"sumo_advance_left", 0.01]
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")
 ClosingInSpeed = 4.0
-StrafingSpeed = 3.0
+StrafingSpeed = 10.0
 Damage = 0.1
 
 [node name="CollisionBox" parent="." index="2"]
@@ -1796,7 +1793,7 @@ visible = false
 one_shot = true
 
 [node name="Model" parent="." index="6" instance=ExtResource("5_kgm2n")]
-transform = Transform3D(1.58603, 0, -0.739582, 0, 1.75, 0, 0.739582, 0, 1.58603, -0.3, 0, 0.5)
+transform = Transform3D(1.58603, 0, -0.739582, 0, 1.75, 0, 0.739582, 0, 1.58603, -0.3, 0, 0.1)
 
 [node name="DropShadow" parent="." index="7"]
 transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)
