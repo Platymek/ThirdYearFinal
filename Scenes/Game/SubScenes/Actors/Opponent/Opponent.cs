@@ -17,6 +17,7 @@ public partial class Opponent : Actor
 
 	private int _sumoCount;
 	private int _sumoLimit;
+	private int _last3Hit = 0;
 
 	public override string State
 	{
@@ -70,12 +71,23 @@ public partial class Opponent : Actor
 
                     GD.Randomize();
 
-                    string[] states = new string[] { "3_hit_combo_1hit",
+                    var states = new[] { "3_hit_combo_1hit",
                         "3_hit_combo_2hit", "3_hit_combo_3hit" };
+                    
+                    var hitChance = GD.Randf();
+                    int hitChoice = 0;
 
-                    state = states[GD.RandRange(0, states.Length - 1)];
-                    GD.Print(State);
+                    hitChoice = hitChance > 0.5f
+	                    ? _last3Hit == 1
+		                    ? 0
+		                    : 1
+	                    : _last3Hit == 2
+		                    ? 0
+		                    : 1;
 
+                    _last3Hit = hitChoice;
+                    state = states[hitChoice];
+					
                     break;
 
 

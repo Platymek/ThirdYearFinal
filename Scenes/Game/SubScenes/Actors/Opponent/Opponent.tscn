@@ -299,7 +299,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_ai1qg"]
 resource_name = "around_the_world_left"
-length = 3.0
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -307,7 +307,7 @@ tracks/0/path = NodePath("AttackStats:CheckDamage")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.725, 2.25),
+"times": PackedFloat32Array(2.29425, 2.9925),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -319,7 +319,7 @@ tracks/1/path = NodePath("Model:_checkLeftHand")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1.725, 2.25),
+"times": PackedFloat32Array(2.29425, 2.9925),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -331,7 +331,7 @@ tracks/2/path = NodePath(".:State")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(3),
+"times": PackedFloat32Array(3.99),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -343,7 +343,7 @@ tracks/3/path = NodePath("AttackStats:Damage")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(1.65),
+"times": PackedFloat32Array(2.1945),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0.1]
@@ -355,7 +355,7 @@ tracks/4/path = NodePath("AttackStats:StrafingSpeed")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.975, 1.05, 1.65),
+"times": PackedFloat32Array(0, 1.29675, 1.3965, 2.1945),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0.0, 0.0, 3.0, 0.0]
@@ -367,7 +367,7 @@ tracks/5/path = NodePath("AttackStats:Knock")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(1.6),
+"times": PackedFloat32Array(2.128),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
@@ -375,7 +375,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id="Animation_8k7im"]
 resource_name = "around_the_world_right"
-length = 3.0
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -383,7 +383,7 @@ tracks/0/path = NodePath("AttackStats:CheckDamage")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.725, 2.25),
+"times": PackedFloat32Array(2.29425, 2.9925),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -395,7 +395,7 @@ tracks/1/path = NodePath("Model:_checkLeftHand")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1.725, 2.25),
+"times": PackedFloat32Array(2.29425, 2.9925),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -407,7 +407,7 @@ tracks/2/path = NodePath(".:State")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(3),
+"times": PackedFloat32Array(3.99),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -419,7 +419,7 @@ tracks/3/path = NodePath("AttackStats:Damage")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(1.65),
+"times": PackedFloat32Array(2.1945),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0.1]
@@ -431,7 +431,7 @@ tracks/4/path = NodePath("AttackStats:StrafingSpeed")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.975, 1.05, 1.65),
+"times": PackedFloat32Array(0, 1.29675, 1.3965, 2.1945),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0.0, 0.0, 3.0, 0.0]
@@ -443,7 +443,7 @@ tracks/5/path = NodePath("AttackStats:Knock")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(1.6),
+"times": PackedFloat32Array(2.128),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
@@ -1774,7 +1774,7 @@ blend_times = [&"sumo_advance_left", &"sumo_advance_right", 0.01, &"sumo_advance
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")
 ClosingInSpeed = 4.0
-StrafingSpeed = 10.0
+StrafingSpeed = 0.0
 Damage = 0.1
 
 [node name="CollisionBox" parent="." index="2"]
@@ -1793,13 +1793,15 @@ visible = false
 one_shot = true
 
 [node name="Model" parent="." index="6" instance=ExtResource("5_kgm2n")]
-transform = Transform3D(1.58603, 0, -0.739582, 0, 1.75, 0, 0.739582, 0, 1.58603, -0.3, 0, 0.1)
+transform = Transform3D(1.58603, 0, -0.739582, 0, 1.75, 0, 0.739582, 0, 1.58603, -0.4, 0, 0.4)
+_checkLeftHand = true
 
 [node name="DropShadow" parent="." index="7"]
 transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)
 
 [node name="UniqueAttackLabel" type="Label3D" parent="." index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, -1)
+visible = false
 billboard = 2
 text = "Unique Attack
 "

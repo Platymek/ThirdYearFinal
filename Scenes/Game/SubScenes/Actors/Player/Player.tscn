@@ -179,7 +179,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_xmv2j"]
 resource_name = "charge"
-length = 3.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -187,7 +187,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(2.5),
+"times": PackedFloat32Array(1.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["punch_heavy"]
@@ -199,7 +199,7 @@ tracks/1/path = NodePath("AttackStats:PunchChargeState")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1.2, 2.5),
+"times": PackedFloat32Array(0, 0.25, 1, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -709,7 +709,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="InputBufferTimer" type="Timer" parent="." index="5"]
-wait_time = 0.4
+wait_time = 0.5
 one_shot = true
 
 [node name="Hitbox" parent="." index="6"]
@@ -721,6 +721,7 @@ shape = SubResource("CylinderShape3D_qbww1")
 
 [node name="StateLabel" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.497781)
+visible = false
 
 [node name="Model" parent="." index="8" instance=ExtResource("5_pdhgb")]
 _checkRightHand = true

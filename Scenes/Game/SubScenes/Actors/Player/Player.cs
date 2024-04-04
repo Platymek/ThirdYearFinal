@@ -122,9 +122,8 @@ public partial class Player : Actor
 		foreach (string action in _bufferableActions)
 		{
 			bool actionPressed
-				= //(State == action &&
-					Input.IsActionJustPressed(action);
-				  //|| (State != action && Input.IsActionPressed(action));
+				= Input.IsActionJustPressed(action)
+				  || (action == "punch" && Input.IsActionPressed(action));
 			
 			if (actionPressed)
 			{
