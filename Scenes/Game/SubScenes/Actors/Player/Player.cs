@@ -179,6 +179,7 @@ public partial class Player : Actor
 
 			case "dodge_left": ProcessDodge(Vector2.Left);
 				break;
+				break;
 			
 			case "dodge_right": ProcessDodge(Vector2.Right);
 				break;

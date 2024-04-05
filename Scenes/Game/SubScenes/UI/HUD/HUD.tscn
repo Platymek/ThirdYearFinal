@@ -1,60 +1,63 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt437vsmw6isq"]
+[gd_scene load_steps=3 format=3 uid="uid://bt437vsmw6isq"]
 
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/UI/HUD/HUD.cs" id="1_6rn4j"]
+[ext_resource type="Theme" uid="uid://cv6onwi1btrjl" path="res://Scenes/Menus/Theme/Theme.tres" id="1_q0egd"]
 
-[node name="Hud" type="Control"]
+[node name="Hud" type="Control" node_paths=PackedStringArray("_playerHealth", "_opponentHealth", "_time")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_q0egd")
 script = ExtResource("1_6rn4j")
+_playerHealth = NodePath("PlayerHealth")
+_opponentHealth = NodePath("OpponentHealth")
+_time = NodePath("Time")
 
 [node name="PlayerHealth" type="ProgressBar" parent="."]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -144.0
-offset_top = -43.0
-offset_right = -16.0
+offset_left = -64.0
+offset_top = -40.0
+offset_right = 64.0
 offset_bottom = -16.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 max_value = 1.0
 value = 0.75
-
-[node name="Label" type="Label" parent="PlayerHealth"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.968
-offset_left = 11.88
-offset_top = -24.0
-offset_right = -8.02399
-offset_bottom = -1.0
-text = "Player Health"
+show_percentage = false
 
 [node name="OpponentHealth" type="ProgressBar" parent="."]
 layout_mode = 1
-offset_left = 16.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -132.0
 offset_top = 16.0
-offset_right = 144.0
-offset_bottom = 43.0
+offset_right = 132.0
+offset_bottom = 40.0
+grow_horizontal = 2
 max_value = 1.0
 value = 0.75
+show_percentage = false
 
-[node name="Label" type="Label" parent="OpponentHealth"]
+[node name="Time" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.0
-anchor_right = 0.968
-anchor_bottom = 1.0
-offset_left = -4.11998
-offset_top = -3.0
-offset_right = 5.97601
-offset_bottom = 20.0
-text = "Opponent Health"
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_top = 24.0
+offset_right = 28.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 36
+text = "120s"
 horizontal_alignment = 1

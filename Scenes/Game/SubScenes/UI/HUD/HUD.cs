@@ -3,28 +3,27 @@ using System;
 
 public partial class HUD : Control
 {
-	[Export]
-	Actor Player;
-
-	[Export]
-	Actor Opponent;
-
-	ProgressBar PlayerHealth;
-	ProgressBar OpponentHealth;
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		base._Ready();
-
-		PlayerHealth = GetNode<ProgressBar>("PlayerHealth");
-		OpponentHealth = GetNode<ProgressBar>("OpponentHealth");
-	}
+	[Export] private Actor _player;
+	[Export] private Actor _opponent;
+	[Export] private Timer _timer;
+	
+	[Export] private ProgressBar _playerHealth;
+	[Export] private ProgressBar _opponentHealth;
+	[Export] private Label _time;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		PlayerHealth.Value = Player.HealthPercentage;
-		OpponentHealth.Value = Opponent.HealthPercentage;
+		_playerHealth.Value = _player.HealthPercentage;
+		_opponentHealth.Value = _opponent.HealthPercentage;
+
+		if (_timer.IsStopped())
+		{
+			_time.Text = $"{_timer.WaitTime}s";
+		}
+		else
+		{
+			_time.Text = $"{(int)_timer.TimeLeft}s";
+		}
 	}
 }

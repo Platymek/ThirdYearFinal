@@ -15,6 +15,7 @@ public partial class Actor : CharacterBody3D
 	protected AttackStats AttackStats;
 
 	private Label3D _stateLabel;
+	private bool _bounced = false;
 
 	protected virtual string Animation
 	{
@@ -63,6 +64,7 @@ public partial class Actor : CharacterBody3D
 				{
 					case "idle":
 						AttackStats.TrackSpeedMultiplier = 1;
+						_bounced = false;
 						break;
 					
 					case "stun_start":
@@ -203,7 +205,9 @@ public partial class Actor : CharacterBody3D
 	// returns true if the wall bounce was successful
 	public bool WallBounce(float angle)
 	{
+		// if already bounced or no knockback, do not wall bounce
 		if (CurrentKnock == 0) return false;
+		if (_bounced) return false;
 		
 		float angleDifference = angle - Rotation.Y;
 		float hurtAngle = angle + angleDifference;
@@ -212,6 +216,9 @@ public partial class Actor : CharacterBody3D
 		State = "stun";
 			
 		GD.Print($"Actor {Name} Wall Bounced!");
+		
+		// can only bounce once
+		_bounced = true;
 		return true;
 	}
 

@@ -5,7 +5,8 @@ public partial class Game : Node3D
 {
 	// Properties //
 
-	Menu _pause;
+	[Export] private Timer _timer;
+	private Menu _pause;
 
 
 	// Node Functions //
@@ -36,13 +37,15 @@ public partial class Game : Node3D
 
 	// Signals //
 
-	private void OnOpponentDeath()
+	private void WinGame()
 	{
 		GetNode<Global>("/root/Global").EndRoundWin();
+		_timer.Stop();
 	}
 
-	private void OnPlayerDeath()
+	private void LoseGame()
 	{
 		GetNode<Global>("/root/Global").EndRoundLoss();
+		_timer.Stop();
 	}
 }

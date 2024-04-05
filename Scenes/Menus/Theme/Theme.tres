@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=17 format=3 uid="uid://cv6onwi1btrjl"]
+[gd_resource type="Theme" load_steps=19 format=3 uid="uid://cv6onwi1btrjl"]
 
 [ext_resource type="Texture2D" uid="uid://d06vknnxqh75e" path="res://Scenes/Menus/Theme/button.png" id="1_2rbso"]
 [ext_resource type="FontFile" uid="uid://ufe14cc4ekoe" path="res://Scenes/Menus/Theme/m6x11plus.ttf" id="1_lquxq"]
@@ -74,6 +74,22 @@ expand_margin_top = 6.0
 expand_margin_right = 8.0
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_afkuc"]
+bg_color = Color(0.494118, 0.145098, 0.32549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.113725, 0.168627, 0.32549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ipt"]
+bg_color = Color(1, 0, 0.301961, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7t2ni"]
 bg_color = Color(0.113725, 0.168627, 0.32549, 1)
 border_width_top = 2
@@ -123,12 +139,15 @@ Header/colors/font_outline_color = Color(0.670588, 0.321569, 0.211765, 1)
 Header/constants/outline_size = 3
 Header/font_sizes/font_size = 36
 Label/colors/font_color = Color(1, 0.945098, 0.909804, 1)
+Label/colors/font_outline_color = Color(0.113725, 0.168627, 0.32549, 1)
 Panel/styles/panel = SubResource("StyleBoxFlat_vj56j")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_vj56j")
 PanelContainerAlt/base_type = &"PanelContainer"
 PanelContainerAlt/styles/panel = SubResource("StyleBoxFlat_dk06j")
 PanelContainerOutline/base_type = &"PanelContainer"
 PanelContainerOutline/styles/panel = SubResource("StyleBoxFlat_682sc")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_afkuc")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_42ipt")
 ReversePanel/base_type = &"Panel"
 ReversePanel/styles/panel = SubResource("StyleBoxFlat_7t2ni")
 RiskButton/base_type = &"Button"

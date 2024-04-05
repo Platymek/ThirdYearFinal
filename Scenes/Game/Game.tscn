@@ -91,13 +91,21 @@ _angleOffset = -25
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Hud" parent="HUD" node_paths=PackedStringArray("Player", "Opponent") instance=ExtResource("5_3dvb1")]
-Player = NodePath("../../Actors/Player")
-Opponent = NodePath("../../Actors/Opponent")
+[node name="Hud" parent="HUD" node_paths=PackedStringArray("_player", "_opponent", "_timer") instance=ExtResource("5_3dvb1")]
+_player = NodePath("../../Actors/Player")
+_opponent = NodePath("../../Actors/Opponent")
+_timer = NodePath("../../Timer")
 
 [node name="Pause" parent="HUD" instance=ExtResource("6_7ls6m")]
 process_mode = 2
 visible = false
 
-[connection signal="Death" from="Actors/Player" to="." method="OnPlayerDeath"]
-[connection signal="Death" from="Actors/Opponent" to="." method="OnOpponentDeath"]
+[node name="Timer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 120.0
+one_shot = true
+autostart = true
+
+[connection signal="Death" from="Actors/Player" to="." method="LoseGame"]
+[connection signal="Death" from="Actors/Opponent" to="." method="WinGame"]
+[connection signal="timeout" from="Timer" to="." method="LoseGame"]
