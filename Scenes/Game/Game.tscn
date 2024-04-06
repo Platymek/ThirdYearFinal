@@ -33,9 +33,10 @@ albedo_color = Color(1, 0.945098, 0.909804, 1)
 material = SubResource("StandardMaterial3D_0tyk7")
 size = Vector3(8, 1, 8)
 
-[node name="Game" type="Node3D"]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("_timer")]
 process_mode = 3
 script = ExtResource("1_sanpw")
+_timer = NodePath("Timer")
 
 [node name="ForcePalette" parent="." instance=ExtResource("8_45i1n")]
 layer = 10
@@ -102,7 +103,7 @@ visible = false
 
 [node name="Timer" type="Timer" parent="."]
 process_mode = 1
-wait_time = 120.0
+wait_time = 60.0
 one_shot = true
 autostart = true
 
