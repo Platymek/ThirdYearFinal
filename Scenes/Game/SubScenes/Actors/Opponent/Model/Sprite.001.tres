@@ -2,17 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://cg3g640rf8wb8" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Oponnent_OpponentTexture.png" id="1_fa7yw"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mlvf1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_upino"]
 cull_mode = 1
-depth_draw_mode = 1
-shading_mode = 0
+depth_draw_mode = 2
 albedo_color = Color(0.113725, 0.168627, 0.32549, 1)
 grow = true
 grow_amount = 0.02
 
 [resource]
 resource_name = "Sprite.001"
-next_pass = SubResource("StandardMaterial3D_mlvf1")
+next_pass = SubResource("StandardMaterial3D_upino")
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
@@ -20,4 +19,3 @@ cull_mode = 2
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_fa7yw")
-texture_filter = 2

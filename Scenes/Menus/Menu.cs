@@ -6,6 +6,9 @@ public partial class Menu : Control
 	// Properties //
 
 	[Export] private Control initialButton;
+	[Export] private Button _continueButton;
+
+	private Global _global;
 
 
 	// Node Functions //
@@ -16,6 +19,13 @@ public partial class Menu : Control
 
 		// focus the specified button
 		Focus();
+
+		_global = GetNode<Global>("/root/Global");
+
+		if (_continueButton != null)
+        {
+            _continueButton.Visible = _global.HasSave();
+        }
 	}
 
 
@@ -49,7 +59,7 @@ public partial class Menu : Control
 
 	private void OnContinuePressed()
 	{
-		GetNode<Global>("/root/Global").Load();
+		_global.Load();
 		GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundNew/RoundNew.tscn");
 	}
 

@@ -59,7 +59,7 @@ public partial class Global : Node
 
 		foreach (Opponent.AttackTypes attackType in new Opponent.AttackTypes[] { 
 			//Opponent.AttackTypes.CloseToWall, Opponent.AttackTypes.Neutral, Opponent.AttackTypes.FarFromWall })
-			Opponent.AttackTypes.MixUp })
+			Opponent.AttackTypes.FarFromWall, Opponent.AttackTypes.MixUp })
 		{
 			// add new attack to each of the specified categories
 
@@ -147,6 +147,12 @@ public partial class Global : Node
 		DirAccess.RemoveAbsolute("user://PlayerStats.res");
 		DirAccess.RemoveAbsolute("user://OpponentStats.res");
 	}
+
+	public bool HasSave()
+	{
+		return ResourceLoader.Exists("user://PlayerStats.res") 
+			&& ResourceLoader.Exists("user://OpponentStats.res");
+    }
 
 	public float GetHealthBonus(Opponent.AttackTypes category)
 	{

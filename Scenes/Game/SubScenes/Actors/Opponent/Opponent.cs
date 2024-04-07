@@ -28,28 +28,26 @@ public partial class Opponent : Actor
 			if (_opponentAttackStats == null) return;
 			if (State == "death") return;
 
-            _opponentAttackStats.ClosingInSpeed = 0;
-            _opponentAttackStats.StrafingSpeed = 0;
-            _opponentAttackStats.DamageReactMutliplier = 1;
-            _opponentAttackStats.KnockReactMutliplier = 1;
+			_opponentAttackStats.ClosingInSpeed = 0;
+			_opponentAttackStats.StrafingSpeed = 0;
+			_opponentAttackStats.DamageReactMutliplier = 1;
+			_opponentAttackStats.KnockReactMutliplier = 1;
 
-			bool stunEnded = false;
+			_model.StandardMaterial3D.AlbedoColor = new Color("FFA300");
+
 			string state = value;
 
-            switch (value)
+			switch (value)
 			{
 				case "idle":
 
 					_idleTimer.Start();
 					_opponentAttackStats.ClosingInSpeed = 1;
-                    _opponentAttackStats.StrafingSpeed = 1;
+					_opponentAttackStats.StrafingSpeed = 1;
 					_opponentAttackStats.DamageReactMutliplier = 0;
 					_opponentAttackStats.KnockReactMutliplier = 0;
 
-                    if (State == "stun")
-					{
-						stunEnded = true;
-                    }
+					_model.StandardMaterial3D.AlbedoColor = new Color("1D2B53");
 
 					break;
 
@@ -67,31 +65,31 @@ public partial class Opponent : Actor
 					break;
 
 
-                case "3 Hit Combo":
+				case "3 Hit Combo":
 
-                    GD.Randomize();
+					GD.Randomize();
 
-                    var states = new[] { "3_hit_combo_1hit",
-                        "3_hit_combo_2hit", "3_hit_combo_3hit" };
-                    
-                    var hitChance = GD.Randf();
-                    int hitChoice = 0;
-
-                    hitChoice = hitChance > 0.5f
-	                    ? _last3Hit == 1
-		                    ? 0
-		                    : 1
-	                    : _last3Hit == 2
-		                    ? 0
-		                    : 1;
-
-                    _last3Hit = hitChoice;
-                    state = states[hitChoice];
+					var states = new[] { "3_hit_combo_1hit",
+						"3_hit_combo_2hit", "3_hit_combo_3hit" };
 					
-                    break;
+					var hitChance = GD.Randf();
+					int hitChoice = 0;
+
+					hitChoice = hitChance > 0.5f
+						? _last3Hit == 1
+							? 0
+							: 1
+						: _last3Hit == 2
+							? 0
+							: 1;
+
+					_last3Hit = hitChoice;
+					state = states[hitChoice];
+					
+					break;
 
 
-                case "Around the World":
+				case "Around the World":
 
 					state = _strafeRight 
 						? "around_the_world_right"
@@ -99,25 +97,25 @@ public partial class Opponent : Actor
 
 					_opponentAttackStats.StrafingSpeed = 4;
 
-                    break;
+					break;
 
 
-                case "Big Push":
+				case "Big Push":
 
-                    state = "big_push";
-                    break;
-
-
-                case "Dig Up Jump":
-
-                    state = "dig_up_jump_dig_up";
-                    break;
+					state = "big_push";
+					break;
 
 
-                case "Jump Back Slam":
+				case "Dig Up Jump":
 
-                    state = "jump_back_slam_jump_back";
-                    break;
+					state = "dig_up_jump_dig_up";
+					break;
+
+
+				case "Jump Back Slam":
+
+					state = "jump_back_slam_jump_back";
+					break;
 
 
 				case "Sumo Advance":
@@ -162,31 +160,34 @@ public partial class Opponent : Actor
 					break;
 					
 
-                case "Sumo Pressure":
+				case "Sumo Pressure":
 
-                    _sumoCount = 0;
-                    _sumoLimit = 10;
-                    state = "sumo_pressure";
-                    break;
-
-
-                case "sumo_pressure_next":
-
-                    _sumoCount++;
-
-                    state = _sumoCount > _sumoLimit
-                        ? "sumo_pressure_end"
-                        : State == "sumo_pressure_right"
-                            ? "sumo_pressure_left"
-                            : "sumo_pressure_right";
-                    break;
+					_sumoCount = 0;
+					_sumoLimit = 10;
+					state = "sumo_pressure";
+					break;
 
 
-                case "Instant Teleport":
+				case "sumo_pressure_next":
+
+					_sumoCount++;
+
+					state = _sumoCount > _sumoLimit
+						? "sumo_pressure_end"
+						: State == "sumo_pressure_right"
+							? "sumo_pressure_left"
+							: "sumo_pressure_right";
+					break;
+
+
+				case "Instant Teleport":
 
 					state = "instant_teleport";
-                    break;
-            }
+					break;
+			}
+
+            _model.StandardMaterial3D.AlbedoColor = new Color("FFA300");
+            GD.Print(_model.StandardMaterial3D.AlbedoColor);
 
 			base.State = state;
 		}
@@ -263,22 +264,22 @@ public partial class Opponent : Actor
 		if (Target == null) return;
 
 
-        // get angle difference from centre of ring, which is the origin of the world
-        float angleToCentre = GetAngleDifference(Position, Rotation.Y,
-            Vector3.Zero, 0.2f);
-        
-        float angleToCentrePercentage = angleToCentre / Mathf.Pi;
+		// get angle difference from centre of ring, which is the origin of the world
+		float angleToCentre = GetAngleDifference(Position, Rotation.Y,
+			Vector3.Zero, 0.2f);
+		
+		float angleToCentrePercentage = angleToCentre / Mathf.Pi;
 
-        float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
+		float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
 		float distanceFromTarget = 100;
 
-        if (Target is Actor a)
-        {
-            distanceFromTarget = Position2D.DistanceTo(a.Position2D);
-        }
+		if (Target is Actor a)
+		{
+			distanceFromTarget = Position2D.DistanceTo(a.Position2D);
+		}
 
 
-        switch (State)
+		switch (State)
 		{
 			case "idle":
 
@@ -296,28 +297,28 @@ public partial class Opponent : Actor
 				_strafeRight = angleToCentre < 0;
 				
 				// initialise as Neutral
-                _currentAttackType = AttackTypes.Neutral;
+				_currentAttackType = AttackTypes.Neutral;
 				
 				// only change attack type if the following conditions are met
-                if (distanceFromCentre > _opponentStats.CloseToWallDistance)
+				if (distanceFromCentre > _opponentStats.CloseToWallDistance)
 				{
 					// must be backed up
 					if (angleToCentrePercentage 
 					   is < 0.25f 
 					   and > -0.25f)
 					{
-                        _currentAttackType = AttackTypes.FarFromWall;
+						_currentAttackType = AttackTypes.FarFromWall;
 					}
 					// must have backed the Player up
 					else if (angleToCentrePercentage 
-					         is > 0.75f 
-					         or < -0.75f)
-                    {
-                        _currentAttackType = AttackTypes.CloseToWall;
-                    }
+							 is > 0.75f 
+							 or < -0.75f)
+					{
+						_currentAttackType = AttackTypes.CloseToWall;
+					}
 				}
 
-                _uniqueAttackLabel.Text = _currentAttackType.ToString();
+				_uniqueAttackLabel.Text = _currentAttackType.ToString();
 
 				
 				bool canAttack = true;
@@ -333,21 +334,21 @@ public partial class Opponent : Actor
 				}
 				
 				// if withing attacking range, attack
-                if (Position2D.DistanceTo(Vector3To2D(Target.Position))
+				if (Position2D.DistanceTo(Vector3To2D(Target.Position))
 					< _opponentStats.ClosingInDistance
 					&& canAttack)
 				{
 					StartAttack();
-                }
+				}
 
-                break;
+				break;
 			
 			case "the_crab":
 				
 				// if already positioned optimally
 				if (angleToCentrePercentage 
-				    is > 0.9f
-				    or < -0.9f)
+					is > 0.9f
+					or < -0.9f)
 				{
 					State = "the_crab_end_start";
 				}
@@ -356,8 +357,8 @@ public partial class Opponent : Actor
 		}
 		
 		Move(Vector2.Down * _opponentAttackStats.ClosingInSpeed);
-        Move(Vector2.Right * _opponentAttackStats.StrafingSpeed * (_strafeRight ? 1 : -1));
-    }
+		Move(Vector2.Right * _opponentAttackStats.StrafingSpeed * (_strafeRight ? 1 : -1));
+	}
 
 
 	// Other Functions //
@@ -376,26 +377,27 @@ public partial class Opponent : Actor
 
 		if (attackList.Count == 0 && mixUpList.Count == 0) return;
 
-        if (attackChance <= _opponentStats.MixUpChance 
-            || attackList.Count == 0);
+		if ((attackChance <= _opponentStats.MixUpChance
+			|| attackList.Count == 0)
+			&& mixUpList.Count != 0)
 		{
 			State = mixUpList.PickRandom();
-        }
-        
-        State = attackList.PickRandom();
+			return;
+		}
+		
+		State = attackList.PickRandom();
 	}
 
-    protected override void Hurt(float damage, float knock)
-    {
+	protected override void Hurt(float damage, float knock)
+	{
 		float d = damage;
 		float k = knock;
 
 		if (State == "instant_teleport")
 		{
-			State = "idle";
-			k = 2;
+			k = 1;
 		}
 
-        base.Hurt(d, k);
-    }
+		base.Hurt(d, k);
+	}
 }

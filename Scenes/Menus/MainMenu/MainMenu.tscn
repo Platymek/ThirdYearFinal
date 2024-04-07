@@ -2,8 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_j2a6o"]
 
-[node name="MainMenu" node_paths=PackedStringArray("initialButton") instance=ExtResource("1_j2a6o")]
+[node name="MainMenu" node_paths=PackedStringArray("initialButton", "_continueButton") instance=ExtResource("1_j2a6o")]
 initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play")
+_continueButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
 text = "- Main Menu -"

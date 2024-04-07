@@ -48,6 +48,8 @@ public partial class ActorModel : Node
 	[Export] private Area3D _leftFootHurtbox;
 	[Export] private Area3D _rightFootHurtbox;
 
+	[Export] public StandardMaterial3D StandardMaterial3D;
+
 	private AnimationPlayer _animationPlayer;
 
 

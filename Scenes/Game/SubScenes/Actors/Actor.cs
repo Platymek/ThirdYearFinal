@@ -310,13 +310,13 @@ public partial class Actor : CharacterBody3D
 		// move player back for the value of the current knock
 		Move(new Vector2(0, -CurrentKnock));
 
-		bool positiveKnock = CurrentKnock > 0;
+		bool positiveKnock = CurrentKnock >= 0;
 
 		// move knock value to zero
 		CurrentKnock -= delta * _stats.KnockReactDeceleration * _stats.KnockReactMultiplier
 								  * (positiveKnock ? 1 : -1);
 
-		bool newPositiveKnock = CurrentKnock > 0;
+		bool newPositiveKnock = CurrentKnock >= 0;
 
 		// if the sign has changed on the knock, set to 0 as it has crossed 0
 		if (positiveKnock != newPositiveKnock)
