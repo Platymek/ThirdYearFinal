@@ -187,10 +187,10 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.5),
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": ["punch_heavy"]
+"values": ["punch_medium"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -199,7 +199,7 @@ tracks/1/path = NodePath("AttackStats:PunchChargeState")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25, 1, 1.5),
+"times": PackedFloat32Array(0, 0.5, 0.9, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -529,7 +529,7 @@ tracks/3/path = NodePath("AttackStats:CheckDamage")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.2, 0.7),
+"times": PackedFloat32Array(0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -541,7 +541,7 @@ tracks/4/path = NodePath("Model:_checkLeftHand")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.2, 0.7),
+"times": PackedFloat32Array(0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -593,7 +593,7 @@ tracks/3/path = NodePath("AttackStats:CheckDamage")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.5),
+"times": PackedFloat32Array(0.5, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -605,7 +605,7 @@ tracks/4/path = NodePath("Model:_checkRightHand")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 1.5),
+"times": PackedFloat32Array(0.5, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -691,7 +691,7 @@ libraries = {
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_7fncs")
-PunchChargeState = 0
+PunchChargeState = 1
 Cancellable = true
 Damage = 1.0
 Knock = 1.0

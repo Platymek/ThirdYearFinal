@@ -179,7 +179,6 @@ public partial class Player : Actor
 
 			case "dodge_left": ProcessDodge(Vector2.Left);
 				break;
-				break;
 			
 			case "dodge_right": ProcessDodge(Vector2.Right);
 				break;
@@ -310,14 +309,19 @@ public partial class Player : Actor
 		_bufferedAction = null;
 	}
 
-	protected override void Hurt(float damage, float knock)
+	public override void Hurt(float damage, float knock)
 	{
 		base.Hurt(damage, knock);
 
 		if (State == "block_start")
 		{
-			State = "idle";
+			State = "block_end";
 			_bufferedAction = null;
 		}
+	}
+
+	public void Kill()
+	{
+		Hurt(Health, 0);
 	}
 }

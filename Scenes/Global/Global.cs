@@ -50,12 +50,11 @@ public partial class Global : Node
 	// prepare starting stats to get ready to start the game
 	public void PrepareGame()
 	{
-		Node remainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
-		remainingOpponentUniqueAttacks.Name = "RemainingOpponentUniqueAttacks";
+        RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
+		//remainingOpponentUniqueAttacks.Name = "RemainingOpponentUniqueAttacks";
 
-		AddChild(remainingOpponentUniqueAttacks, true);
-		GD.Print(GetChildren());
-		RemainingOpponentUniqueAttacks = GetNode("RemainingOpponentUniqueAttacks");
+		//AddChild(remainingOpponentUniqueAttacks, true);
+		//RemainingOpponentUniqueAttacks = GetNode("RemainingOpponentUniqueAttacks");
 
 		foreach (Opponent.AttackTypes attackType in new Opponent.AttackTypes[] { 
 			//Opponent.AttackTypes.CloseToWall, Opponent.AttackTypes.Neutral, Opponent.AttackTypes.FarFromWall })
@@ -126,7 +125,8 @@ public partial class Global : Node
 	// end round on a loss
 	public void EndRoundLoss()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/Menus/MainMenu/MainMenu.tscn");
+        PrepareGame();
+        GetTree().ChangeSceneToFile("res://Scenes/Menus/MainMenu/MainMenu.tscn");
 	}
 
 	// save game

@@ -53,7 +53,7 @@ transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 
 Target = NodePath("../Opponent")
 
 [node name="Opponent" parent="Actors" node_paths=PackedStringArray("Target") instance=ExtResource("2_5hirn")]
-transform = Transform3D(-0.642787, 0, -0.766045, 0, 1, 0, 0.766045, 0, -0.642787, -2.1, 0, -2.3)
+transform = Transform3D(-0.642787, 0, -0.766045, 0, 1, 0, 0.766045, 0, -0.642787, -1.1, 0, -1.3)
 _startState = "idle"
 Target = NodePath("../Player")
 _stats = null
@@ -67,16 +67,16 @@ mesh = SubResource("BoxMesh_dkrsf")
 [node name="Walls" type="Node3D" parent="Map"]
 
 [node name="Wall" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, 0, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, 0, 0, 2.5)
 
 [node name="Wall2" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(-4.37114e-08, 0.0871557, 0.996195, 0, 0.996195, -0.0871557, -1, -3.8097e-09, -4.35451e-08, 3, 0, 0)
+transform = Transform3D(-4.37114e-08, 0.0871557, 0.996195, 0, 0.996195, -0.0871557, -1, -3.8097e-09, -4.35451e-08, 2.5, 0, 0)
 
 [node name="Wall3" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(-1, -1.23384e-15, -8.74228e-08, 7.6194e-09, 0.996195, -0.0871558, 8.70901e-08, -0.0871558, -0.996195, 0, 0, -3)
+transform = Transform3D(-1, -1.23384e-15, -8.74228e-08, 7.6194e-09, 0.996195, -0.0871558, 8.70901e-08, -0.0871558, -0.996195, 0, 0, -2.5)
 
 [node name="Wall4" parent="Map/Walls" instance=ExtResource("3_o07bf")]
-transform = Transform3D(1.30635e-07, -0.0871557, -0.996195, 1.14291e-08, 0.996195, -0.0871557, 1, 0, 1.31134e-07, -3, 0, 0)
+transform = Transform3D(1.30635e-07, -0.0871557, -0.996195, 1.14291e-08, 0.996195, -0.0871557, 1, 0, 1.31134e-07, -2.5, 0, 0)
 
 [node name="Lights" type="Node3D" parent="Map"]
 
@@ -109,4 +109,4 @@ autostart = true
 
 [connection signal="Death" from="Actors/Player" to="." method="LoseGame"]
 [connection signal="Death" from="Actors/Opponent" to="." method="WinGame"]
-[connection signal="timeout" from="Timer" to="." method="LoseGame"]
+[connection signal="timeout" from="Timer" to="Actors/Player" method="Kill"]

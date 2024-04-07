@@ -73,15 +73,14 @@ public partial class Opponent : Actor
 						"3_hit_combo_2hit", "3_hit_combo_3hit" };
 					
 					var hitChance = GD.Randf();
-					int hitChoice = 0;
 
-					hitChoice = hitChance > 0.5f
+					int hitChoice = hitChance > 0.5f
 						? _last3Hit == 1
 							? 0
 							: 1
 						: _last3Hit == 2
-							? 0
-							: 1;
+							? 1
+							: 2;
 
 					_last3Hit = hitChoice;
 					state = states[hitChoice];
@@ -228,6 +227,8 @@ public partial class Opponent : Actor
 	public override void _Ready()
 	{
 		base._Ready();
+
+		GD.Randomize();
 		
 		if (_stats == null)
 		{
@@ -388,7 +389,7 @@ public partial class Opponent : Actor
 		State = attackList.PickRandom();
 	}
 
-	protected override void Hurt(float damage, float knock)
+	public override void Hurt(float damage, float knock)
 	{
 		float d = damage;
 		float k = knock;

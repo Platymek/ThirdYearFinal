@@ -170,7 +170,7 @@ public partial class Actor : CharacterBody3D
 	}
 	
 	// get hurt by another actor
-	protected virtual void Hurt(float damage, float knock)
+	public virtual void Hurt(float damage, float knock)
 	{
 		float finalDamage = damage * _stats.DamageReactMultiplier * AttackStats.DamageReactMutliplier;
 		float finalKnock = knock * _stats.KnockReactMultiplier * AttackStats.KnockReactMutliplier;
@@ -193,11 +193,14 @@ public partial class Actor : CharacterBody3D
 		if (CurrentKnock == 0) return;
 		State = "stun_start";
 	}
-	
-	// get hurt by another actor and change angle
-	protected void Hurt(float damage, float knock, float angle)
+
+    // get hurt by another actor and change angle
+    public void Hurt(float damage, float knock, float angle)
 	{
-		Rotation = new Vector3(Rotation.X, angle, Rotation.Z);
+		if (knock == 0)
+        {
+            Rotation = new Vector3(Rotation.X, angle, Rotation.Z);
+        }
 		
 		Hurt(damage, knock);
 	}
@@ -212,7 +215,12 @@ public partial class Actor : CharacterBody3D
 		float angleDifference = angle - Rotation.Y;
 		float hurtAngle = angle + angleDifference;
 		
-		Hurt(_previousDamage, -CurrentKnock / (_stats.KnockReactMultiplier * AttackStats.KnockReactMutliplier), hurtAngle);
+		Hurt(_previousDamage, 
+			-CurrentKnock 
+			* 0.25f 
+			/ (_stats.KnockReactMultiplier * AttackStats.KnockReactMutliplier), 
+			hurtAngle);
+
 		State = "stun";
 			
 		GD.Print($"Actor {Name} Wall Bounced!");
@@ -342,7 +350,8 @@ public partial class Actor : CharacterBody3D
 		// hurt actor
 		actor.Hurt(
 			_stats.DamageMultiplier * AttackStats.Damage,
-			_stats.KnockMultiplier * AttackStats.Knock);
+			_stats.KnockMultiplier * AttackStats.Knock,
+			Rotation.Y + Mathf.Pi);
 	}
 
 	private void EmitDeathSignal()
