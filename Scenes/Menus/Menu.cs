@@ -8,7 +8,7 @@ public partial class Menu : Control
 	[Export] private Control initialButton;
 	[Export] private Button _continueButton;
 
-	private Global _global;
+	public Global Global;
 
 
 	// Node Functions //
@@ -20,11 +20,11 @@ public partial class Menu : Control
 		// focus the specified button
 		Focus();
 
-		_global = GetNode<Global>("/root/Global");
+        Global = GetNode<Global>("/root/Global");
 
 		if (_continueButton != null)
         {
-            _continueButton.Visible = _global.HasSave();
+            _continueButton.Visible = Global.HasSave();
         }
 	}
 
@@ -33,7 +33,8 @@ public partial class Menu : Control
 
 	private void OnPlayPressed()
 	{
-		GetTree().Paused = false;
+        Global.PrepareNewGame();
+        GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
 	}
 
@@ -59,7 +60,7 @@ public partial class Menu : Control
 
 	private void OnContinuePressed()
 	{
-		_global.Load();
+		Global.PrepareContinueGame();
 		GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundNew/RoundNew.tscn");
 	}
 

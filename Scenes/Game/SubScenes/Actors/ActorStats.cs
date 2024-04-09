@@ -3,17 +3,30 @@ using System;
 
 public partial class ActorStats : Resource
 {
+    // Properties //
+
     [Export] public float MaxHealth;
     [Export] public float Speed;
     [Export] public float TrackSpeed;
-    
+
+
+    // Damage //
+
+    [ExportGroup("Damage")]
     [Export] public float DamageMultiplier;
     [Export] public float DamageReactMultiplier;
-    
+
+
+    // Knock //
+
+    [ExportGroup("Knock")]
     [Export] public float KnockMultiplier;
     [Export] public float KnockReactMultiplier;
     [Export] public float KnockReactDeceleration;
     
+
+    // Constructors //
+
     public ActorStats(float maxHealth, float speed, float damageMultiplier, float damageReactMultiplier, 
         float knockMultiplier, float knockReactMultiplier, float knockReactDeceleration)
     {
@@ -28,8 +41,7 @@ public partial class ActorStats : Resource
         KnockReactDeceleration = knockReactDeceleration;
     }
 
-    public ActorStats() : this(1, 1, 1, 1, 1,
-        1, 1)
+    public ActorStats() : this(1, 1, 1, 1, 1, 1, 1)
     {
         // initialise values to 1
     }

@@ -1,31 +1,57 @@
 using Godot;
 using System;
-using System.Security.Cryptography;
+using Godot.Collections;
 
 public partial class Global : Node
 {
-	// Properties //
+    // Properties //
 
-	[Export] public PlayerStats PlayerStats;
+    [Export] public SaveFile SaveFile;
+
+	[ExportGroup("Game Constants")]
+	[Export] public int RoundsToWin = 6;
+
+	[ExportGroup("Default Stats")]
+    [Export] public PlayerStats PlayerStats;
 	[Export] public OpponentStats OpponentStats;
 
-	private Node _opponentUniqueAttacks;
+	[ExportGroup("Debug")]
+	[Export] public bool Debug = false;
+    [Export] public PlayerStats DebugPlayerStats;
+    [Export] public OpponentStats DebugOpponentStats;
+
+
+	// For Current Game //
+
+    private Node _opponentUniqueAttacks;
 	public Node RemainingOpponentUniqueAttacks;
-
 	public Attack LastAddedAttack;
-	
+	public int CurrentRoundProgress;
 
-	// Node Functions //
+	// array of the currently eligible attack type categories
+	// to pull random attacks from
+	private Array<Opponent.AttackTypes> _eligibleAttackTypes;
 
-	public override void _Ready()
+
+    // Node Functions //
+
+    public override void _Ready()
 	{
 		base._Ready();
 
 		_opponentUniqueAttacks = GetNode("OpponentUniqueAttacks");
 
 
-		PrepareGame();
-	}
+        // load main save file
+        if (SaveFile.FileExists())
+        {
+            SaveFile = SaveFile.Load();
+        }
+        else
+        {
+            SaveFile = new SaveFile();
+        }
+    }
 
 	public override void _Process(double delta)
 	{
@@ -48,25 +74,64 @@ public partial class Global : Node
 	// Functions //
 
 	// prepare starting stats to get ready to start the game
-	public void PrepareGame()
-	{
-        RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
-		//remainingOpponentUniqueAttacks.Name = "RemainingOpponentUniqueAttacks";
+	public void PrepareNewGame()
+    {
+        InitialiseEligibleAttackTypes();
 
-		//AddChild(remainingOpponentUniqueAttacks, true);
-		//RemainingOpponentUniqueAttacks = GetNode("RemainingOpponentUniqueAttacks");
+        CurrentRoundProgress = 1;
 
-		foreach (Opponent.AttackTypes attackType in new Opponent.AttackTypes[] { 
+        if (!Debug)
+        {
+            RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
+
+            foreach (Opponent.AttackTypes attackType in new Opponent.AttackTypes[] { 
 			//Opponent.AttackTypes.CloseToWall, Opponent.AttackTypes.Neutral, Opponent.AttackTypes.FarFromWall })
 			Opponent.AttackTypes.FarFromWall, Opponent.AttackTypes.MixUp })
+            {
+                // add new attack to each of the specified categories
+
+                AddOpponentAttack(GetRandomAttack(attackType));
+            }
+
+            GD.Print(OpponentStats.CurrentUniqueAttacks);
+			return;
+        }
+
+		// if debug mode, set the opponent and player stats to their debug stats
+        OpponentStats = DebugOpponentStats;
+        PlayerStats = DebugPlayerStats;
+    }
+
+	// prepare for the player to continue the game
+	public void PrepareContinueGame()
+    {
+        InitialiseEligibleAttackTypes();
+
+        // function can only be called when these files exist anyway
+        PlayerStats = PlayerStats.Load();
+		OpponentStats = OpponentStats.Load();
+		CurrentRoundProgress = SaveFile.SavedRoundProgress;
+
+        RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
+
+		// remove the already equipped unique attacks
+        foreach (Opponent.AttackTypes attackType 
+			in OpponentStats.CurrentUniqueAttacks.Keys) 
 		{
-			// add new attack to each of the specified categories
+			foreach (string attack 
+				in OpponentStats.CurrentUniqueAttacks[attackType])
+			{
+				// find node in category and remove
+				RemainingOpponentUniqueAttacks
+					.GetNode(attackType.ToString())
+					.GetNode(attack)
+					.QueueFree();
+			}
 
-			AddOpponentAttack(GetRandomAttack(attackType));
+			// check the category is still eligible
+			CheckEligibleAndDelete(attackType);
 		}
-
-		GD.Print(OpponentStats.CurrentUniqueAttacks);
-	}
+    }
 
 	// select a random attack from a specific category and remove it from its list
 	public Attack GetRandomAttack(Opponent.AttackTypes attackType)
@@ -75,7 +140,7 @@ public partial class Global : Node
 
 		// get a random attack from the specified category
 		Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(attackType.ToString());
-		Attack newAttack = categoryNode.GetChild<Attack>((int)(GD.Randi() % categoryNode.GetChildCount()));
+		Attack newAttack = categoryNode.GetChildren().PickRandom() as Attack;
 		Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
 
 		// remove attack from remaining list and return name
@@ -92,25 +157,27 @@ public partial class Global : Node
 
 	// select a random attack and remove it from its list
 	public Attack GetRandomAttack()
-	{
+    {
+        GD.Randomize();
+
 		// pick a random category
-		GD.Randomize();
-		int nodeCategoryIndex = (int)(GD.Randi() % RemainingOpponentUniqueAttacks.GetChildCount());
+		int nodeCategoryIndex = (int)_eligibleAttackTypes.PickRandom();
 		Node categoryNode = RemainingOpponentUniqueAttacks.GetChild(nodeCategoryIndex);
 
 		// pick a random attack from the category
-		GD.Randomize();
-		Attack newAttack = categoryNode.GetChild<Attack>((int)(GD.Randi() % categoryNode.GetChildCount()));
-		Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
+		Attack newAttack = categoryNode.GetChildren()
+			.PickRandom() 
+			as Attack;
+
+		Attack newAttackDuplicate = newAttack.Duplicate() 
+			as Attack;
 
 		// remove attack from remaining list and return name
 		newAttack.Free();
 
-		// delete category node if empty
-		if (categoryNode.GetChildCount() == 0)
-		{
-			categoryNode.Free();
-		}
+		// check the category is still eligible
+		CheckEligibleAndDelete(
+			(Opponent.AttackTypes)nodeCategoryIndex);
 
 		return newAttackDuplicate;
 	}
@@ -125,33 +192,33 @@ public partial class Global : Node
 	// end round on a loss
 	public void EndRoundLoss()
 	{
-        PrepareGame();
         GetTree().ChangeSceneToFile("res://Scenes/Menus/MainMenu/MainMenu.tscn");
 	}
 
 	// save game
 	public void Save()
 	{
-		// save opponent stats and player stats
-		ResourceSaver.Save(PlayerStats, "user://PlayerStats.res");
-		ResourceSaver.Save(OpponentStats, "user://OpponentStats.res");
-	}
+        // save opponent stats and player stats
+        PlayerStats.Save();
+		OpponentStats.Save();
 
+		// save SaveFile with current round progress
+		SaveFile.SavedRoundProgress = CurrentRoundProgress;
+		SaveFile.Save();
+    }
+
+	// load player and opponent stats
 	public void Load()
 	{
 		// load files
-		PlayerStats = ResourceLoader.Load<PlayerStats>("user://PlayerStats.res");
-		OpponentStats = ResourceLoader.Load<OpponentStats>("user://OpponentStats.res");
-
-		// delete files
-		DirAccess.RemoveAbsolute("user://PlayerStats.res");
-		DirAccess.RemoveAbsolute("user://OpponentStats.res");
-	}
+		PlayerStats = PlayerStats.Load();
+		OpponentStats = OpponentStats.Load();
+    }
 
 	public bool HasSave()
 	{
-		return ResourceLoader.Exists("user://PlayerStats.res") 
-			&& ResourceLoader.Exists("user://OpponentStats.res");
+		return PlayerStats.FileExists()
+			&& OpponentStats.FileExists();
     }
 
 	public float GetHealthBonus(Opponent.AttackTypes category)
@@ -180,4 +247,30 @@ public partial class Global : Node
 		GD.Print(OpponentStats.CurrentUniqueAttacks);
 		GD.Print(OpponentStats.MaxHealth);
 	}
+
+	private void InitialiseEligibleAttackTypes()
+	{
+		_eligibleAttackTypes = new()
+        {
+            Opponent.AttackTypes.CloseToWall,
+            Opponent.AttackTypes.Neutral,
+            Opponent.AttackTypes.FarFromWall,
+            Opponent.AttackTypes.MixUp,
+        };
+    }
+
+	// check if an attack category has any children, otherwise
+	// mark as ineligible by deleting from eligible list
+	private void CheckEligibleAndDelete(Opponent.AttackTypes attackType)
+	{
+        // if no more children in one category,
+        // delete category from eligible list
+        if (RemainingOpponentUniqueAttacks
+                .GetNode(attackType.ToString())
+                .GetChildren()
+                .Count == 0)
+        {
+            _eligibleAttackTypes.Remove(attackType);
+        }
+    }
 }

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/UI/HUD/HUD.cs" id="1_6rn4j"]
 [ext_resource type="Theme" uid="uid://cv6onwi1btrjl" path="res://Scenes/Menus/Theme/Theme.tres" id="1_q0egd"]
 
-[node name="Hud" type="Control" node_paths=PackedStringArray("_playerHealth", "_opponentHealth", "_time")]
+[node name="Hud" type="Control" node_paths=PackedStringArray("_playerHealth", "_opponentHealth", "_time", "_roundLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +15,7 @@ script = ExtResource("1_6rn4j")
 _playerHealth = NodePath("PlayerHealth")
 _opponentHealth = NodePath("OpponentHealth")
 _time = NodePath("Time")
+_roundLabel = NodePath("RoundLabel")
 
 [node name="PlayerHealth" type="ProgressBar" parent="."]
 layout_mode = 1
@@ -39,13 +40,41 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -132.0
-offset_top = 16.0
+offset_top = 24.0
 offset_right = 132.0
-offset_bottom = 40.0
+offset_bottom = 48.0
 grow_horizontal = 2
 max_value = 1.0
 value = 0.75
 show_percentage = false
+
+[node name="OpponentLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -124.0
+offset_top = 16.0
+offset_right = -68.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 8
+text = "Opponent"
+horizontal_alignment = 1
+
+[node name="RoundLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 68.0
+offset_top = 16.0
+offset_right = 124.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 8
+text = "Round 0"
+horizontal_alignment = 2
 
 [node name="Time" type="Label" parent="."]
 layout_mode = 1
@@ -60,4 +89,21 @@ grow_horizontal = 2
 theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 36
 text = "120s"
+horizontal_alignment = 1
+
+[node name="PlayerLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -48.0
+offset_right = 28.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/outline_size = 8
+text = "Player"
 horizontal_alignment = 1

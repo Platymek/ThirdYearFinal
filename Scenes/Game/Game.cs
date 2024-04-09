@@ -39,7 +39,8 @@ public partial class Game : Node3D
 
 	private void WinGame()
 	{
-		GetNode<Global>("/root/Global").EndRoundWin();
+		GetNode<Global>("/root/Global").CurrentRoundProgress++;
+        GetNode<Global>("/root/Global").EndRoundWin();
 		_timer.Stop();
 	}
 

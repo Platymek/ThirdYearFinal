@@ -46,4 +46,39 @@ public partial class OpponentStats : ActorStats
     [Export] public float IdleDuration = 2f;
     [Export] public float CloseToWallDistance = 6f;
     [Export] public float MixUpChance = .5f;
+
+
+    // Saving and Loading //
+
+    private static string _savePath
+        = "user://OpponentStats.res";
+
+    public static bool FileExists()
+    {
+        return FileAccess.FileExists(_savePath);
+    }
+
+    public static OpponentStats Load()
+    {
+        if (FileExists())
+        {
+            var save = ResourceLoader.Load<OpponentStats>(
+                _savePath);
+
+            // delete the file after loading
+            DirAccess.RemoveAbsolute(_savePath);
+
+            return save;
+        }
+
+        // if the file does not exist, return null
+        return null;
+    }
+
+    public void Save()
+    {
+        ResourceSaver.Save(
+            this,
+            _savePath);
+    }
 }
