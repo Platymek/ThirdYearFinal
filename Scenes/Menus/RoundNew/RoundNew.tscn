@@ -4,17 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://dmsbht843ohqy" path="res://Scenes/Menus/RoundNew/AttackOption/AttackOption.tscn" id="2_14qsx"]
 [ext_resource type="Script" path="res://Scenes/Menus/RoundNew/RoundNew.cs" id="2_wln1b"]
 
-[node name="RoundNew" node_paths=PackedStringArray("initialButton") instance=ExtResource("1_rx7xy")]
+[node name="RoundNew" node_paths=PackedStringArray("_attack1", "_attack2", "_title") instance=ExtResource("1_rx7xy")]
 script = ExtResource("2_wln1b")
-initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Or")
+_attack1 = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Attack1")
+_attack2 = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Attack2")
+_title = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/Title")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
-text = "- Pick an Attack! -"
+text = "- Round 2 -"
 
 [node name="Description" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 0
-text = "The selected attack will be added to the opponent's moveset in the next round."
+text = "Select and attack to be added to the opponent's moveset in the next round."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -25,16 +27,18 @@ custom_minimum_size = Vector2(0, 8)
 [node name="Attack1" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0" instance=ExtResource("2_14qsx")]
 layout_mode = 2
 
-[node name="Or" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+[node name="CenterContainer" type="CenterContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer" index="0"]
+layout_mode = 2
+
+[node name="Or" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer/VBoxContainer" index="0"]
 layout_mode = 2
 disabled = true
 text = "or..."
 
-[node name="Container2" type="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
-custom_minimum_size = Vector2(0, 2)
-layout_mode = 2
-
-[node name="Attack2" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3" instance=ExtResource("2_14qsx")]
+[node name="Attack2" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2" instance=ExtResource("2_14qsx")]
 layout_mode = 2
 
 [connection signal="Picked" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Attack1" to="." method="OnAttackPicked"]

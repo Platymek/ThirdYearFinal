@@ -6,13 +6,13 @@
 script = ExtResource("1_scfv2")
 CenterStrafingDistance = 0.5
 ClosingInDistance = 1.5
+IdleDuration = 2.0
+CloseToWallDistance = 1.0
+MixUpChance = 0.25
 CloseToWallAttacks = Array[String]([])
 FarFromWallAttacks = Array[String]([])
 NeutralAttacks = Array[String]([])
 MixUpAttacks = Array[String]([])
-IdleDuration = 2.0
-CloseToWallDistance = 1.0
-MixUpChance = 0.25
 MaxHealth = 1.0
 Speed = 1.0
 TrackSpeed = 0.25

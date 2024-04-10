@@ -5,6 +5,7 @@ public partial class ActorStats : Resource
 {
     // Properties //
 
+    [ExportGroup("Stats")]
     [Export] public float MaxHealth;
     [Export] public float Speed;
     [Export] public float TrackSpeed;
@@ -12,14 +13,14 @@ public partial class ActorStats : Resource
 
     // Damage //
 
-    [ExportGroup("Damage")]
+    [ExportSubgroup("Damage")]
     [Export] public float DamageMultiplier;
     [Export] public float DamageReactMultiplier;
 
 
     // Knock //
 
-    [ExportGroup("Knock")]
+    [ExportSubgroup("Knock")]
     [Export] public float KnockMultiplier;
     [Export] public float KnockReactMultiplier;
     [Export] public float KnockReactDeceleration;

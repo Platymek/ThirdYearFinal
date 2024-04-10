@@ -3,37 +3,54 @@ using System;
 
 public partial class RoundNew : Menu
 {
-	// Properties //
+	[ExportGroup("Nodes")]
+    [Export] private AttackOption _attack1;
+    [Export] private AttackOption _attack2;
+	[Export] private Label _title;
 
-	private Global _global;
 
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
 		base._Ready();
 
-		_global = GetNode<Global>("/root/Global");
+
+		// say "final round"
+		if (Global.IsFinalRound())
+        {
+            _title.Text =
+                $"- Final Round -";
+        }
+		// or say what number round it is
+		else
+        {
+            _title.Text =
+                $"- Round {Global.CurrentRoundProgress} -";
+        }
+
+        // set a random attack for the first attack option
+        Attack randomAttack1 = Global.GetRandomAttack();
+        
+		_attack1.SetAttack(
+			randomAttack1, 
+			Global.GetHealthBonus(randomAttack1.AttackType), 
+			Global.GetCurrentOpponentHealth());
 
 
-		Attack randomAttack1 = _global.GetRandomAttack();
+		// set a random attack for the second attack option
+		Attack randomAttack2 = Global.GetRandomAttack();
 
-		GetNode<AttackOption>("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Attack1")
-			.SetAttack(randomAttack1, _global.GetHealthBonus(randomAttack1.AttackType), _global.GetCurrentOpponentHealth());
-
-
-		Attack randomAttack2 = _global.GetRandomAttack();
-
-		GetNode<AttackOption>("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Attack2")
-			.SetAttack(randomAttack2, _global.GetHealthBonus(randomAttack2.AttackType), _global.GetCurrentOpponentHealth());
+        _attack2.SetAttack(
+			randomAttack2, 
+			Global.GetHealthBonus(randomAttack2.AttackType), 
+			Global.GetCurrentOpponentHealth());
 	}
 	
+	// when an attack has been selected
 	private void OnAttackPicked(Attack attack, float healthBonus)
 	{
-		_global = GetNode<Global>("/root/Global");
-
-		_global.AddOpponentAttack(attack, healthBonus);
-
-		GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
+		// add it and automatically change scene to the game
+        Global.AddOpponentAttack(attack, healthBonus);
+		Global.ChangeScene(Global.Scene.Game);
 	}
 }

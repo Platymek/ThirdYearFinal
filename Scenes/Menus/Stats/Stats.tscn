@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtrni5faylylg"]
+
+[ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_xty0y"]
+[ext_resource type="Script" path="res://Scenes/Menus/Stats/Stats.cs" id="2_2tbo6"]
+
+[node name="Stats" node_paths=PackedStringArray("_roundsWon", "_roundsLost", "_gamesWon", "_initialButton") instance=ExtResource("1_xty0y")]
+script = ExtResource("2_2tbo6")
+_roundsWon = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer/RoundsWon")
+_roundsLost = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer/RoundsLost")
+_gamesWon = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer2/GamesWon")
+_initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer/BackToMenu")
+
+[node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
+text = "- Stats -"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="RoundsWonLabel" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer" index="0"]
+layout_mode = 2
+text = "Rounds Won"
+horizontal_alignment = 1
+
+[node name="RoundsWon" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer" index="1"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer" index="2"]
+layout_mode = 2
+
+[node name="RoundsLostLabel" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer" index="3"]
+layout_mode = 2
+text = "Rounds Lost"
+horizontal_alignment = 1
+
+[node name="RoundsLost" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer" index="4"]
+layout_mode = 2
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer" index="2"]
+layout_mode = 2
+
+[node name="GamesWonLabel" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer2" index="0"]
+layout_mode = 2
+text = "Games Won"
+horizontal_alignment = 1
+
+[node name="GamesWon" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer2" index="1"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
+layout_mode = 2
+
+[node name="BackToMenu" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer" index="0"]
+layout_mode = 2
+text = "Back to Menu"
+
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer/BackToMenu" to="." method="OnMenuPressed"]

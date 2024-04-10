@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using static Global;
 
 public partial class Global : Node
 {
@@ -28,6 +29,34 @@ public partial class Global : Node
 	public Attack LastAddedAttack;
 	public int CurrentRoundProgress;
 
+
+    // Settings //
+
+    private bool _fullscreen;
+    public bool Fullscreen
+    {
+        get => _fullscreen;
+
+        set
+        {
+            _fullscreen = value;
+
+            SaveFile.Fullscreen = Fullscreen;
+            SaveFile.Save();
+
+
+            if (Fullscreen)
+            {
+                DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+                return;
+            }
+
+            // else, set to windowed
+            DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+        }
+    }
+
+
 	// array of the currently eligible attack type categories
 	// to pull random attacks from
 	private Array<Opponent.AttackTypes> _eligibleAttackTypes;
@@ -46,10 +75,16 @@ public partial class Global : Node
         if (SaveFile.FileExists())
         {
             SaveFile = SaveFile.Load();
+
+
+            // Load Settings //
+
+            Fullscreen = SaveFile.Fullscreen;
         }
         else
         {
             SaveFile = new SaveFile();
+            SaveFile.Save();
         }
     }
 
@@ -58,20 +93,16 @@ public partial class Global : Node
 		base._Process(delta);
 
 		if (Input.IsActionJustPressed("fullscreen"))
-		{
-			if (DisplayServer.WindowGetMode() == DisplayServer.WindowMode.ExclusiveFullscreen)
-			{
-				DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
-			}
-			else
-			{
-				DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-			}
-		}
+        {
+            // toggle fullscreen
+            Fullscreen = !Fullscreen;
+        }
 	}
 
 
 	// Functions //
+
+    // Preparing the Game //
 
 	// prepare starting stats to get ready to start the game
 	public void PrepareNewGame()
@@ -82,14 +113,18 @@ public partial class Global : Node
 
         if (!Debug)
         {
+            // duplicate the list of reimaing attacks as to not affect future games
             RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
 
-            foreach (Opponent.AttackTypes attackType in new Opponent.AttackTypes[] { 
-			//Opponent.AttackTypes.CloseToWall, Opponent.AttackTypes.Neutral, Opponent.AttackTypes.FarFromWall })
-			Opponent.AttackTypes.FarFromWall, Opponent.AttackTypes.MixUp })
+            // add new attack to each of the specified categories
+            foreach (
+                Opponent.AttackTypes attackType
+                in new Opponent.AttackTypes[] 
+                {
+			        Opponent.AttackTypes.FarFromWall, 
+                    Opponent.AttackTypes.MixUp
+                })
             {
-                // add new attack to each of the specified categories
-
                 AddOpponentAttack(GetRandomAttack(attackType));
             }
 
@@ -133,67 +168,8 @@ public partial class Global : Node
 		}
     }
 
-	// select a random attack from a specific category and remove it from its list
-	public Attack GetRandomAttack(Opponent.AttackTypes attackType)
-	{
-		GD.Randomize();
 
-		// get a random attack from the specified category
-		Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(attackType.ToString());
-		Attack newAttack = categoryNode.GetChildren().PickRandom() as Attack;
-		Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
-
-		// remove attack from remaining list and return name
-		newAttack.QueueFree();
-
-		// delete category node if empty
-		if (categoryNode.GetChildCount() == 0)
-		{
-			categoryNode.Free();
-		}
-
-		return newAttackDuplicate;
-	}
-
-	// select a random attack and remove it from its list
-	public Attack GetRandomAttack()
-    {
-        GD.Randomize();
-
-		// pick a random category
-		int nodeCategoryIndex = (int)_eligibleAttackTypes.PickRandom();
-		Node categoryNode = RemainingOpponentUniqueAttacks.GetChild(nodeCategoryIndex);
-
-		// pick a random attack from the category
-		Attack newAttack = categoryNode.GetChildren()
-			.PickRandom() 
-			as Attack;
-
-		Attack newAttackDuplicate = newAttack.Duplicate() 
-			as Attack;
-
-		// remove attack from remaining list and return name
-		newAttack.Free();
-
-		// check the category is still eligible
-		CheckEligibleAndDelete(
-			(Opponent.AttackTypes)nodeCategoryIndex);
-
-		return newAttackDuplicate;
-	}
-	
-	// end round on a win
-	public void EndRoundWin()
-	{
-		Save();
-		GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundEnd/RoundEnd.tscn");
-	}
-
-	// end round on a loss
-	public void EndRoundLoss()
-	{
-        GetTree().ChangeSceneToFile("res://Scenes/Menus/MainMenu/MainMenu.tscn");
-	}
+	// Data Management //
 
 	// save game
 	public void Save()
@@ -221,16 +197,8 @@ public partial class Global : Node
 			&& OpponentStats.FileExists();
     }
 
-	public float GetHealthBonus(Opponent.AttackTypes category)
-	{
-		int numberOfUniqueAttacks = OpponentStats.CurrentUniqueAttacks[category].Count + 1;
-		return 0.25f * numberOfUniqueAttacks;
-	}
 
-	public float GetCurrentOpponentHealth()
-	{
-		return OpponentStats.MaxHealth;
-	}
+	// Attacks //
 
 	public void AddOpponentAttack(Attack attack)
 	{
@@ -245,7 +213,6 @@ public partial class Global : Node
 		OpponentStats.MaxHealth *= healthBonus;
 
 		GD.Print(OpponentStats.CurrentUniqueAttacks);
-		GD.Print(OpponentStats.MaxHealth);
 	}
 
 	private void InitialiseEligibleAttackTypes()
@@ -273,4 +240,164 @@ public partial class Global : Node
             _eligibleAttackTypes.Remove(attackType);
         }
     }
+
+    // select a random attack from a specific category and remove it from its list
+    public Attack GetRandomAttack(Opponent.AttackTypes attackType)
+    {
+        GD.Randomize();
+
+        // get a random attack from the specified category
+        Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(attackType.ToString());
+        Attack newAttack = categoryNode.GetChildren().PickRandom() as Attack;
+        Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
+
+        // remove attack from remaining list and return name
+        newAttack.QueueFree();
+
+        // delete category node if empty
+        if (categoryNode.GetChildCount() == 0)
+        {
+            categoryNode.Free();
+        }
+
+        return newAttackDuplicate;
+    }
+
+    // select a random attack and remove it from its list
+    public Attack GetRandomAttack()
+    {
+        GD.Randomize();
+
+        // pick a random category
+        int nodeCategoryIndex = (int)_eligibleAttackTypes.PickRandom();
+        Node categoryNode = RemainingOpponentUniqueAttacks.GetChild(nodeCategoryIndex);
+
+        // pick a random attack from the category
+        Attack newAttack = categoryNode.GetChildren()
+            .PickRandom()
+            as Attack;
+
+        Attack newAttackDuplicate = newAttack.Duplicate()
+            as Attack;
+
+        // remove attack from remaining list and return name
+        newAttack.Free();
+
+        // check the category is still eligible
+        CheckEligibleAndDelete(
+            (Opponent.AttackTypes)nodeCategoryIndex);
+
+        return newAttackDuplicate;
+    }
+
+    public float GetHealthBonus(Opponent.AttackTypes category)
+    {
+        int numberOfUniqueAttacks = OpponentStats.CurrentUniqueAttacks[category].Count + 1;
+        return 0.25f * numberOfUniqueAttacks;
+    }
+
+    public float GetCurrentOpponentHealth()
+    {
+        return OpponentStats.MaxHealth;
+    }
+
+
+    // Rounds //
+
+    // end round on a win
+    public void EndRoundWin()
+    {
+        // if the player just won the final round
+        if (IsFinalRound())
+        {
+            ChangeScene(Scene.YouWon);
+
+            return;
+        }
+
+        // if not the final round, progress and save
+        CurrentRoundProgress++;
+
+        Save();
+        ChangeScene(Scene.RoundEnd);
+    }
+
+    // end round on a loss
+    public void EndRoundLoss()
+    {
+        ChangeScene(Scene.YouLost);
+    }
+
+    public bool IsFinalRound()
+	{
+		return CurrentRoundProgress == RoundsToWin;
+	}
+
+
+    // Changing Scene //
+
+	public enum Scene
+	{
+		Game,
+		MainMenu,
+        RoundEnd,
+		RoundNew,
+        YouLost,
+        YouWon,
+        Stats,
+    }
+
+	public void ChangeScene(Scene scene)
+	{
+		switch (scene)
+		{
+			case Scene.Game:
+
+				GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
+
+				break;
+
+
+			case Scene.MainMenu:
+
+				GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
+
+				break;
+
+
+			case Scene.RoundEnd:
+
+				GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundEnd/RoundEnd.tscn");
+
+				break;
+
+
+			case Scene.RoundNew:
+
+				GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundNew/RoundNew.tscn");
+
+				break;
+
+
+            case Scene.YouLost:
+
+                GetTree().ChangeSceneToFile("res://Scenes/Menus/YouLost/YouLost.tscn");
+
+                break;
+
+
+            case Scene.YouWon:
+
+                GetTree().ChangeSceneToFile("res://Scenes/Menus/YouWon/YouWon.tscn");
+
+                break;
+
+
+            case Scene.Stats:
+
+                GetTree().ChangeSceneToFile("res://Scenes/Menus/Stats/Stats.tscn");
+
+                break;
+        }
+	}
 }

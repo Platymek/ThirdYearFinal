@@ -10,6 +10,8 @@ process_mode = 3
 script = ExtResource("1_mbovf")
 PlayerStats = ExtResource("2_lj5dc")
 OpponentStats = ExtResource("3_ll254")
+DebugPlayerStats = ExtResource("2_lj5dc")
+DebugOpponentStats = ExtResource("3_ll254")
 
 [node name="OpponentUniqueAttacks" type="Node" parent="."]
 

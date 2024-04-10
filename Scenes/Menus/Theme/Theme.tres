@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=19 format=3 uid="uid://cv6onwi1btrjl"]
+[gd_resource type="Theme" load_steps=21 format=3 uid="uid://cv6onwi1btrjl"]
 
 [ext_resource type="Texture2D" uid="uid://d06vknnxqh75e" path="res://Scenes/Menus/Theme/button.png" id="1_2rbso"]
 [ext_resource type="FontFile" uid="uid://ufe14cc4ekoe" path="res://Scenes/Menus/Theme/m6x11plus.ttf" id="1_lquxq"]
@@ -39,6 +39,11 @@ texture_margin_bottom = 3.0
 expand_margin_left = 16.0
 expand_margin_right = 16.0
 region_rect = Rect2(0, 0, 8, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l617p"]
+bg_color = Color(0.513726, 0.462745, 0.611765, 1)
+border_width_top = 2
+border_color = Color(0.513726, 0.462745, 0.611765, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vj56j"]
 bg_color = Color(0.113725, 0.168627, 0.32549, 1)
@@ -119,6 +124,12 @@ expand_margin_right = 16.0
 expand_margin_bottom = 2.0
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qabx"]
+bg_color = Color(0.513726, 0.462745, 0.611765, 1)
+border_width_left = 2
+border_width_top = 2
+border_color = Color(0.513726, 0.462745, 0.611765, 1)
+
 [resource]
 default_font = ExtResource("1_lquxq")
 default_font_size = 18
@@ -133,6 +144,8 @@ Button/styles/focus = SubResource("StyleBoxTexture_704s4")
 Button/styles/hover = SubResource("StyleBoxTexture_jd5cd")
 Button/styles/normal = SubResource("StyleBoxTexture_jd5cd")
 Button/styles/pressed = SubResource("StyleBoxTexture_a36hp")
+HSeparator/constants/separation = 2
+HSeparator/styles/separator = SubResource("StyleBoxFlat_l617p")
 Header/base_type = &"Label"
 Header/colors/font_color = Color(1, 0.92549, 0.152941, 1)
 Header/colors/font_outline_color = Color(0.670588, 0.321569, 0.211765, 1)
@@ -140,6 +153,7 @@ Header/constants/outline_size = 3
 Header/font_sizes/font_size = 36
 Label/colors/font_color = Color(1, 0.945098, 0.909804, 1)
 Label/colors/font_outline_color = Color(0.113725, 0.168627, 0.32549, 1)
+Label/constants/line_spacing = -4
 Panel/styles/panel = SubResource("StyleBoxFlat_vj56j")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_vj56j")
 PanelContainerAlt/base_type = &"PanelContainer"
@@ -160,5 +174,8 @@ RiskButton/styles/focus = SubResource("StyleBoxTexture_704s4")
 RiskButton/styles/normal = SubResource("StyleBoxTexture_loofa")
 RiskButton/styles/pressed = SubResource("StyleBoxFlat_ribo2")
 SmallFont/base_type = &"Label"
+SmallFont/constants/line_spacing = 1
 SmallFont/font_sizes/font_size = 8
 SmallFont/fonts/font = ExtResource("1_ni610")
+VSeparator/constants/separation = 32
+VSeparator/styles/separator = SubResource("StyleBoxFlat_4qabx")

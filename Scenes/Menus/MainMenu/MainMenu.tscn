@@ -1,37 +1,55 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8exwqqbqkiy7"]
+[gd_scene load_steps=3 format=3 uid="uid://c8exwqqbqkiy7"]
 
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_j2a6o"]
+[ext_resource type="Script" path="res://Scenes/Menus/MainMenu/MainMenu.cs" id="2_knh7x"]
 
-[node name="MainMenu" node_paths=PackedStringArray("initialButton", "_continueButton") instance=ExtResource("1_j2a6o")]
-initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play")
+[node name="MainMenu" node_paths=PackedStringArray("_continueButton", "_fullScreenButton", "_hardModeButton", "_initialButton") instance=ExtResource("1_j2a6o")]
+script = ExtResource("2_knh7x")
 _continueButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
+_fullScreenButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Fullscreen")
+_hardModeButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HardMode")
+_initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
 text = "- Main Menu -"
 
-[node name="Play" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
+[node name="Continue" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
 layout_mode = 2
-text = "Play
+text = "Continue"
+
+[node name="Play" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+text = "New Game"
+
+[node name="HardMode" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
+layout_mode = 2
+text = "Final Challenge
 "
 
-[node name="Continue" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+[node name="HSeparator2" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3"]
 layout_mode = 2
-text = "Continue Last Save"
 
-[node name="Settings" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
+[node name="Fullscreen" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
 layout_mode = 2
-text = "Settings
+toggle_mode = true
+text = "Fullscreen"
+
+[node name="Stats" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="5"]
+layout_mode = 2
+text = "Stats
 "
 
-[node name="Container" type="Container" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3"]
-custom_minimum_size = Vector2(0, 4)
+[node name="HSeparator" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="6"]
 layout_mode = 2
 
-[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
+[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="7"]
 layout_mode = 2
 theme_type_variation = &"RiskButton"
 text = "Exit"
 
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play" to="." method="OnPlayPressed"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue" to="." method="OnContinuePressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play" to="." method="OnPlayPressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HardMode" to="." method="OnPlayPressed"]
+[connection signal="toggled" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Fullscreen" to="." method="OnFullscreenToggled"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Stats" to="." method="OnStatsPressed"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Exit" to="." method="OnExitPressed"]

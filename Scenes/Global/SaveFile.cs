@@ -10,9 +10,14 @@ public partial class SaveFile : Resource
 
     // Forever Game Stats //
 
-    public int NumberOfGames;
-    public int NumberOfWins;
-    public int RoundsWon;
+    public int GamesWon { get; private set; }
+    public int RoundsLost { get; private set; }
+    public int RoundsWon { get; private set; }
+
+
+    // Settings //
+
+    public bool Fullscreen;
 
 
     // Stats for Current Saved Game //
@@ -24,20 +29,47 @@ public partial class SaveFile : Resource
 
     public SaveFile() : this(
 
+        false,
         false) 
     { }
 
     public SaveFile(
         
-        bool unlockedHardMode)
-    { 
+        bool unlockedHardMode,
+        bool fullscreen)
+    {
+        // bonus data
         UnlockedHardMode = unlockedHardMode;
+        Fullscreen = fullscreen;
 
-        NumberOfGames = 0;
-        NumberOfWins = 0;
+        // stats
+        GamesWon = 0;
+        RoundsLost = 0;
         RoundsWon = 0;
 
+        // extra save data
         SavedRoundProgress = 0;
+    }
+
+
+    // increment stats //
+
+    public void IncrementGamesWon(int value = 1)
+    {
+        GamesWon += value;
+        Save();
+    }
+
+    public void IncrementRoundsLost(int value = 1)
+    {
+        RoundsLost += value;
+        Save();
+    }
+
+    public void IncrementRoundsWon(int value = 1)
+    {
+        RoundsWon += value;
+        Save();
     }
 
 

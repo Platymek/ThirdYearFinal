@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://yr5xt274t5n8"]
+
+[ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_m17c0"]
+
+[node name="RoundLoss" instance=ExtResource("1_m17c0")]
+
+[node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
+text = "- You lost -"
+
+[node name="Label" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="1"]
+layout_mode = 2
+text = "Make sure you take a look
+at the how to play section and 
+better luck next time!"
+
+[node name="Button" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
+layout_mode = 2
+text = "Back to Menu"
+
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Button" to="." method="OnMenuPressed"]
