@@ -37,14 +37,14 @@ public partial class RoundNew : Menu
 			Global.GetCurrentOpponentHealth());
 
 
-		// set a random attack for the second attack option
-		Attack randomAttack2 = Global.GetRandomAttack();
+        // set a random attack for the second attack option
+        Attack randomAttack2 = Global.GetRandomAttack();
 
         _attack2.SetAttack(
 			randomAttack2, 
 			Global.GetHealthBonus(randomAttack2.AttackType), 
 			Global.GetCurrentOpponentHealth());
-	}
+    }
 	
 	// when an attack has been selected
 	private void OnAttackPicked(Attack attack, float healthBonus)

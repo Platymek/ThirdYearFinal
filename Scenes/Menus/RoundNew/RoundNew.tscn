@@ -4,11 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://dmsbht843ohqy" path="res://Scenes/Menus/RoundNew/AttackOption/AttackOption.tscn" id="2_14qsx"]
 [ext_resource type="Script" path="res://Scenes/Menus/RoundNew/RoundNew.cs" id="2_wln1b"]
 
-[node name="RoundNew" node_paths=PackedStringArray("_attack1", "_attack2", "_title") instance=ExtResource("1_rx7xy")]
+[node name="RoundNew" node_paths=PackedStringArray("_attack1", "_attack2", "_title", "_initialButton") instance=ExtResource("1_rx7xy")]
 script = ExtResource("2_wln1b")
 _attack1 = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Attack1")
 _attack2 = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Attack2")
 _title = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/Title")
+_initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer/VBoxContainer/Or")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
 text = "- Round 2 -"

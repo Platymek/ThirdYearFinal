@@ -38,14 +38,14 @@ public partial class Game : Node3D
 	// Signals //
 
 	private void WinGame()
-	{
+    {
+        _timer.Stop();
         GetNode<Global>("/root/Global").EndRoundWin();
-		_timer.Stop();
 	}
 
 	private void LoseGame()
-	{
-		GetNode<Global>("/root/Global").EndRoundLoss();
-		_timer.Stop();
+    {
+        _timer.Stop();
+        GetNode<Global>("/root/Global").EndRoundLoss();
 	}
 }

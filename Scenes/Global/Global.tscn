@@ -1,17 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgt3o7vwccp4b"]
+[gd_scene load_steps=7 format=3 uid="uid://cgt3o7vwccp4b"]
 
 [ext_resource type="Script" path="res://Scenes/Global/Global.cs" id="1_mbovf"]
 [ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="2_lj5dc"]
 [ext_resource type="Resource" uid="uid://d0x4kt3xr13g6" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStatsDefault.tres" id="3_ll254"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStats.cs" id="4_r4lfs"]
 [ext_resource type="Script" path="res://Scenes/Global/Attack.cs" id="4_twu5d"]
+
+[sub_resource type="Resource" id="Resource_o2fbd"]
+script = ExtResource("4_r4lfs")
+CenterStrafingDistance = 0.5
+ClosingInDistance = 1.5
+IdleDuration = 2.0
+CloseToWallDistance = 1.25
+MixUpChance = 0.25
+CloseToWallAttacks = Array[String](["Wastin Time"])
+FarFromWallAttacks = Array[String]([])
+NeutralAttacks = Array[String]([])
+MixUpAttacks = Array[String]([])
+MaxHealth = 1.0
+Speed = 1.0
+TrackSpeed = 0.25
+DamageMultiplier = 1.0
+DamageReactMultiplier = 1.5
+KnockMultiplier = 1.0
+KnockReactMultiplier = 2.0
+KnockReactDeceleration = 0.75
 
 [node name="Global" type="Node"]
 process_mode = 3
 script = ExtResource("1_mbovf")
+_forcedTypeSelection = Array[int]([2, 2, 1])
+_forcedTypeSelectionEnabled = Array[bool]([true, true, false, false, false, false])
 PlayerStats = ExtResource("2_lj5dc")
 OpponentStats = ExtResource("3_ll254")
+Debug = true
 DebugPlayerStats = ExtResource("2_lj5dc")
-DebugOpponentStats = ExtResource("3_ll254")
+DebugOpponentStats = SubResource("Resource_o2fbd")
 
 [node name="OpponentUniqueAttacks" type="Node" parent="."]
 
@@ -21,13 +45,13 @@ DebugOpponentStats = ExtResource("3_ll254")
 script = ExtResource("4_twu5d")
 Description = "If being against a wall seemed bad enough, the machine's going to try to keep you there with their high pressure moves!"
 
+[node name="Wastin Time" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
+script = ExtResource("4_twu5d")
+Description = "The machine thinks it's funny. It isn't."
+
 [node name="Jump Back Slam" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
 script = ExtResource("4_twu5d")
 Description = "The machine strikes, propelling itself backwards. Then, dives in for a big strike!"
-
-[node name="The Crab" type="Node" parent="OpponentUniqueAttacks/CloseToWall"]
-script = ExtResource("4_twu5d")
-Description = "The machine enters Crab Mode - he scuttles around you to find the perfect angle, and then strikes!"
 
 [node name="FarFromWall" type="Node" parent="OpponentUniqueAttacks"]
 
@@ -48,9 +72,9 @@ script = ExtResource("4_twu5d")
 Description = "A big push followed by a following jump. They'll let out there inner forest spirit!"
 AttackType = 2
 
-[node name="Wastin Time" type="Node" parent="OpponentUniqueAttacks/Neutral"]
+[node name="The Crab" type="Node" parent="OpponentUniqueAttacks/Neutral"]
 script = ExtResource("4_twu5d")
-Description = "The machine thinks it's funny. It isn't."
+Description = "The machine enters Crab Mode - he scuttles around you to find the perfect angle, and then strikes!"
 AttackType = 2
 
 [node name="Sumo Advance" type="Node" parent="OpponentUniqueAttacks/Neutral"]

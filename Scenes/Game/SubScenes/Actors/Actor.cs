@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class Actor : CharacterBody3D
 {
@@ -190,14 +189,16 @@ public partial class Actor : CharacterBody3D
 			State = "death";
 		}
 
-		if (CurrentKnock == 0) return;
-		State = "stun_start";
+		if (CurrentKnock != 0)
+        {
+            State = "stun_start";
+        }
 	}
 
     // get hurt by another actor and change angle
     public void Hurt(float damage, float knock, float angle)
 	{
-		if (knock == 0)
+		if (knock > 0)
         {
             Rotation = new Vector3(Rotation.X, angle, Rotation.Z);
         }
@@ -212,21 +213,14 @@ public partial class Actor : CharacterBody3D
 		if (CurrentKnock == 0) return false;
 		if (_bounced) return false;
 		
-		float angleDifference = angle - Rotation.Y;
-		float hurtAngle = angle + angleDifference;
-		
-		Hurt(_previousDamage, 
-			-CurrentKnock 
-			* 0.25f 
-			/ (_stats.KnockReactMultiplier * AttackStats.KnockReactMutliplier), 
-			hurtAngle);
-
-		State = "stun";
+		// hurt with previous damage but cancel knockback
+		Hurt(_previousDamage, 0);
 			
 		GD.Print($"Actor {Name} Wall Bounced!");
-		
-		// can only bounce once
-		_bounced = true;
+
+        // can only bounce once
+        State = "idle";
+        _bounced = true;
 		return true;
 	}
 

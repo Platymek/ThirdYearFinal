@@ -8,10 +8,13 @@ public partial class Opponent : Actor
 
 	[Export] private string _startState;
 
-	private OpponentStats _opponentStats;
+	[ExportGroup("Nodes")]
+    [Export] private Label3D _uniqueAttackLabel;
+    [Export] private ActorModel _model;
+	[Export] private Node3D _secondCheck;
+
+    private OpponentStats _opponentStats;
 	private OpponentAttackStats _opponentAttackStats;
-	private Label3D _uniqueAttackLabel;
-	private ActorModel _model;
 	private AttackTypes _currentAttackType;
 	private bool _strafeRight;
 
@@ -41,11 +44,8 @@ public partial class Opponent : Actor
 			{
 				case "idle":
 
-					_idleTimer.Start();
 					_opponentAttackStats.ClosingInSpeed = 1;
 					_opponentAttackStats.StrafingSpeed = 1;
-					_opponentAttackStats.DamageReactMutliplier = 0;
-					_opponentAttackStats.KnockReactMutliplier = 0;
 
 					_model.StandardMaterial3D.AlbedoColor = new Color("1D2B53");
 
@@ -217,8 +217,6 @@ public partial class Opponent : Actor
 		Neutral, // performed when in neutral position of ring
 		MixUp, // can happen at any point
 	}
-
-	private Timer _idleTimer;
 	
 	
 	// Node Functions //
@@ -242,12 +240,6 @@ public partial class Opponent : Actor
 
 		Health = _stats.MaxHealth;
 		_opponentAttackStats = AttackStats as OpponentAttackStats;
-		
-		_idleTimer = GetNode<Timer>("IdleTimer");
-		_idleTimer.WaitTime = _opponentStats.IdleDuration;
-
-		_uniqueAttackLabel = GetNode<Label3D>("UniqueAttackLabel");
-		_model = GetNode<ActorModel>("Model");
 
 		// set state property now that everything has been loaded
 		if (_startState != null)
@@ -271,19 +263,12 @@ public partial class Opponent : Actor
 		
 		float angleToCentrePercentage = angleToCentre / Mathf.Pi;
 
-		float distanceFromCentre = Position2D.DistanceTo(Vector2.Zero);
-		float distanceFromTarget = 100;
-
-		if (Target is Actor a)
-		{
-			distanceFromTarget = Position2D.DistanceTo(a.Position2D);
-		}
-
 
 		switch (State)
 		{
 			case "idle":
 
+				// set animation based on walking speed
 				switch (_opponentAttackStats.ClosingInSpeed)
 				{
 					case > 0.25f:
@@ -294,26 +279,47 @@ public partial class Opponent : Actor
 						Animation = "idle"; break;
 				}
 
+
 				// choose which direction to strafe in
 				_strafeRight = angleToCentre < 0;
 				
 				// initialise as Neutral
 				_currentAttackType = AttackTypes.Neutral;
-				
-				// only change attack type if the following conditions are met
-				if (distanceFromCentre > _opponentStats.CloseToWallDistance)
+
+
+				// distance from self to centre
+				float distanceFromCentre = Position2D
+					.DistanceTo(Vector2.Zero);
+
+				// distance from the position of the second check node to centre
+				float distanceFromCentreSecond = Vector3To2D(
+					Position + _secondCheck.Position.Rotated(Vector3.Up, Rotation.Y))
+                    .DistanceTo(Vector2.Zero);
+
+				GD.Print(distanceFromCentreSecond);
+
+
+                // change attack type by first checking the distance of the
+                // opponent from the centre
+                if (distanceFromCentre
+                        > _opponentStats.CloseToWallDistance
+
+                    || distanceFromCentreSecond
+                        > _opponentStats.CloseToWallDistance)
 				{
+					// then check the angle to the centre
+
 					// must be backed up
 					if (angleToCentrePercentage 
-					   is < 0.25f 
-					   and > -0.25f)
+					   is < 0.4f 
+					   and > -0.4f)
 					{
 						_currentAttackType = AttackTypes.FarFromWall;
 					}
 					// must have backed the Player up
 					else if (angleToCentrePercentage 
-							 is > 0.75f 
-							 or < -0.75f)
+							 is > 0.6f 
+							 or < -0.6f)
 					{
 						_currentAttackType = AttackTypes.CloseToWall;
 					}
@@ -328,11 +334,20 @@ public partial class Opponent : Actor
 				if (Target is Player p)
 				{
 					canAttack = p.State
-						is  not "charge"
+						is not "charge"
 						and not "punch_light"
 						and not "punch_medium"
 						and not "punch_heavy";
 				}
+
+				// if the opponent cannot attack, stop and prevent all damage
+				_opponentAttackStats.ClosingInSpeed
+				= _opponentAttackStats.StrafingSpeed
+				= _opponentAttackStats.DamageReactMutliplier
+				= _opponentAttackStats.KnockReactMutliplier
+				= canAttack
+				? 1
+				: 0;
 				
 				// if withing attacking range, attack
 				if (Position2D.DistanceTo(Vector3To2D(Target.Position))
@@ -342,8 +357,9 @@ public partial class Opponent : Actor
 					StartAttack();
 				}
 
-				break;
+                break;
 			
+
 			case "the_crab":
 				
 				// if already positioned optimally
@@ -355,6 +371,13 @@ public partial class Opponent : Actor
 				}
 				
 				break;
+
+
+			//case "wastin_time":
+			//
+			//	if ()
+			//
+			//	break;
 		}
 		
 		Move(Vector2.Down * _opponentAttackStats.ClosingInSpeed);

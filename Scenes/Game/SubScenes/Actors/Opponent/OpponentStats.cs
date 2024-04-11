@@ -15,6 +15,8 @@ public partial class OpponentStats : ActorStats
     [Export] public float CloseToWallDistance = 6f;
     [Export] public float MixUpChance = .5f;
 
+    [ExportGroup("Unique Attacks")]
+
     // dictionary containing all attacks using the attack type as the key
     public Dictionary<Opponent.AttackTypes, Array<string>> CurrentUniqueAttacks
         = new Dictionary<Opponent.AttackTypes, Array<string>>
@@ -25,7 +27,6 @@ public partial class OpponentStats : ActorStats
             { Opponent.AttackTypes.MixUp, new Array<string>() },
         };
 
-    [ExportGroup("Unique Attacks")]
     [Export]
     public Array<string> CloseToWallAttacks
     {

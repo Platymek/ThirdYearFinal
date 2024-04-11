@@ -11,6 +11,8 @@ public partial class Global : Node
 
 	[ExportGroup("Game Constants")]
 	[Export] public int RoundsToWin = 6;
+    [Export] private Array<Opponent.AttackTypes> _forcedTypeSelection;
+    [Export] private Array<bool> _forcedTypeSelectionEnabled;
 
 	[ExportGroup("Default Stats")]
     [Export] public PlayerStats PlayerStats;
@@ -40,8 +42,7 @@ public partial class Global : Node
         set
         {
             _fullscreen = value;
-
-            SaveFile.ToggleFullscreen();
+            SaveFile.Fullscreen = value;
 
 
             if (Fullscreen)
@@ -255,13 +256,10 @@ public partial class Global : Node
         Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
 
         // remove attack from remaining list and return name
-        newAttack.QueueFree();
+        newAttack.Free();
 
-        // delete category node if empty
-        if (categoryNode.GetChildCount() == 0)
-        {
-            categoryNode.Free();
-        }
+        // check the category is still eligible
+        CheckEligibleAndDelete(attackType);
 
         return newAttackDuplicate;
     }
@@ -271,26 +269,17 @@ public partial class Global : Node
     {
         GD.Randomize();
 
+        // the round number has to have 2 taken away as it is the second round
+        // and round number starts with 1
+        int roundOffset = 2;
+
         // pick a random category
-        int nodeCategoryIndex = (int)_eligibleAttackTypes.PickRandom();
-        Node categoryNode = RemainingOpponentUniqueAttacks.GetChild(nodeCategoryIndex);
+        Opponent.AttackTypes randomAttackType
+            = _forcedTypeSelectionEnabled[CurrentRoundProgress - roundOffset]
+            ? _forcedTypeSelection[CurrentRoundProgress - roundOffset]
+            : _eligibleAttackTypes.PickRandom();
 
-        // pick a random attack from the category
-        Attack newAttack = categoryNode.GetChildren()
-            .PickRandom()
-            as Attack;
-
-        Attack newAttackDuplicate = newAttack.Duplicate()
-            as Attack;
-
-        // remove attack from remaining list and return name
-        newAttack.Free();
-
-        // check the category is still eligible
-        CheckEligibleAndDelete(
-            (Opponent.AttackTypes)nodeCategoryIndex);
-
-        return newAttackDuplicate;
+        return GetRandomAttack(randomAttackType);
     }
 
     public float GetHealthBonus(Opponent.AttackTypes category)
@@ -320,6 +309,8 @@ public partial class Global : Node
 
         // if not the final round, progress and save
         CurrentRoundProgress++;
+        SaveFile.SavedRoundProgress++;
+        SaveFile.IncrementRoundsWon();
 
         Save();
         ChangeScene(Scene.RoundEnd);
@@ -328,6 +319,7 @@ public partial class Global : Node
     // end round on a loss
     public void EndRoundLoss()
     {
+        SaveFile.IncrementRoundsLost();
         ChangeScene(Scene.YouLost);
     }
 

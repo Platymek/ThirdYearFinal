@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_2yide"]
 
-[node name="Pause" node_paths=PackedStringArray("initialButton") instance=ExtResource("1_2yide")]
-initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Resume")
+[node name="Pause" node_paths=PackedStringArray("_initialButton") instance=ExtResource("1_2yide")]
+_initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Resume")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
 text = "- Pause -"

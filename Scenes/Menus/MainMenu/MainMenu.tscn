@@ -3,12 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_j2a6o"]
 [ext_resource type="Script" path="res://Scenes/Menus/MainMenu/MainMenu.cs" id="2_knh7x"]
 
-[node name="MainMenu" node_paths=PackedStringArray("_continueButton", "_fullScreenButton", "_hardModeButton", "_playButton", "_initialButton") instance=ExtResource("1_j2a6o")]
+[node name="MainMenu" node_paths=PackedStringArray("_continueButton", "_fullScreenButton", "_hardModeButton", "_playButton", "_howToPlayButton", "_initialButton") instance=ExtResource("1_j2a6o")]
 script = ExtResource("2_knh7x")
 _continueButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
 _fullScreenButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Fullscreen")
 _hardModeButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HardMode")
 _playButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play")
+_howToPlayButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HowToPlay")
 _initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]

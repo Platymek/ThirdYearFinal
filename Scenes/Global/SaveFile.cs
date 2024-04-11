@@ -19,7 +19,16 @@ public partial class SaveFile : Resource
 
     // Settings //
 
-    [Export] public bool Fullscreen { get; private set; }
+    private bool _fullscreen;
+    [Export] public bool Fullscreen 
+    { 
+        get => _fullscreen;
+        set
+        {
+            _fullscreen = value;
+            Save();
+        }
+    }
 
 
     // Stats for Current Saved Game //
@@ -83,12 +92,6 @@ public partial class SaveFile : Resource
     public void ConfirmHowToPlayRead()
     {
         HowToPlayRead = true;
-        Save();
-    }
-
-    public void ToggleFullscreen()
-    {
-        Fullscreen = !Fullscreen;
         Save();
     }
 

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_jq4dd"]
 
-[node name="Menu" node_paths=PackedStringArray("initialButton") instance=ExtResource("1_jq4dd")]
-initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
+[node name="Menu" node_paths=PackedStringArray("_initialButton") instance=ExtResource("1_jq4dd")]
+_initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
 text = "- Round Won -"

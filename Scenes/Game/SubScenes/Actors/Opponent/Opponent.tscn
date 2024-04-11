@@ -1,10 +1,11 @@
-[gd_scene load_steps=50 format=3 uid="uid://f0emr35uydsf"]
+[gd_scene load_steps=51 format=3 uid="uid://f0emr35uydsf"]
 
 [ext_resource type="PackedScene" uid="uid://w172lg7775ce" path="res://Scenes/Game/SubScenes/Actors/Actor.tscn" id="1_2y64p"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/Opponent.cs" id="2_oqqya"]
 [ext_resource type="Resource" uid="uid://d0x4kt3xr13g6" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStatsDefault.tres" id="3_v06ba"]
 [ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentAttackStats.cs" id="4_m6ksn"]
 [ext_resource type="PackedScene" uid="uid://goixjvylabf5" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Model.tscn" id="5_kgm2n"]
+[ext_resource type="Texture2D" uid="uid://d0b5t8iv82smp" path="res://icon.svg" id="6_pb7ow"]
 
 [sub_resource type="Animation" id="Animation_y2qe3"]
 resource_name = "3_hit_combo_1hit"
@@ -1656,7 +1657,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(2),
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["wastin_time_end"]
@@ -1664,7 +1665,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_gr43t"]
 resource_name = "wastin_time_end"
-length = 3.6
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1672,7 +1673,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(3.6),
+"times": PackedFloat32Array(2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -1756,10 +1757,14 @@ _data = {
 height = 3.0
 radius = 0.9
 
-[node name="Opponent" instance=ExtResource("1_2y64p")]
+[node name="Opponent" node_paths=PackedStringArray("_uniqueAttackLabel", "_model", "_secondCheck") instance=ExtResource("1_2y64p")]
 script = ExtResource("2_oqqya")
 _startState = ""
+_uniqueAttackLabel = NodePath("UniqueAttackLabel")
+_model = NodePath("Model")
+_secondCheck = NodePath("SecondCheck")
 _stats = ExtResource("3_v06ba")
+State = "wastin_time_end"
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
@@ -1786,21 +1791,28 @@ shape = SubResource("CylinderShape3D_jscm4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, -1)
 visible = false
 
-[node name="IdleTimer" type="Timer" parent="." index="5"]
-one_shot = true
-
-[node name="Model" parent="." index="6" instance=ExtResource("5_kgm2n")]
+[node name="Model" parent="." index="5" instance=ExtResource("5_kgm2n")]
 transform = Transform3D(1.58603, 0, -0.739582, 0, 1.75, 0, 0.739582, 0, 1.58603, -0.4, 0, 0.4)
 _checkLeftHand = true
 _checkRightHand = true
 
-[node name="DropShadow" parent="." index="7"]
+[node name="DropShadow" parent="." index="6"]
 transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.33617e-07, 5.27, 4.37114e-08, 0, 0.01, 0)
 
-[node name="UniqueAttackLabel" type="Label3D" parent="." index="8"]
+[node name="UniqueAttackLabel" type="Label3D" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, -1)
 billboard = 2
 text = "Unique Attack
 "
+
+[node name="SecondCheck" type="Node3D" parent="." index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="Sprite3D" type="Sprite3D" parent="SecondCheck" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
+pixel_size = 0.0025
+billboard = 1
+no_depth_test = true
+texture = ExtResource("6_pb7ow")
 
 [connection signal="ActorHurt" from="Model" to="." method="OnActorHurt"]

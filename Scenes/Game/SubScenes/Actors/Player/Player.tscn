@@ -486,6 +486,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id="Animation_tx1tu"]
 resource_name = "punch_light"
+length = 0.75
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -493,7 +494,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.75),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -557,7 +558,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.5),
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -593,7 +594,7 @@ tracks/3/path = NodePath("AttackStats:CheckDamage")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.5, 1.5),
+"times": PackedFloat32Array(0.5, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -605,7 +606,7 @@ tracks/4/path = NodePath("Model:_checkRightHand")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.5, 1.5),
+"times": PackedFloat32Array(0.5, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -691,7 +692,7 @@ libraries = {
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_7fncs")
-PunchChargeState = 1
+PunchChargeState = 0
 Cancellable = true
 Damage = 1.0
 Knock = 1.0
@@ -709,7 +710,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="InputBufferTimer" type="Timer" parent="." index="5"]
-wait_time = 0.5
+wait_time = 0.25
 one_shot = true
 
 [node name="Hitbox" parent="." index="6"]
@@ -724,8 +725,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.497781)
 visible = false
 
 [node name="Model" parent="." index="8" instance=ExtResource("5_pdhgb")]
-_checkRightHand = true
+_checkLeftHand = true
 NextAnimationLength = 0.9
+Animation = "charge_light"
 
 [node name="DropShadow" parent="." index="9"]
 transform = Transform3D(-3, 2.62268e-07, 3.82137e-15, 0, -1.31134e-07, 1, 2.62268e-07, 3, 4.37114e-08, 0, 0.01, 0)
