@@ -3,11 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_j2a6o"]
 [ext_resource type="Script" path="res://Scenes/Menus/MainMenu/MainMenu.cs" id="2_knh7x"]
 
-[node name="MainMenu" node_paths=PackedStringArray("_continueButton", "_fullScreenButton", "_hardModeButton", "_initialButton") instance=ExtResource("1_j2a6o")]
+[node name="MainMenu" node_paths=PackedStringArray("_continueButton", "_fullScreenButton", "_hardModeButton", "_playButton", "_initialButton") instance=ExtResource("1_j2a6o")]
 script = ExtResource("2_knh7x")
 _continueButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
 _fullScreenButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Fullscreen")
 _hardModeButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HardMode")
+_playButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play")
 _initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue")
 
 [node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
@@ -26,30 +27,37 @@ layout_mode = 2
 text = "Final Challenge
 "
 
-[node name="HSeparator2" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3"]
+[node name="HowToPlay" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="3"]
+layout_mode = 2
+toggle_mode = true
+text = "How To Play"
+
+[node name="HSeparator2" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
 layout_mode = 2
 
-[node name="Fullscreen" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="4"]
+[node name="Fullscreen" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="5"]
 layout_mode = 2
 toggle_mode = true
 text = "Fullscreen"
 
-[node name="Stats" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="5"]
+[node name="Stats" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="6"]
 layout_mode = 2
 text = "Stats
 "
 
-[node name="HSeparator" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="6"]
+[node name="HSeparator" type="HSeparator" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="7"]
 layout_mode = 2
 
-[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="7"]
+[node name="Exit" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="8"]
 layout_mode = 2
 theme_type_variation = &"RiskButton"
 text = "Exit"
 
+[connection signal="ready" from="." to="." method="SetVisibilities"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue" to="." method="OnContinuePressed"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play" to="." method="OnPlayPressed"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HardMode" to="." method="OnPlayPressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HowToPlay" to="." method="OnHowToPlayPressed"]
 [connection signal="toggled" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Fullscreen" to="." method="OnFullscreenToggled"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Stats" to="." method="OnStatsPressed"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Exit" to="." method="OnExitPressed"]

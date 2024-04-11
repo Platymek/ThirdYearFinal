@@ -1,0 +1,136 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmxlikdurjbj8"]
+
+[ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_50omj"]
+[ext_resource type="Texture2D" uid="uid://dsogkenjqfma4" path="res://KenneyButtonPrompts/Tiles (White)/tile_0212.png" id="2_tmgig"]
+[ext_resource type="Script" path="res://Scenes/Menus/HowToPlay/HowToPlay.cs" id="2_vigdu"]
+[ext_resource type="Texture2D" uid="uid://bkx7hwrirpylh" path="res://KenneyButtonPrompts/Tiles (White)/tile_0313.png" id="3_mjnk0"]
+[ext_resource type="Texture2D" uid="uid://4uhfqcsnukcx" path="res://KenneyButtonPrompts/Tiles (White)/tile_0077.png" id="4_gf8ns"]
+[ext_resource type="Texture2D" uid="uid://bv58vmcm48j1w" path="res://KenneyButtonPrompts/Tiles (White)/tile_0312.png" id="5_5qgbv"]
+[ext_resource type="Texture2D" uid="uid://dop7ndbs88jl" path="res://KenneyButtonPrompts/Tiles (White)/tile_0078.png" id="6_7cejp"]
+[ext_resource type="Texture2D" uid="uid://o2wx2lbds2qh" path="res://KenneyButtonPrompts/Tiles (White)/tile_0624.png" id="7_tgh3f"]
+
+[node name="HowToPlay" node_paths=PackedStringArray("_initialButton") instance=ExtResource("1_50omj")]
+script = ExtResource("2_vigdu")
+_initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer/BackToMenu")
+
+[node name="Title" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="0"]
+text = "- How To Play -"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="0"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer" index="0"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Move" type="HBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Move" index="0"]
+layout_mode = 2
+text = "Move:"
+
+[node name="Keyboard" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Move" index="1"]
+layout_mode = 2
+text = "WASD"
+
+[node name="Slash" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Move" index="2"]
+layout_mode = 2
+text = "/"
+
+[node name="Controller" type="TextureRect" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Move" index="3"]
+layout_mode = 2
+texture = ExtResource("2_tmgig")
+
+[node name="MoveLabel" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="1"]
+layout_mode = 2
+theme_type_variation = &"SmallFont"
+text = "Being knocked against the wall does extra damage so make sure you have good positioning!"
+autowrap_mode = 2
+
+[node name="Attack" type="HBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Attack" index="0"]
+layout_mode = 2
+text = "Attack:"
+
+[node name="Mouse" type="TextureRect" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Attack" index="1"]
+layout_mode = 2
+texture = ExtResource("4_gf8ns")
+
+[node name="Slash" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Attack" index="2"]
+layout_mode = 2
+text = "/"
+
+[node name="Controller" type="TextureRect" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Attack" index="3"]
+layout_mode = 2
+texture = ExtResource("3_mjnk0")
+
+[node name="Attacklabel" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="3"]
+layout_mode = 2
+theme_type_variation = &"SmallFont"
+text = "Hold the button to do more damage! The opponent can only be hit during an attack so make sure to time these carefully!"
+autowrap_mode = 2
+
+[node name="Dodge" type="HBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Dodge" index="0"]
+layout_mode = 2
+text = "Dodge:"
+
+[node name="Keyboard" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Dodge" index="1"]
+layout_mode = 2
+text = "Space"
+
+[node name="Slash" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Dodge" index="2"]
+layout_mode = 2
+text = "/"
+
+[node name="Controller" type="TextureRect" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Dodge" index="3"]
+layout_mode = 2
+texture = ExtResource("5_5qgbv")
+
+[node name="DodgeLabel" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="5"]
+layout_mode = 2
+theme_type_variation = &"SmallFont"
+text = "Used for quick positioning and moving out of the way of attacks."
+autowrap_mode = 2
+
+[node name="Block" type="HBoxContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="6"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Block" index="0"]
+layout_mode = 2
+text = "Block:"
+
+[node name="Mouse" type="TextureRect" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Block" index="1"]
+layout_mode = 2
+texture = ExtResource("6_7cejp")
+
+[node name="Slash" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Block" index="2"]
+layout_mode = 2
+text = "/"
+
+[node name="Controller" type="TextureRect" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer/Block" index="3"]
+layout_mode = 2
+texture = ExtResource("7_tgh3f")
+
+[node name="BlockLabel" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/ScrollContainer/VBoxContainer" index="7"]
+layout_mode = 2
+theme_type_variation = &"SmallFont"
+text = "The start of your block is invincible so make sure you time your blocks well"
+autowrap_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+
+[node name="BackToMenu" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer" index="0"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="BackPressed" from="." to="." method="OnBackPressedDefault"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer/BackToMenu" to="." method="OnBackPressed"]

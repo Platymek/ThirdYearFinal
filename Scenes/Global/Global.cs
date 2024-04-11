@@ -41,8 +41,7 @@ public partial class Global : Node
         {
             _fullscreen = value;
 
-            SaveFile.Fullscreen = Fullscreen;
-            SaveFile.Save();
+            SaveFile.ToggleFullscreen();
 
 
             if (Fullscreen)
@@ -70,6 +69,10 @@ public partial class Global : Node
 
 		_opponentUniqueAttacks = GetNode("OpponentUniqueAttacks");
 
+
+        // if a save file has been specified, then the user
+        // is debugging and therefore a savefile need not be loaded
+        if (SaveFile != null) return;
 
         // load main save file
         if (SaveFile.FileExists())
@@ -345,6 +348,7 @@ public partial class Global : Node
         YouLost,
         YouWon,
         Stats,
+        HowToPlay,
     }
 
 	public void ChangeScene(Scene scene)
@@ -360,7 +364,7 @@ public partial class Global : Node
 
 			case Scene.MainMenu:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
+				GetTree().ChangeSceneToFile("res://Scenes/Menus/MainMenu/MainMenu.tscn");
 
 				break;
 
@@ -396,6 +400,13 @@ public partial class Global : Node
             case Scene.Stats:
 
                 GetTree().ChangeSceneToFile("res://Scenes/Menus/Stats/Stats.tscn");
+
+                break;
+
+
+            case Scene.HowToPlay:
+
+                GetTree().ChangeSceneToFile("res://Scenes/Menus/HowToPlay/HowToPlay.tscn");
 
                 break;
         }
