@@ -296,8 +296,6 @@ public partial class Opponent : Actor
 					Position + _secondCheck.Position.Rotated(Vector3.Up, Rotation.Y))
                     .DistanceTo(Vector2.Zero);
 
-				GD.Print(distanceFromCentreSecond);
-
 
                 // change attack type by first checking the distance of the
                 // opponent from the centre

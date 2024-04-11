@@ -18,4 +18,5 @@ theme_type_variation = &"RiskButton"
 text = "Exit without saving"
 
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Resume" to="." method="OnResumePressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Resume" to="." method="set_visible" binds= [false]]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/BackToMenu" to="." method="OnMenuPressed"]
