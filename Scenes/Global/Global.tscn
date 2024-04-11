@@ -13,7 +13,7 @@ ClosingInDistance = 1.5
 IdleDuration = 2.0
 CloseToWallDistance = 1.25
 MixUpChance = 0.25
-CloseToWallAttacks = Array[String](["Wastin Time"])
+CloseToWallAttacks = Array[String]([])
 FarFromWallAttacks = Array[String]([])
 NeutralAttacks = Array[String]([])
 MixUpAttacks = Array[String]([])
@@ -29,11 +29,11 @@ KnockReactDeceleration = 0.75
 [node name="Global" type="Node"]
 process_mode = 3
 script = ExtResource("1_mbovf")
+RoundsToWin = 3
 _forcedTypeSelection = Array[int]([2, 2, 1])
 _forcedTypeSelectionEnabled = Array[bool]([true, true, false, false, false, false])
 PlayerStats = ExtResource("2_lj5dc")
 OpponentStats = ExtResource("3_ll254")
-Debug = true
 DebugPlayerStats = ExtResource("2_lj5dc")
 DebugOpponentStats = SubResource("Resource_o2fbd")
 

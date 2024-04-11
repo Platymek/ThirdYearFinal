@@ -790,7 +790,7 @@ tracks/6/keys = {
 
 [sub_resource type="Animation" id="Animation_3kyj6"]
 resource_name = "dig_up_jump_jump"
-length = 2.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -810,7 +810,7 @@ tracks/1/path = NodePath(".:State")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(2),
+"times": PackedFloat32Array(1.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -822,7 +822,7 @@ tracks/2/path = NodePath("AttackStats:ClosingInSpeed")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.6),
+"times": PackedFloat32Array(0, 0.15, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 6.0, 0.0]
@@ -1764,7 +1764,6 @@ _uniqueAttackLabel = NodePath("UniqueAttackLabel")
 _model = NodePath("Model")
 _secondCheck = NodePath("SecondCheck")
 _stats = ExtResource("3_v06ba")
-State = "wastin_time_end"
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
@@ -1777,7 +1776,6 @@ blend_times = [&"sumo_advance_right", &"sumo_advance_left", 0.01, &"sumo_advance
 script = ExtResource("4_m6ksn")
 ClosingInSpeed = 4.0
 StrafingSpeed = 0.0
-Damage = 0.1
 
 [node name="CollisionBox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
@@ -1807,6 +1805,7 @@ text = "Unique Attack
 
 [node name="SecondCheck" type="Node3D" parent="." index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+visible = false
 
 [node name="Sprite3D" type="Sprite3D" parent="SecondCheck" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
