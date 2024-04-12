@@ -52,9 +52,17 @@ public partial class Menu : Control
 		GetTree().Paused = false;
 	}
 
-	private void OnContinuePressed()
+	private void OnContinuePressed(bool load)
 	{
-		Global.PrepareContinueGame();
+		if (load)
+		{
+			Global.PrepareContinueGame();
+		}
+		else
+		{
+			Global.OpponentStats.Delete();
+		}
+
 		GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundNew/RoundNew.tscn");
 	}
 

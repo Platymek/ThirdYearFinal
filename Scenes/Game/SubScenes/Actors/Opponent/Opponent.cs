@@ -22,6 +22,9 @@ public partial class Opponent : Actor
 	private int _sumoLimit;
 	private int _last3Hit = 0;
 
+	private int[] _attackIndexes
+		= new[] { 0, 0, 0, 0, };
+
 	public override string State
 	{
 		get => base.State;
@@ -31,12 +34,11 @@ public partial class Opponent : Actor
 			if (_opponentAttackStats == null) return;
 			if (State == "death") return;
 
+
 			_opponentAttackStats.ClosingInSpeed = 0;
 			_opponentAttackStats.StrafingSpeed = 0;
 			_opponentAttackStats.DamageReactMutliplier = 1;
 			_opponentAttackStats.KnockReactMutliplier = 1;
-
-			_model.StandardMaterial3D.AlbedoColor = new Color("FFA300");
 
 			string state = value;
 
@@ -46,8 +48,6 @@ public partial class Opponent : Actor
 
 					_opponentAttackStats.ClosingInSpeed = 1;
 					_opponentAttackStats.StrafingSpeed = 1;
-
-					_model.StandardMaterial3D.AlbedoColor = new Color("1D2B53");
 
 					break;
 
@@ -66,8 +66,6 @@ public partial class Opponent : Actor
 
 
 				case "3 Hit Combo":
-
-					GD.Randomize();
 
 					var states = new[] { "3_hit_combo_1hit",
 						"3_hit_combo_2hit", "3_hit_combo_3hit" };
@@ -185,9 +183,6 @@ public partial class Opponent : Actor
 					break;
 			}
 
-            _model.StandardMaterial3D.AlbedoColor = new Color("FFA300");
-            GD.Print(_model.StandardMaterial3D.AlbedoColor);
-
 			base.State = state;
 		}
 	}
@@ -225,6 +220,7 @@ public partial class Opponent : Actor
 	public override void _Ready()
 	{
 		base._Ready();
+
 
 		GD.Randomize();
 		
@@ -387,27 +383,59 @@ public partial class Opponent : Actor
 
 	private void StartAttack()
 	{
-		GD.Randomize();
-
 		float attackChance = GD.Randf();
+		GD.Print(attackChance);
 
-		Array<string> attackList = _opponentStats.CurrentUniqueAttacks[
-			_currentAttackType];
-		
-		Array<string> mixUpList = _opponentStats.CurrentUniqueAttacks[
-			AttackTypes.MixUp];
 
-		if (attackList.Count == 0 && mixUpList.Count == 0) return;
+		string attackName;
 
-		if ((attackChance <= _opponentStats.MixUpChance
-			|| attackList.Count == 0)
-			&& mixUpList.Count != 0)
+        if (attackChance <= _opponentStats.MixUpChance)
 		{
-			State = mixUpList.PickRandom();
-			return;
+			attackName
+                = PickAttackFromCategory(AttackTypes.MixUp);
+			
+			// if there are any attacks to pick from, set the
+			// state to that attack
+			if (attackName != null)
+			{
+				State = attackName;
+				return;
+			}
 		}
-		
-		State = attackList.PickRandom();
+
+
+        attackName
+            = PickAttackFromCategory(AttackTypes.MixUp);
+
+        if (attackName != null) State = attackName;
+    }
+
+	private string PickAttackFromCategory(AttackTypes attackType)
+    {
+        Array<string> attackList = _opponentStats.CurrentUniqueAttacks[
+            attackType];
+
+		if (attackList.Count == 0) return null;
+
+
+        string attackName 
+			= attackList
+			[_attackIndexes[(int)attackType]++];
+
+
+		// if the list has been fully progresses, restart from the start
+		// and shuffle the list to make sure every attack is frequently
+		// performed
+		if (_attackIndexes[(int)attackType] 
+			== attackList.Count)
+		{
+			_attackIndexes[(int)attackType] = 0;
+
+			GD.Randomize();
+			attackList.Shuffle();
+        }
+
+		return attackName;
 	}
 
 	public override void Hurt(float damage, float knock)

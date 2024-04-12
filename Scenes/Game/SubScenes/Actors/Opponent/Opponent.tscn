@@ -1799,6 +1799,7 @@ transform = Transform3D(-4.96, 4.60718e-07, 3.82137e-15, 0, -2.30359e-07, 1, 4.3
 
 [node name="UniqueAttackLabel" type="Label3D" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, -1)
+visible = false
 billboard = 2
 text = "Unique Attack
 "

@@ -9,6 +9,7 @@ public partial class Actor : CharacterBody3D
 
 	[Export] public Node3D Target { protected set; get; }
 	[Export] protected ActorStats _stats;
+	[Export] public bool _debugMessages;
 	
 	private AnimationPlayer _animationPlayer;
 	protected AttackStats AttackStats;
@@ -72,7 +73,10 @@ public partial class Actor : CharacterBody3D
 				}
 			}
 			
-			GD.Print($"{Name} change State to {value}");
+			if (_debugMessages)
+            {
+                GD.Print($"{Name} change State to {value}");
+            }
 		}
 	}
 	
@@ -181,8 +185,11 @@ public partial class Actor : CharacterBody3D
 		_previousDamage = damage;
 		_previousKnock = knock;
 
-		GD.Print($"{Name} was hit for {AttackStats.DamageReactMutliplier} damage " +
+		if (_debugMessages)
+		{
+			GD.Print($"{Name} was hit for {AttackStats.DamageReactMutliplier} damage " +
 				 $"and {finalKnock} knock, with only {HealthPercentage}% health left");
+		}
 
 		if (Health <= 0)
 		{
@@ -215,8 +222,12 @@ public partial class Actor : CharacterBody3D
 		
 		// hurt with previous damage but cancel knockback
 		Hurt(_previousDamage, 0);
-			
-		GD.Print($"Actor {Name} Wall Bounced!");
+
+
+		if (_debugMessages)
+		{
+			GD.Print($"Actor {Name} Wall Bounced!");
+		}
 
         // can only bounce once
         State = "idle";

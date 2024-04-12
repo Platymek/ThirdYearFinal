@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using Godot.Collections;
-using static Global;
 
 public partial class Global : Node
 {
@@ -29,9 +28,11 @@ public partial class Global : Node
 	// For Current Game //
 
 	private Node _opponentUniqueAttacks;
-	public Node RemainingOpponentUniqueAttacks;
 	public Attack LastAddedAttack;
 	public int CurrentRoundProgress;
+
+	public Node RemainingOpponentUniqueAttacks;
+	private OpponentStats _savedOpponentStats;
 
 
 	// Settings //
@@ -49,7 +50,8 @@ public partial class Global : Node
 
 			if (Fullscreen)
 			{
-				DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+				DisplayServer.WindowSetMode(
+					DisplayServer.WindowMode.ExclusiveFullscreen);
 				return;
 			}
 
@@ -114,15 +116,26 @@ public partial class Global : Node
 	// prepare starting stats to get ready to start the game
 	public void PrepareNewGame()
 	{
-		RefreshActorStats();
 		InitialiseEligibleAttackTypes();
 
 		CurrentRoundProgress = 1;
 
 		if (!Debug)
 		{
+			// if remaining unique attacks node already exists, free it
+			if (RemainingOpponentUniqueAttacks != null)
+			{
+				RemainingOpponentUniqueAttacks.Free();
+			}
+
 			// duplicate the list of reimaing attacks as to not affect future games
-			RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
+			RemainingOpponentUniqueAttacks 
+				= _opponentUniqueAttacks
+					.Duplicate();
+
+
+			AddChild(RemainingOpponentUniqueAttacks);
+			RefreshActorStats();
 
 			// add new attack to each of the specified categories
 			foreach (
@@ -154,7 +167,22 @@ public partial class Global : Node
 		LoadActorStats();
 		CurrentRoundProgress = SaveFile.SavedRoundProgress;
 
-		RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
+
+		GD.Print(
+			OpponentStats
+				.CurrentUniqueAttacks);
+
+
+		// if remaining unique attacks node already exists, free it
+		if (RemainingOpponentUniqueAttacks != null)
+		{
+			RemainingOpponentUniqueAttacks.Free();
+		}
+
+		RemainingOpponentUniqueAttacks 
+			= _opponentUniqueAttacks
+				.Duplicate();
+
 
 		// remove the already equipped unique attacks
 		foreach (Opponent.AttackTypes attackType 
@@ -167,7 +195,7 @@ public partial class Global : Node
 				RemainingOpponentUniqueAttacks
 					.GetNode(attackType.ToString())
 					.GetNode(attack)
-					.QueueFree();
+					.Free();
 			}
 
 			// check the category is still eligible
@@ -184,6 +212,7 @@ public partial class Global : Node
 		// save opponent stats and player stats
 		PlayerStats.Save();
 		OpponentStats.Save();
+
 
 		// save SaveFile with current round progress
 		SaveFile.SavedRoundProgress = CurrentRoundProgress;
@@ -254,7 +283,9 @@ public partial class Global : Node
 		GD.Randomize();
 
 		// get a random attack from the specified category
-		Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(attackType.ToString());
+		Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(
+			attackType.ToString());
+			
 		Attack newAttack = categoryNode.GetChildren().PickRandom() as Attack;
 		Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
 
@@ -272,6 +303,7 @@ public partial class Global : Node
 	{
 		GD.Randomize();
 
+
 		// the round number has to have 2 taken away as it is the second round
 		// and round number starts with 1
 		int roundOffset = 2;
@@ -287,7 +319,9 @@ public partial class Global : Node
 
 	public float GetHealthBonus(Opponent.AttackTypes category)
 	{
-		int numberOfUniqueAttacks = OpponentStats.CurrentUniqueAttacks[category].Count + 1;
+		int numberOfUniqueAttacks 
+			= OpponentStats.CurrentUniqueAttacks[category].Count + 1;
+			
 		return 0.25f * numberOfUniqueAttacks;
 	}
 
@@ -300,6 +334,8 @@ public partial class Global : Node
 	{
 		PlayerStats = _playerStatsDefault.Duplicate() as PlayerStats;
 		OpponentStats = _opponentStatsDefault.Duplicate() as OpponentStats;
+
+		InitialiseEligibleAttackTypes();
 	}
 
 	private void LoadActorStats()
@@ -364,56 +400,64 @@ public partial class Global : Node
 		{
 			case Scene.Game:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Game/Game.tscn");
 
 				break;
 
 
 			case Scene.MainMenu:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Menus/MainMenu/MainMenu.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Menus/MainMenu/MainMenu.tscn");
 
 				break;
 
 
 			case Scene.RoundEnd:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundEnd/RoundEnd.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Menus/RoundEnd/RoundEnd.tscn");
 
 				break;
 
 
 			case Scene.RoundNew:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundNew/RoundNew.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Menus/RoundNew/RoundNew.tscn");
 
 				break;
 
 
 			case Scene.YouLost:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Menus/YouLost/YouLost.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Menus/YouLost/YouLost.tscn");
 
 				break;
 
 
 			case Scene.YouWon:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Menus/YouWon/YouWon.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Menus/YouWon/YouWon.tscn");
 
 				break;
 
 
 			case Scene.Stats:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Menus/Stats/Stats.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Menus/Stats/Stats.tscn");
 
 				break;
 
 
 			case Scene.HowToPlay:
 
-				GetTree().ChangeSceneToFile("res://Scenes/Menus/HowToPlay/HowToPlay.tscn");
+				GetTree().ChangeSceneToFile(
+					"res://Scenes/Menus/HowToPlay/HowToPlay.tscn");
 
 				break;
 		}

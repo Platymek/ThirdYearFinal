@@ -30,9 +30,6 @@ public partial class ActorModel : Node
 				_animationPlayer.SpeedScale = (float)(_animationPlayer.CurrentAnimationLength
 					/ NextAnimationLength);
 
-				GD.Print($"Animation Speed: {_animationPlayer.CurrentAnimationLength} / {NextAnimationLength}" +
-					$" = {(float)(_animationPlayer.CurrentAnimationLength / NextAnimationLength)}");
-
 				NextAnimationLength = 0;
 			}
 			else

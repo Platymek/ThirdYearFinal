@@ -20,18 +20,23 @@ public partial class PlayerStats : ActorStats
 
     public static PlayerStats Load()
     {
-        if (FileExists())
-        {
-            var save = ResourceLoader.Load<PlayerStats>(
-                _savePath);
+        if (!FileExists()) return null;
 
-            // delete the file after loading
-            DirAccess.RemoveAbsolute(_savePath);
+        var save = ResourceLoader.Load<PlayerStats>(
+            _savePath);
 
-            return save;
-        }
+        // delete the file after loading
+        save.Delete();
 
-        return null;
+        return save;
+    }
+
+    public void Delete()
+    {
+        if (!FileExists()) return;
+
+        // delete the file after loading
+        DirAccess.RemoveAbsolute(_savePath);
     }
 
     public void Save()

@@ -63,21 +63,26 @@ public partial class OpponentStats : ActorStats
         return FileAccess.FileExists(_savePath);
     }
 
+
     public static OpponentStats Load()
     {
-        if (FileExists())
-        {
-            var save = ResourceLoader.Load<OpponentStats>(
-                _savePath);
+        if (!FileExists()) return null;
 
-            // delete the file after loading
-            DirAccess.RemoveAbsolute(_savePath);
+        var save = ResourceLoader.Load<OpponentStats>(
+            _savePath);
 
-            return save;
-        }
+        // delete the file after loading
+        save.Delete();
 
-        // if the file does not exist, return null
-        return null;
+        return save;
+    }
+
+    public void Delete()
+    {
+        if (!FileExists()) return;
+
+        // delete the file after loading
+        DirAccess.RemoveAbsolute(_savePath);
     }
 
     public void Save()

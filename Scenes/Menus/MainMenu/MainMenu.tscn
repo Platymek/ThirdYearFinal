@@ -55,7 +55,7 @@ theme_type_variation = &"RiskButton"
 text = "Exit"
 
 [connection signal="ready" from="." to="." method="SetVisibilities"]
-[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue" to="." method="OnContinuePressed"]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Continue" to="." method="OnContinuePressed" binds= [true]]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/Play" to="." method="OnPlayPressed"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HardMode" to="." method="OnPlayPressed"]
 [connection signal="pressed" from="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HowToPlay" to="." method="OnHowToPlayPressed"]

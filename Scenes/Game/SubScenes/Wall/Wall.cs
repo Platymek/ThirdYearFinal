@@ -29,7 +29,6 @@ public partial class Wall : StaticBody3D
 		foreach (var actor in collidedActors)
 		{
 			_collidingActors.Remove(actor);
-			GD.Print($"{actor.Name} stopped Colliding!");
 		}
 	}
 
@@ -38,7 +37,6 @@ public partial class Wall : StaticBody3D
 		if (area.Owner is not Actor actor) return;
 		
 		_collidingActors.Add(actor);
-		GD.Print($"{actor.Name} started Colliding!");
 	}
 
 	private void OnWallExited(Area3D area)
@@ -46,6 +44,5 @@ public partial class Wall : StaticBody3D
 		if (area.Owner is not Actor actor) return;
 		
 		_collidingActors.Remove(actor);
-		GD.Print($"{actor.Name} stopped Colliding!");
 	}
 }

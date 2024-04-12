@@ -16,7 +16,7 @@ MixUpChance = 0.25
 CloseToWallAttacks = Array[String]([])
 FarFromWallAttacks = Array[String]([])
 NeutralAttacks = Array[String]([])
-MixUpAttacks = Array[String]([])
+MixUpAttacks = Array[String](["Big Chop", "Wastin Time"])
 MaxHealth = 1.0
 Speed = 1.0
 TrackSpeed = 0.25
@@ -29,7 +29,7 @@ KnockReactDeceleration = 0.75
 [node name="Global" type="Node"]
 process_mode = 3
 script = ExtResource("1_mbovf")
-_forcedTypeSelection = Array[int]([2, 2, 1])
+_forcedTypeSelection = Array[int]([2, 2, 0])
 _forcedTypeSelectionEnabled = Array[bool]([true, true, false, false, false, false])
 _playerStatsDefault = ExtResource("2_lj5dc")
 _opponentStatsDefault = ExtResource("3_ll254")

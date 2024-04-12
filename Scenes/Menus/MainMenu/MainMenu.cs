@@ -16,21 +16,21 @@ public partial class MainMenu : Menu
 	// needs to be called after the ready function because Global
 	// may not have loaded the save file yet
 	private void SetVisibilities()
-    {
-        _continueButton.Visible = Global.HasSave();
-        _fullScreenButton.ButtonPressed = Global.SaveFile.Fullscreen;
+	{
+		_continueButton.Visible = Global.HasSave();
+		_fullScreenButton.ButtonPressed = Global.SaveFile.Fullscreen;
 		_hardModeButton.Visible = Global.SaveFile.UnlockedHardMode;
 		_playButton.Visible = Global.SaveFile.HowToPlayRead;
 
 		// focus button based on what is and is not visible
 		if (!_playButton.Visible)
 		{
-            _howToPlayButton.GrabFocus();
-        }
+			_howToPlayButton.GrabFocus();
+		}
 		else if (!_continueButton.Visible)
 		{
-            _playButton.GrabFocus();
-        }
+			_playButton.GrabFocus();
+		}
 	}
 
 	private void OnFullscreenToggled(bool toggled_on)
