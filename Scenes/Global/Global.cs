@@ -5,56 +5,58 @@ using static Global;
 
 public partial class Global : Node
 {
-    // Properties //
+	// Properties //
 
-    [Export] public SaveFile SaveFile;
+	[Export] public SaveFile SaveFile;
 
 	[ExportGroup("Game Constants")]
 	[Export] public int RoundsToWin = 6;
-    [Export] private Array<Opponent.AttackTypes> _forcedTypeSelection;
-    [Export] private Array<bool> _forcedTypeSelectionEnabled;
+	[Export] private Array<Opponent.AttackTypes> _forcedTypeSelection;
+	[Export] private Array<bool> _forcedTypeSelectionEnabled;
 
 	[ExportGroup("Default Stats")]
-    [Export] public PlayerStats PlayerStats;
-	[Export] public OpponentStats OpponentStats;
+	[Export] private PlayerStats _playerStatsDefault;
+	[Export] private OpponentStats _opponentStatsDefault;
+	public PlayerStats PlayerStats;
+	public OpponentStats OpponentStats;
 
 	[ExportGroup("Debug")]
 	[Export] public bool Debug = false;
-    [Export] public PlayerStats DebugPlayerStats;
-    [Export] public OpponentStats DebugOpponentStats;
+	[Export] public PlayerStats DebugPlayerStats;
+	[Export] public OpponentStats DebugOpponentStats;
 
 
 	// For Current Game //
 
-    private Node _opponentUniqueAttacks;
+	private Node _opponentUniqueAttacks;
 	public Node RemainingOpponentUniqueAttacks;
 	public Attack LastAddedAttack;
 	public int CurrentRoundProgress;
 
 
-    // Settings //
+	// Settings //
 
-    private bool _fullscreen;
-    public bool Fullscreen
-    {
-        get => _fullscreen;
+	private bool _fullscreen;
+	public bool Fullscreen
+	{
+		get => _fullscreen;
 
-        set
-        {
-            _fullscreen = value;
-            SaveFile.Fullscreen = value;
+		set
+		{
+			_fullscreen = value;
+			SaveFile.Fullscreen = value;
 
 
-            if (Fullscreen)
-            {
-                DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-                return;
-            }
+			if (Fullscreen)
+			{
+				DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+				return;
+			}
 
-            // else, set to windowed
-            DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
-        }
-    }
+			// else, set to windowed
+			DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+		}
+	}
 
 
 	// array of the currently eligible attack type categories
@@ -62,99 +64,100 @@ public partial class Global : Node
 	private Array<Opponent.AttackTypes> _eligibleAttackTypes;
 
 
-    // Node Functions //
+	// Node Functions //
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		base._Ready();
 
 		_opponentUniqueAttacks = GetNode("OpponentUniqueAttacks");
 
+		RefreshActorStats();
 
-        // if a save file has been specified, then the user
-        // is debugging and therefore a savefile need not be loaded
-        if (SaveFile != null) return;
+		// if a save file has been specified, then the user
+		// is debugging and therefore a savefile need not be loaded
+		if (SaveFile != null) return;
 
-        // load main save file
-        if (SaveFile.FileExists())
-        {
-            SaveFile = SaveFile.Load();
+		// load main save file
+		if (SaveFile.FileExists())
+		{
+			SaveFile = SaveFile.Load();
 
 
-            // Load Settings //
+			// Load Settings //
 
-            Fullscreen = SaveFile.Fullscreen;
-        }
-        else
-        {
-            SaveFile = new SaveFile();
-            SaveFile.Save();
-        }
-    }
+			Fullscreen = SaveFile.Fullscreen;
+		}
+		else
+		{
+			SaveFile = new SaveFile();
+			SaveFile.Save();
+		}
+	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
 
 		if (Input.IsActionJustPressed("fullscreen"))
-        {
-            // toggle fullscreen
-            Fullscreen = !Fullscreen;
-        }
+		{
+			// toggle fullscreen
+			Fullscreen = !Fullscreen;
+		}
 	}
 
 
 	// Functions //
 
-    // Preparing the Game //
+	// Preparing the Game //
 
 	// prepare starting stats to get ready to start the game
 	public void PrepareNewGame()
-    {
-        InitialiseEligibleAttackTypes();
+	{
+		RefreshActorStats();
+		InitialiseEligibleAttackTypes();
 
-        CurrentRoundProgress = 1;
+		CurrentRoundProgress = 1;
 
-        if (!Debug)
-        {
-            // duplicate the list of reimaing attacks as to not affect future games
-            RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
+		if (!Debug)
+		{
+			// duplicate the list of reimaing attacks as to not affect future games
+			RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
 
-            // add new attack to each of the specified categories
-            foreach (
-                Opponent.AttackTypes attackType
-                in new Opponent.AttackTypes[] 
-                {
-			        Opponent.AttackTypes.FarFromWall, 
-                    Opponent.AttackTypes.MixUp
-                })
-            {
-                AddOpponentAttack(GetRandomAttack(attackType));
-            }
+			// add new attack to each of the specified categories
+			foreach (
+				Opponent.AttackTypes attackType
+				in new Opponent.AttackTypes[] 
+				{
+					Opponent.AttackTypes.FarFromWall, 
+					Opponent.AttackTypes.MixUp
+				})
+			{
+				AddOpponentAttack(GetRandomAttack(attackType));
+			}
 
-            GD.Print(OpponentStats.CurrentUniqueAttacks);
+			GD.Print(OpponentStats.CurrentUniqueAttacks);
 			return;
-        }
+		}
 
 		// if debug mode, set the opponent and player stats to their debug stats
-        OpponentStats = DebugOpponentStats;
-        PlayerStats = DebugPlayerStats;
-    }
+		OpponentStats = DebugOpponentStats;
+		PlayerStats = DebugPlayerStats;
+	}
 
 	// prepare for the player to continue the game
 	public void PrepareContinueGame()
-    {
-        InitialiseEligibleAttackTypes();
+	{
+		InitialiseEligibleAttackTypes();
 
-        // function can only be called when these files exist anyway
-        PlayerStats = PlayerStats.Load();
-		OpponentStats = OpponentStats.Load();
+		// function can only be called when these files exist anyway
+		LoadActorStats();
 		CurrentRoundProgress = SaveFile.SavedRoundProgress;
 
-        RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
+		RemainingOpponentUniqueAttacks = _opponentUniqueAttacks.Duplicate();
 
 		// remove the already equipped unique attacks
-        foreach (Opponent.AttackTypes attackType 
+		foreach (Opponent.AttackTypes attackType 
 			in OpponentStats.CurrentUniqueAttacks.Keys) 
 		{
 			foreach (string attack 
@@ -170,7 +173,7 @@ public partial class Global : Node
 			// check the category is still eligible
 			CheckEligibleAndDelete(attackType);
 		}
-    }
+	}
 
 
 	// Data Management //
@@ -178,14 +181,14 @@ public partial class Global : Node
 	// save game
 	public void Save()
 	{
-        // save opponent stats and player stats
-        PlayerStats.Save();
+		// save opponent stats and player stats
+		PlayerStats.Save();
 		OpponentStats.Save();
 
 		// save SaveFile with current round progress
 		SaveFile.SavedRoundProgress = CurrentRoundProgress;
 		SaveFile.Save();
-    }
+	}
 
 	// load player and opponent stats
 	public void Load()
@@ -193,13 +196,13 @@ public partial class Global : Node
 		// load files
 		PlayerStats = PlayerStats.Load();
 		OpponentStats = OpponentStats.Load();
-    }
+	}
 
 	public bool HasSave()
 	{
 		return PlayerStats.FileExists()
 			&& OpponentStats.FileExists();
-    }
+	}
 
 
 	// Attacks //
@@ -222,126 +225,138 @@ public partial class Global : Node
 	private void InitialiseEligibleAttackTypes()
 	{
 		_eligibleAttackTypes = new()
-        {
-            Opponent.AttackTypes.CloseToWall,
-            Opponent.AttackTypes.Neutral,
-            Opponent.AttackTypes.FarFromWall,
-            Opponent.AttackTypes.MixUp,
-        };
-    }
+		{
+			Opponent.AttackTypes.CloseToWall,
+			Opponent.AttackTypes.Neutral,
+			Opponent.AttackTypes.FarFromWall,
+			Opponent.AttackTypes.MixUp,
+		};
+	}
 
 	// check if an attack category has any children, otherwise
 	// mark as ineligible by deleting from eligible list
 	private void CheckEligibleAndDelete(Opponent.AttackTypes attackType)
 	{
-        // if no more children in one category,
-        // delete category from eligible list
-        if (RemainingOpponentUniqueAttacks
-                .GetNode(attackType.ToString())
-                .GetChildren()
-                .Count == 0)
-        {
-            _eligibleAttackTypes.Remove(attackType);
-        }
-    }
+		// if no more children in one category,
+		// delete category from eligible list
+		if (RemainingOpponentUniqueAttacks
+				.GetNode(attackType.ToString())
+				.GetChildren()
+				.Count == 0)
+		{
+			_eligibleAttackTypes.Remove(attackType);
+		}
+	}
 
-    // select a random attack from a specific category and remove it from its list
-    public Attack GetRandomAttack(Opponent.AttackTypes attackType)
-    {
-        GD.Randomize();
+	// select a random attack from a specific category and remove it from its list
+	public Attack GetRandomAttack(Opponent.AttackTypes attackType)
+	{
+		GD.Randomize();
 
-        // get a random attack from the specified category
-        Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(attackType.ToString());
-        Attack newAttack = categoryNode.GetChildren().PickRandom() as Attack;
-        Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
+		// get a random attack from the specified category
+		Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(attackType.ToString());
+		Attack newAttack = categoryNode.GetChildren().PickRandom() as Attack;
+		Attack newAttackDuplicate = newAttack.Duplicate() as Attack;
 
-        // remove attack from remaining list and return name
-        newAttack.Free();
+		// remove attack from remaining list and return name
+		newAttack.Free();
 
-        // check the category is still eligible
-        CheckEligibleAndDelete(attackType);
+		// check the category is still eligible
+		CheckEligibleAndDelete(attackType);
 
-        return newAttackDuplicate;
-    }
+		return newAttackDuplicate;
+	}
 
-    // select a random attack and remove it from its list
-    public Attack GetRandomAttack()
-    {
-        GD.Randomize();
+	// select a random attack and remove it from its list
+	public Attack GetRandomAttack()
+	{
+		GD.Randomize();
 
-        // the round number has to have 2 taken away as it is the second round
-        // and round number starts with 1
-        int roundOffset = 2;
+		// the round number has to have 2 taken away as it is the second round
+		// and round number starts with 1
+		int roundOffset = 2;
 
-        // pick a random category
-        Opponent.AttackTypes randomAttackType
-            = _forcedTypeSelectionEnabled[CurrentRoundProgress - roundOffset]
-            ? _forcedTypeSelection[CurrentRoundProgress - roundOffset]
-            : _eligibleAttackTypes.PickRandom();
+		// pick a random category
+		Opponent.AttackTypes randomAttackType
+			= _forcedTypeSelectionEnabled[CurrentRoundProgress - roundOffset]
+			? _forcedTypeSelection[CurrentRoundProgress - roundOffset]
+			: _eligibleAttackTypes.PickRandom();
 
-        return GetRandomAttack(randomAttackType);
-    }
+		return GetRandomAttack(randomAttackType);
+	}
 
-    public float GetHealthBonus(Opponent.AttackTypes category)
-    {
-        int numberOfUniqueAttacks = OpponentStats.CurrentUniqueAttacks[category].Count + 1;
-        return 0.25f * numberOfUniqueAttacks;
-    }
+	public float GetHealthBonus(Opponent.AttackTypes category)
+	{
+		int numberOfUniqueAttacks = OpponentStats.CurrentUniqueAttacks[category].Count + 1;
+		return 0.25f * numberOfUniqueAttacks;
+	}
 
-    public float GetCurrentOpponentHealth()
-    {
-        return OpponentStats.MaxHealth;
-    }
+	public float GetCurrentOpponentHealth()
+	{
+		return OpponentStats.MaxHealth;
+	}
+
+	private void RefreshActorStats()
+	{
+		PlayerStats = _playerStatsDefault.Duplicate() as PlayerStats;
+		OpponentStats = _opponentStatsDefault.Duplicate() as OpponentStats;
+	}
+
+	private void LoadActorStats()
+	{
+		PlayerStats = PlayerStats.Load();
+		OpponentStats = OpponentStats.Load();
+	}
 
 
-    // Rounds //
+	// Rounds //
 
-    // end round on a win
-    public void EndRoundWin()
-    {
-        // if the player just won the final round
-        if (IsFinalRound())
-        {
-            ChangeScene(Scene.YouWon);
+	// end round on a win
+	public void EndRoundWin()
+	{
+		// if the player just won the final round
+		if (IsFinalRound())
+		{
+			ChangeScene(Scene.YouWon);
 
-            return;
-        }
+			return;
+		}
 
-        // if not the final round, progress and save
-        CurrentRoundProgress++;
-        SaveFile.SavedRoundProgress++;
-        SaveFile.IncrementRoundsWon();
+		// if not the final round, progress and save
+		CurrentRoundProgress++;
+		SaveFile.SavedRoundProgress++;
+		SaveFile.IncrementRoundsWon();
 
-        Save();
-        ChangeScene(Scene.RoundEnd);
-    }
+		Save();
+		ChangeScene(Scene.RoundEnd);
+	}
 
-    // end round on a loss
-    public void EndRoundLoss()
-    {
-        SaveFile.IncrementRoundsLost();
-        ChangeScene(Scene.YouLost);
-    }
+	// end round on a loss
+	public void EndRoundLoss()
+	{
+		SaveFile.IncrementRoundsLost();
+		ChangeScene(Scene.YouLost);
+	}
 
-    public bool IsFinalRound()
+	public bool IsFinalRound()
 	{
 		return CurrentRoundProgress == RoundsToWin;
 	}
 
 
-    // Changing Scene //
+	// Changing Scene //
 
 	public enum Scene
 	{
 		Game,
 		MainMenu,
-        RoundEnd,
+		RoundEnd,
 		RoundNew,
-        YouLost,
-        YouWon,
-        Stats,
-        HowToPlay,
-    }
+		YouLost,
+		YouWon,
+		Stats,
+		HowToPlay,
+	}
 
 	public void ChangeScene(Scene scene)
 	{
@@ -375,32 +390,32 @@ public partial class Global : Node
 				break;
 
 
-            case Scene.YouLost:
+			case Scene.YouLost:
 
-                GetTree().ChangeSceneToFile("res://Scenes/Menus/YouLost/YouLost.tscn");
+				GetTree().ChangeSceneToFile("res://Scenes/Menus/YouLost/YouLost.tscn");
 
-                break;
-
-
-            case Scene.YouWon:
-
-                GetTree().ChangeSceneToFile("res://Scenes/Menus/YouWon/YouWon.tscn");
-
-                break;
+				break;
 
 
-            case Scene.Stats:
+			case Scene.YouWon:
 
-                GetTree().ChangeSceneToFile("res://Scenes/Menus/Stats/Stats.tscn");
+				GetTree().ChangeSceneToFile("res://Scenes/Menus/YouWon/YouWon.tscn");
 
-                break;
+				break;
 
 
-            case Scene.HowToPlay:
+			case Scene.Stats:
 
-                GetTree().ChangeSceneToFile("res://Scenes/Menus/HowToPlay/HowToPlay.tscn");
+				GetTree().ChangeSceneToFile("res://Scenes/Menus/Stats/Stats.tscn");
 
-                break;
-        }
+				break;
+
+
+			case Scene.HowToPlay:
+
+				GetTree().ChangeSceneToFile("res://Scenes/Menus/HowToPlay/HowToPlay.tscn");
+
+				break;
+		}
 	}
 }
