@@ -90,6 +90,8 @@ public partial class Global : Node
 			// Load Settings //
 
 			Fullscreen = SaveFile.Fullscreen;
+
+			GD.Print(SaveFile.RoundsWon);
 		}
 		else
 		{

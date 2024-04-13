@@ -6,4 +6,8 @@
 script = ExtResource("1_plp6i")
 UnlockedHardMode = false
 HowToPlayRead = false
+GamesWon = 0
+RoundsLost = 2
+RoundsWon = 2
+TotalRounds = 1
 Fullscreen = false

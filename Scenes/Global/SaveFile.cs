@@ -11,13 +11,16 @@ public partial class SaveFile : Resource
 
     // Forever Game Stats //
 
-    public int GamesWon { get; private set; }
-    public int RoundsLost { get; private set; }
-    public int RoundsWon { get; private set; }
-    public int TotalRounds { get; private set; }
+    [ExportGroup("Stats")]
+    [Export] public int GamesWon { get; private set; }
+    [Export] public int RoundsLost { get; private set; }
+    [Export] public int RoundsWon { get; private set; }
+    [Export] public int RoundsTotal { get; private set; }
 
 
     // Settings //
+
+    [ExportGroup("Settings")]
 
     private bool _fullscreen;
     [Export] public bool Fullscreen 
@@ -42,14 +45,24 @@ public partial class SaveFile : Resource
 
         false,
         false,
-        false) 
+        false,
+        0,
+        0,
+        0,
+        0,
+        0) 
     { }
 
     public SaveFile(
         
         bool unlockedHardMode,
         bool howToPlayRead,
-        bool fullscreen)
+        bool fullscreen,
+        int gamesWon,
+        int roundsLost,
+        int roundsWon,
+        int totalRounds,
+        int saveRoundProgress)
     {
         // bonus data
         UnlockedHardMode = unlockedHardMode;
@@ -57,35 +70,35 @@ public partial class SaveFile : Resource
         Fullscreen = fullscreen;
 
         // stats
-        GamesWon = 0;
-        RoundsLost = 0;
-        RoundsWon = 0;
-        TotalRounds = 0;
+        GamesWon = gamesWon;
+        RoundsLost = roundsLost;
+        RoundsWon = roundsWon;
+        RoundsTotal = totalRounds;
 
         // extra save data
-        SavedRoundProgress = 0;
+        SavedRoundProgress = saveRoundProgress;
     }
 
 
     // modify properties and autosave //
 
-    public void IncrementGamesWon(int value = 1)
+    public void IncrementGamesWon()
     {
-        GamesWon += value;
+        GamesWon++;
         Save();
     }
 
-    public void IncrementRoundsLost(int value = 1)
+    public void IncrementRoundsLost()
     {
-        RoundsLost += value;
-        TotalRounds += value;
+        RoundsLost++;
+        RoundsTotal++;
         Save();
     }
 
-    public void IncrementRoundsWon(int value = 1)
+    public void IncrementRoundsWon()
     {
-        RoundsWon += value;
-        TotalRounds += value;
+        RoundsWon++;
+        RoundsTotal++;
         Save();
     }
 

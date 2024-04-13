@@ -3,10 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://dwjeb0d0sl7bh" path="res://Scenes/Menus/Menu.tscn" id="1_xty0y"]
 [ext_resource type="Script" path="res://Scenes/Menus/Stats/Stats.cs" id="2_2tbo6"]
 
-[node name="Stats" node_paths=PackedStringArray("_roundsWon", "_roundsLost", "_gamesWon", "_initialButton") instance=ExtResource("1_xty0y")]
+[node name="Stats" node_paths=PackedStringArray("_roundsWon", "_roundsLost", "_roundsTotal", "_gamesWon", "_initialButton") instance=ExtResource("1_xty0y")]
 script = ExtResource("2_2tbo6")
 _roundsWon = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer/RoundsWon")
 _roundsLost = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer/RoundsLost")
+_roundsTotal = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer2/TotalRounds")
 _gamesWon = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/HBoxContainer/VBoxContainer2/GamesWon")
 _initialButton = NodePath("AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons/CenterContainer/BackToMenu")
 
