@@ -31,7 +31,8 @@ public partial class Global : Node
 	public Attack LastAddedAttack;
 	public int CurrentRoundProgress;
 
-	public Node RemainingOpponentUniqueAttacks;
+	public Node RemainingUniqueAttacks;
+	private Node _temporaryUniqueAttacks;
 	private OpponentStats _savedOpponentStats;
 
 
@@ -122,20 +123,10 @@ public partial class Global : Node
 
 		if (!Debug)
 		{
-			// if remaining unique attacks node already exists, free it
-			if (RemainingOpponentUniqueAttacks != null)
-			{
-				RemainingOpponentUniqueAttacks.Free();
-			}
-
-			// duplicate the list of reimaing attacks as to not affect future games
-			RemainingOpponentUniqueAttacks 
-				= _opponentUniqueAttacks
-					.Duplicate();
-
-
-			AddChild(RemainingOpponentUniqueAttacks);
+			PrepareRemainingUniqueAttacks();
+			PrepareTemporaryUniqueAttacks();
 			RefreshActorStats();
+
 
 			// add new attack to each of the specified categories
 			foreach (
@@ -162,26 +153,11 @@ public partial class Global : Node
 	public void PrepareContinueGame()
 	{
 		InitialiseEligibleAttackTypes();
+		PrepareRemainingUniqueAttacks();
 
 		// function can only be called when these files exist anyway
 		LoadActorStats();
 		CurrentRoundProgress = SaveFile.SavedRoundProgress;
-
-
-		GD.Print(
-			OpponentStats
-				.CurrentUniqueAttacks);
-
-
-		// if remaining unique attacks node already exists, free it
-		if (RemainingOpponentUniqueAttacks != null)
-		{
-			RemainingOpponentUniqueAttacks.Free();
-		}
-
-		RemainingOpponentUniqueAttacks 
-			= _opponentUniqueAttacks
-				.Duplicate();
 
 
 		// remove the already equipped unique attacks
@@ -192,7 +168,7 @@ public partial class Global : Node
 				in OpponentStats.CurrentUniqueAttacks[attackType])
 			{
 				// find node in category and remove
-				RemainingOpponentUniqueAttacks
+				RemainingUniqueAttacks
 					.GetNode(attackType.ToString())
 					.GetNode(attack)
 					.Free();
@@ -201,6 +177,8 @@ public partial class Global : Node
 			// check the category is still eligible
 			CheckEligibleAndDelete(attackType);
 		}
+
+		PrepareTemporaryUniqueAttacks();
 	}
 
 
@@ -240,6 +218,8 @@ public partial class Global : Node
 	{
 		LastAddedAttack = attack;
 		OpponentStats.CurrentUniqueAttacks[attack.AttackType].Add(attack.Name);
+
+		DeleteAttack(attack);
 	}
 
 	public void AddOpponentAttack(Attack attack, float healthBonus)
@@ -268,7 +248,7 @@ public partial class Global : Node
 	{
 		// if no more children in one category,
 		// delete category from eligible list
-		if (RemainingOpponentUniqueAttacks
+		if (RemainingUniqueAttacks
 				.GetNode(attackType.ToString())
 				.GetChildren()
 				.Count == 0)
@@ -283,7 +263,7 @@ public partial class Global : Node
 		GD.Randomize();
 
 		// get a random attack from the specified category
-		Node categoryNode = RemainingOpponentUniqueAttacks.GetNode(
+		Node categoryNode = _temporaryUniqueAttacks.GetNode(
 			attackType.ToString());
 			
 		Attack newAttack = categoryNode.GetChildren().PickRandom() as Attack;
@@ -291,9 +271,6 @@ public partial class Global : Node
 
 		// remove attack from remaining list and return name
 		newAttack.Free();
-
-		// check the category is still eligible
-		CheckEligibleAndDelete(attackType);
 
 		return newAttackDuplicate;
 	}
@@ -315,6 +292,18 @@ public partial class Global : Node
 			: _eligibleAttackTypes.PickRandom();
 
 		return GetRandomAttack(randomAttackType);
+	}
+
+	// delete an attack from the remaining types
+	public void DeleteAttack(Attack attack)
+	{
+		RemainingUniqueAttacks
+			.GetNode(attack.AttackType.ToString())
+			.GetNode(attack.Name.ToString())
+			.Free();
+
+		// check the category is still eligible
+		CheckEligibleAndDelete(attack.AttackType);
 	}
 
 	public float GetHealthBonus(Opponent.AttackTypes category)
@@ -344,6 +333,31 @@ public partial class Global : Node
 		OpponentStats = OpponentStats.Load();
 	}
 
+	private void PrepareRemainingUniqueAttacks()
+	{
+		// if remaining unique attacks node already exists, free it
+		if (RemainingUniqueAttacks != null)
+		{
+			RemainingUniqueAttacks.Free();
+		}
+
+		RemainingUniqueAttacks
+			= _opponentUniqueAttacks
+			.Duplicate();
+	}
+
+	private void PrepareTemporaryUniqueAttacks()
+	{
+		if (_temporaryUniqueAttacks != null)
+		{
+			_temporaryUniqueAttacks.Free();
+		}
+
+		_temporaryUniqueAttacks 
+			= RemainingUniqueAttacks
+			.Duplicate();
+	}
+
 
 	// Rounds //
 
@@ -362,6 +376,15 @@ public partial class Global : Node
 		CurrentRoundProgress++;
 		SaveFile.SavedRoundProgress++;
 		SaveFile.IncrementRoundsWon();
+
+
+		if (_temporaryUniqueAttacks != null)
+		{
+			_temporaryUniqueAttacks.Free();
+		}
+
+		_temporaryUniqueAttacks = RemainingUniqueAttacks.Duplicate();
+
 
 		Save();
 		ChangeScene(Scene.RoundEnd);
