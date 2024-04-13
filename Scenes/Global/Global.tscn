@@ -1,30 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgt3o7vwccp4b"]
+[gd_scene load_steps=6 format=3 uid="uid://cgt3o7vwccp4b"]
 
 [ext_resource type="Script" path="res://Scenes/Global/Global.cs" id="1_mbovf"]
 [ext_resource type="Resource" uid="uid://r14q1j4ytleq" path="res://Scenes/Game/SubScenes/Actors/Player/PlayerDefaultStats.tres" id="2_lj5dc"]
 [ext_resource type="Resource" uid="uid://d0x4kt3xr13g6" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStatsDefault.tres" id="3_ll254"]
-[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentStats.cs" id="4_r4lfs"]
+[ext_resource type="Resource" uid="uid://bk2mhf0r18ulk" path="res://OpponentStats.res" id="4_gbm4f"]
 [ext_resource type="Script" path="res://Scenes/Global/Attack.cs" id="4_twu5d"]
-
-[sub_resource type="Resource" id="Resource_o2fbd"]
-script = ExtResource("4_r4lfs")
-CenterStrafingDistance = 0.5
-ClosingInDistance = 1.5
-IdleDuration = 2.0
-CloseToWallDistance = 1.25
-MixUpChance = 0.25
-CloseToWallAttacks = Array[String]([])
-FarFromWallAttacks = Array[String]([])
-NeutralAttacks = Array[String]([])
-MixUpAttacks = Array[String](["Big Chop", "Wastin Time"])
-MaxHealth = 1.0
-Speed = 1.0
-TrackSpeed = 0.25
-DamageMultiplier = 1.0
-DamageReactMultiplier = 1.5
-KnockMultiplier = 1.0
-KnockReactMultiplier = 2.0
-KnockReactDeceleration = 0.75
 
 [node name="Global" type="Node"]
 process_mode = 3
@@ -34,7 +14,7 @@ _forcedTypeSelectionEnabled = Array[bool]([true, true, false, false, false, fals
 _playerStatsDefault = ExtResource("2_lj5dc")
 _opponentStatsDefault = ExtResource("3_ll254")
 DebugPlayerStats = ExtResource("2_lj5dc")
-DebugOpponentStats = SubResource("Resource_o2fbd")
+DebugOpponentStats = ExtResource("4_gbm4f")
 
 [node name="OpponentUniqueAttacks" type="Node" parent="."]
 

@@ -1770,7 +1770,7 @@ libraries = {
 "": SubResource("AnimationLibrary_bq7h1")
 }
 autoplay = "idle"
-blend_times = [&"sumo_advance_right", &"sumo_advance_left", 0.01, &"sumo_advance_left", &"sumo_advance_right", 0.01]
+blend_times = [&"sumo_advance_left", &"sumo_advance_right", 0.01, &"sumo_advance_right", &"sumo_advance_left", 0.01]
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")

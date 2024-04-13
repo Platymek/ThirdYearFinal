@@ -36,7 +36,7 @@ public partial class SaveFile : Resource
 
     // Stats for Current Saved Game //
 
-    public int SavedRoundProgress;
+    [Export] public int SavedRoundProgress;
 
 
     // Constructors //

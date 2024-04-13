@@ -30,6 +30,7 @@ public partial class Menu : Control
 		Global.PrepareNewGame();
 		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://Scenes/Game/Game.tscn");
+		Global.ChangeScene(Global.Scene.Game);
 	}
 
 	private void OnExitPressed()
@@ -40,12 +41,13 @@ public partial class Menu : Control
 	private void OnMenuPressed()
 	{
 		GetTree().ChangeSceneToFile("res://Scenes/Menus/MainMenu/MainMenu.tscn");
-	}
+        Global.ChangeScene(Global.Scene.MainMenu);
+    }
 
 	private void OnSettingsPressed()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/Menus/Settings/Settings.tscn");
-	}
+		// Settings not added yet
+    }
 
 	private void OnResumePressed()
 	{
@@ -64,7 +66,8 @@ public partial class Menu : Control
 		}
 
 		GetTree().ChangeSceneToFile("res://Scenes/Menus/RoundNew/RoundNew.tscn");
-	}
+        Global.ChangeScene(Global.Scene.RoundNew);
+    }
 
 
 	// Other Functions //

@@ -9,11 +9,11 @@ public partial class Opponent : Actor
 	[Export] private string _startState;
 
 	[ExportGroup("Nodes")]
-    [Export] private Label3D _uniqueAttackLabel;
-    [Export] private ActorModel _model;
+	[Export] private Label3D _uniqueAttackLabel;
+	[Export] private ActorModel _model;
 	[Export] private Node3D _secondCheck;
 
-    private OpponentStats _opponentStats;
+	private OpponentStats _opponentStats;
 	private OpponentAttackStats _opponentAttackStats;
 	private AttackTypes _currentAttackType;
 	private bool _strafeRight;
@@ -24,6 +24,9 @@ public partial class Opponent : Actor
 
 	private int[] _attackIndexes
 		= new[] { 0, 0, 0, 0, };
+
+	private Array<bool> _mixUpQueue;
+	private int _mixUpQueueIndex;
 
 	public override string State
 	{
@@ -224,6 +227,8 @@ public partial class Opponent : Actor
 
 		GD.Randomize();
 		
+
+		// obtain stats
 		if (_stats == null)
 		{
 			_opponentStats = GetNode<Global>("/root/Global").OpponentStats;
@@ -234,6 +239,7 @@ public partial class Opponent : Actor
 			_opponentStats = _stats as OpponentStats;
 		}
 
+
 		Health = _stats.MaxHealth;
 		_opponentAttackStats = AttackStats as OpponentAttackStats;
 
@@ -242,6 +248,19 @@ public partial class Opponent : Actor
 		{
 			State = _startState;
 		}
+
+
+		// prepare mixUpQueue for use
+		_mixUpQueue = new();
+
+		for (int i = 0; i < 10; i++)
+		{
+			_mixUpQueue.Add(
+				i < _opponentStats.MixUpChanceInTen);
+		}
+
+		_mixUpQueue.Shuffle();
+		_mixUpQueueIndex = 0;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -290,16 +309,16 @@ public partial class Opponent : Actor
 				// distance from the position of the second check node to centre
 				float distanceFromCentreSecond = Vector3To2D(
 					Position + _secondCheck.Position.Rotated(Vector3.Up, Rotation.Y))
-                    .DistanceTo(Vector2.Zero);
+					.DistanceTo(Vector2.Zero);
 
 
-                // change attack type by first checking the distance of the
-                // opponent from the centre
-                if (distanceFromCentre
-                        > _opponentStats.CloseToWallDistance
+				// change attack type by first checking the distance of the
+				// opponent from the centre
+				if (distanceFromCentre
+						> _opponentStats.CloseToWallDistance
 
-                    || distanceFromCentreSecond
-                        > _opponentStats.CloseToWallDistance)
+					|| distanceFromCentreSecond
+						> _opponentStats.CloseToWallDistance)
 				{
 					// then check the angle to the centre
 
@@ -351,7 +370,7 @@ public partial class Opponent : Actor
 					StartAttack();
 				}
 
-                break;
+				break;
 			
 
 			case "the_crab":
@@ -365,13 +384,6 @@ public partial class Opponent : Actor
 				}
 				
 				break;
-
-
-			//case "wastin_time":
-			//
-			//	if ()
-			//
-			//	break;
 		}
 		
 		Move(Vector2.Down * _opponentAttackStats.ClosingInSpeed);
@@ -383,16 +395,26 @@ public partial class Opponent : Actor
 
 	private void StartAttack()
 	{
-		float attackChance = GD.Randf();
-		GD.Print(attackChance);
-
-
 		string attackName;
 
-        if (attackChance <= _opponentStats.MixUpChance)
+
+		// increment mix up queue index and make sure it is 
+		// within bounds
+		_mixUpQueueIndex++;
+
+		if (_mixUpQueueIndex >= _mixUpQueue.Count)
+		{
+			_mixUpQueueIndex = 0;
+
+			// reshuffle the list to randomise the order
+			GD.Randomize();
+			_mixUpQueue.Shuffle();
+		}
+
+		if (_mixUpQueue[_mixUpQueueIndex])
 		{
 			attackName
-                = PickAttackFromCategory(AttackTypes.MixUp);
+				= PickAttackFromCategory(AttackTypes.MixUp);
 			
 			// if there are any attacks to pick from, set the
 			// state to that attack
@@ -403,27 +425,30 @@ public partial class Opponent : Actor
 			}
 		}
 
+		// if the previous if did not run, then the opponent is
+		// not performing a mix up attack
+		attackName
+			= PickAttackFromCategory(_currentAttackType);
 
-        attackName
-            = PickAttackFromCategory(AttackTypes.MixUp);
-
-        if (attackName != null) State = attackName;
-    }
+		// if the name is still null, that means the opponent does not
+		// have any attacks they can currently perform
+		if (attackName != null) State = attackName;
+	}
 
 	private string PickAttackFromCategory(AttackTypes attackType)
-    {
-        Array<string> attackList = _opponentStats.CurrentUniqueAttacks[
-            attackType];
+	{
+		Array<string> attackList = _opponentStats.CurrentUniqueAttacks[
+			attackType];
 
 		if (attackList.Count == 0) return null;
 
 
-        string attackName 
+		string attackName 
 			= attackList
 			[_attackIndexes[(int)attackType]++];
 
 
-		// if the list has been fully progresses, restart from the start
+		// if the list has been fully progressed, restart from the start
 		// and shuffle the list to make sure every attack is frequently
 		// performed
 		if (_attackIndexes[(int)attackType] 
@@ -433,7 +458,7 @@ public partial class Opponent : Actor
 
 			GD.Randomize();
 			attackList.Shuffle();
-        }
+		}
 
 		return attackName;
 	}

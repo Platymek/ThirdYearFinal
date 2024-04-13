@@ -333,6 +333,8 @@ public partial class Global : Node
 	{
 		PlayerStats = PlayerStats.Load();
 		OpponentStats = OpponentStats.Load();
+
+		GD.Print(OpponentStats.CurrentUniqueAttacks);
 	}
 
 	private void PrepareRemainingUniqueAttacks()
