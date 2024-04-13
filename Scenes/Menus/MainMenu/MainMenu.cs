@@ -19,7 +19,6 @@ public partial class MainMenu : Menu
 	{
 		_continueButton.Visible = Global.HasSave();
 		_fullScreenButton.ButtonPressed = Global.SaveFile.Fullscreen;
-		_hardModeButton.Visible = Global.SaveFile.UnlockedHardMode;
 		_playButton.Visible = Global.SaveFile.HowToPlayRead;
 
 		// focus button based on what is and is not visible

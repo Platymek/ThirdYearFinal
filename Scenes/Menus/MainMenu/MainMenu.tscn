@@ -24,6 +24,7 @@ layout_mode = 2
 text = "New Game"
 
 [node name="HardMode" type="Button" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer/CenterContainer/Buttons" index="2"]
+visible = false
 layout_mode = 2
 text = "Final Challenge
 "
