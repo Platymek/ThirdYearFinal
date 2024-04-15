@@ -10,7 +10,7 @@ public partial class Opponent : Actor
 
 	[ExportGroup("Nodes")]
 	[Export] private Label3D _uniqueAttackLabel;
-	[Export] private ActorModel _model;
+	[Export] private OpponentModel _model;
 	[Export] private Node3D _secondCheck;
 
 	private OpponentStats _opponentStats;
@@ -43,6 +43,10 @@ public partial class Opponent : Actor
 			_opponentAttackStats.DamageReactMutliplier = 1;
 			_opponentAttackStats.KnockReactMutliplier = 1;
 
+
+			_model.ShaderMaterial.SetShaderParameter("Visible", false);
+
+
 			string state = value;
 
 			switch (value)
@@ -51,8 +55,9 @@ public partial class Opponent : Actor
 
 					_opponentAttackStats.ClosingInSpeed = 1;
 					_opponentAttackStats.StrafingSpeed = 1;
+                    _model.ShaderMaterial.SetShaderParameter("Visible", true);
 
-					break;
+                    break;
 
 
 				case "stun":

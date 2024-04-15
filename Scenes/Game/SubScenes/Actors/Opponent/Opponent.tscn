@@ -347,7 +347,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(1.64587),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0.1]
+"values": [0.2]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -371,7 +371,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(1.596),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [2.0]
 }
 
 [sub_resource type="Animation" id="Animation_8k7im"]
@@ -423,7 +423,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(1.64587),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0.1]
+"values": [0.2]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -447,7 +447,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(1.596),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [2.0]
 }
 
 [sub_resource type="Animation" id="Animation_fjnlq"]
@@ -1770,12 +1770,13 @@ libraries = {
 "": SubResource("AnimationLibrary_bq7h1")
 }
 autoplay = "idle"
-blend_times = [&"sumo_advance_left", &"sumo_advance_right", 0.01, &"sumo_advance_right", &"sumo_advance_left", 0.01]
+blend_times = [&"sumo_advance_right", &"sumo_advance_left", 0.01, &"sumo_advance_left", &"sumo_advance_right", 0.01]
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")
 ClosingInSpeed = 4.0
 StrafingSpeed = 0.0
+Damage = 0.3
 
 [node name="CollisionBox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)

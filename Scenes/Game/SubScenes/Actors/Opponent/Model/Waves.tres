@@ -1,0 +1,71 @@
+[gd_resource type="VisualShader" load_steps=7 format=3 uid="uid://c70aqwl8aott8"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_eqfy7"]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeVectorDistance" id="VisualShaderNodeVectorDistance_n77wx"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(0, 0)]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeVec2Constant" id="VisualShaderNodeVec2Constant_u3v6b"]
+constant = Vector2(0.5, 0.5)
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_7tidk"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_uq4fp"]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_pi14y"]
+function = 0
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+
+void fragment() {
+// Input:2
+	vec2 n_out2p0 = SCREEN_UV;
+
+
+// Vector2Constant:4
+	vec2 n_out4p0 = vec2(0.500000, 0.500000);
+
+
+// Distance:3
+	float n_out3p0 = distance(n_out2p0, n_out4p0);
+
+
+// Input:6
+	float n_out6p0 = TIME;
+
+
+// FloatOp:5
+	float n_out5p0 = n_out3p0 + n_out6p0;
+
+
+// FloatFunc:7
+	float n_out7p0 = sin(n_out5p0);
+
+
+// Output:0
+	ALPHA = n_out7p0;
+
+
+}
+"
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_eqfy7")
+nodes/fragment/2/position = Vector2(-520, 0)
+nodes/fragment/3/node = SubResource("VisualShaderNodeVectorDistance_n77wx")
+nodes/fragment/3/position = Vector2(-220, 0)
+nodes/fragment/4/node = SubResource("VisualShaderNodeVec2Constant_u3v6b")
+nodes/fragment/4/position = Vector2(-520, 80)
+nodes/fragment/5/node = SubResource("VisualShaderNodeFloatOp_7tidk")
+nodes/fragment/5/position = Vector2(-60, 0)
+nodes/fragment/6/node = SubResource("VisualShaderNodeInput_uq4fp")
+nodes/fragment/6/position = Vector2(-520, 220)
+nodes/fragment/7/node = SubResource("VisualShaderNodeFloatFunc_pi14y")
+nodes/fragment/7/position = Vector2(100, 0)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 4, 0, 3, 1, 3, 0, 5, 0, 6, 0, 5, 1, 5, 0, 7, 0, 7, 0, 0, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bcwut0htsf36f"]
+[gd_scene load_steps=15 format=3 uid="uid://bcwut0htsf36f"]
 
 [ext_resource type="PackedScene" uid="uid://drf2gde56141u" path="res://Scenes/Game/SubScenes/Actors/Player/Player.tscn" id="1_cxp7k"]
 [ext_resource type="Script" path="res://Scenes/Game/Game.cs" id="1_sanpw"]
@@ -7,18 +7,19 @@
 [ext_resource type="PackedScene" uid="uid://c54376f7qc04q" path="res://Scenes/Game/SubScenes/Wall/Wall.tscn" id="3_o07bf"]
 [ext_resource type="PackedScene" uid="uid://bt437vsmw6isq" path="res://Scenes/Game/SubScenes/UI/HUD/HUD.tscn" id="5_3dvb1"]
 [ext_resource type="PackedScene" uid="uid://bwy3f26ko0tq" path="res://Scenes/Menus/Pause/Pause.tscn" id="6_7ls6m"]
+[ext_resource type="PackedScene" uid="uid://d1h4v3mjahwds" path="res://Scenes/Game/SubScenes/CrowdMember/CrowdMember.tscn" id="8_6noqh"]
 [ext_resource type="PackedScene" uid="uid://b2a0x5ks6qtqc" path="res://Scenes/Game/SubScenes/Shaders/ForcePalette/ForcePalette.tscn" id="8_45i1n"]
 
 [sub_resource type="Gradient" id="Gradient_1tk40"]
-offsets = PackedFloat32Array(0.22619, 1)
-colors = PackedColorArray(0.113725, 0.168627, 0.32549, 1, 1, 0.945098, 0.909804, 1)
+offsets = PackedFloat32Array(0, 0.22619, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.113725, 0.168627, 0.32549, 1, 1, 0.945098, 0.909804, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_shay0"]
 gradient = SubResource("Gradient_1tk40")
 
 [sub_resource type="Environment" id="Environment_42hdb"]
 background_mode = 1
-background_color = Color(0.160784, 0.678431, 1, 1)
+background_canvas_max_layer = -1
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.2
@@ -31,7 +32,7 @@ albedo_color = Color(1, 0.945098, 0.909804, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_dkrsf"]
 material = SubResource("StandardMaterial3D_0tyk7")
-size = Vector3(8, 1, 8)
+size = Vector3(6, 1, 6)
 
 [node name="Game" type="Node3D" node_paths=PackedStringArray("_timer")]
 process_mode = 3
@@ -40,7 +41,13 @@ _timer = NodePath("Timer")
 
 [node name="ForcePalette" parent="." instance=ExtResource("8_45i1n")]
 layer = 10
-_colors = PackedColorArray(0.113725, 0.168627, 0.32549, 1, 0.494118, 0.145098, 0.32549, 1, 0, 0.529412, 0.317647, 1, 0.670588, 0.321569, 0.211765, 1, 0.372549, 0.341176, 0.309804, 1, 0.760784, 0.764706, 0.780392, 1, 1, 0.945098, 0.909804, 1, 1, 0, 0.301961, 1, 1, 0.639216, 0, 1, 1, 0.92549, 0.152941, 1, 0, 0.894118, 0.211765, 1, 0.160784, 0.678431, 1, 1, 0.513726, 0.462745, 0.611765, 1, 1, 0.466667, 0.658824, 1, 1, 0.8, 0.666667, 1, 0, 0, 0, 1)
+_colors = PackedColorArray(0, 0, 0, 1, 0.113725, 0.168627, 0.32549, 1, 0.494118, 0.145098, 0.32549, 1, 0, 0.529412, 0.317647, 1, 0.670588, 0.321569, 0.211765, 1, 0.372549, 0.341176, 0.309804, 1, 0.760784, 0.764706, 0.780392, 1, 1, 0.945098, 0.909804, 1, 1, 0, 0.301961, 1, 1, 0.639216, 0, 1, 1, 0.92549, 0.152941, 1, 0, 0.894118, 0.211765, 1, 0.160784, 0.678431, 1, 1, 0.513726, 0.462745, 0.611765, 1, 1, 0.466667, 0.658824, 1, 1, 0.8, 0.666667, 1)
+
+[node name="CameraAnchor" parent="." node_paths=PackedStringArray("_player", "_target") instance=ExtResource("3_gshri")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+_player = NodePath("../Actors/Player")
+_target = NodePath("../Actors/Opponent")
+_angleOffset = -25
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_42hdb")
@@ -85,11 +92,19 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4, 
 light_energy = 0.75
 directional_shadow_mode = 0
 
-[node name="CameraAnchor" parent="." node_paths=PackedStringArray("_player", "_target") instance=ExtResource("3_gshri")]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
-_player = NodePath("../Actors/Player")
-_target = NodePath("../Actors/Opponent")
-_angleOffset = -25
+[node name="Crowds" type="Node3D" parent="Map"]
+
+[node name="CrowdMember" parent="Map/Crowds" instance=ExtResource("8_6noqh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -3)
+
+[node name="CrowdMember2" parent="Map/Crowds" instance=ExtResource("8_6noqh")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, -1, 0)
+
+[node name="CrowdMember3" parent="Map/Crowds" instance=ExtResource("8_6noqh")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1, 3)
+
+[node name="CrowdMember4" parent="Map/Crowds" instance=ExtResource("8_6noqh")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -3, -1, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -108,6 +123,10 @@ wait_time = 100.0
 one_shot = true
 autostart = true
 
+[connection signal="Damaged" from="Actors/Player" to="Map/Crowds/CrowdMember" method="Cheer"]
+[connection signal="Damaged" from="Actors/Player" to="Map/Crowds/CrowdMember2" method="Cheer"]
+[connection signal="Damaged" from="Actors/Player" to="Map/Crowds/CrowdMember3" method="Cheer"]
+[connection signal="Damaged" from="Actors/Player" to="Map/Crowds/CrowdMember4" method="Cheer"]
 [connection signal="Death" from="Actors/Player" to="." method="LoseGame"]
 [connection signal="Death" from="Actors/Opponent" to="." method="WinGame"]
 [connection signal="timeout" from="Timer" to="Actors/Player" method="Kill"]

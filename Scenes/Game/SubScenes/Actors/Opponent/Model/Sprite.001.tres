@@ -1,10 +1,18 @@
-[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cjt33a646jmpy"]
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://cjt33a646jmpy"]
 
 [ext_resource type="Texture2D" uid="uid://cg3g640rf8wb8" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Oponnent_OpponentTexture.png" id="1_fa7yw"]
+[ext_resource type="Shader" uid="uid://bxbtohrhqtg26" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Lines.tres" id="2_sdk2o"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_upino"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dji0r"]
+render_priority = 0
+shader = ExtResource("2_sdk2o")
+shader_parameter/Color = Color(1, 0.639216, 0, 1)
+shader_parameter/Visible = true
+shader_parameter/Gap = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p0urm"]
+next_pass = SubResource("ShaderMaterial_dji0r")
 cull_mode = 1
-depth_draw_mode = 2
 shading_mode = 0
 albedo_color = Color(0.113725, 0.168627, 0.32549, 1)
 disable_receive_shadows = true
@@ -13,7 +21,7 @@ grow_amount = 0.02
 
 [resource]
 resource_name = "Sprite.001"
-next_pass = SubResource("StandardMaterial3D_upino")
+next_pass = SubResource("StandardMaterial3D_p0urm")
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0

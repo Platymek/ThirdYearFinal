@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhqicy03kkt2m"
-path="res://.godot/imported/Corner.png-a4c9c5b6ab38d9872afc6f5aefd2ac31.ctex"
+uid="uid://bqlqu5f8x2pn1"
+path.s3tc="res://.godot/imported/crowd.png-4f3e3a18ebd9c8fa74b2b795800500d5.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://Scenes/Game/SubScenes/Wall/Corner.png"
-dest_files=["res://.godot/imported/Corner.png-a4c9c5b6ab38d9872afc6f5aefd2ac31.ctex"]
+source_file="res://Scenes/Game/SubScenes/UI/Background/crowd.png"
+dest_files=["res://.godot/imported/crowd.png-4f3e3a18ebd9c8fa74b2b795800500d5.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -25,7 +26,7 @@ mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false

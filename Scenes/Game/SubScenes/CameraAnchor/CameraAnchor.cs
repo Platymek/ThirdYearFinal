@@ -3,18 +3,14 @@ using System;
 
 public partial class CameraAnchor : Node3D
 {
-	[Export]
-	Node3D _player;
-
-	[Export]
-	Node3D _target;
+	[Export] Node3D _player;
+	[Export] Node3D _target;
 
 	// offset when pointing towards opponent
 	[Export (PropertyHint.Range, "-180,180")]
 	int _angleOffset;
 
-	[Export]
-	float _turnSpeed = 1;
+	[Export] float _turnSpeed = 1;
 
 	Camera3D _camera;
 

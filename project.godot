@@ -15,6 +15,7 @@ config/tags=PackedStringArray("uni")
 run/main_scene="res://Scenes/Menus/MainMenu/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 boot_splash/bg_color=Color(0.113725, 0.168627, 0.32549, 1)
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -118,4 +119,7 @@ fullscreen={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/decals/filter=2
+textures/light_projectors/filter=2
 environment/defaults/default_clear_color=Color(0.513726, 0.462745, 0.611765, 1)
+environment/defaults/default_environment="res://Scenes/Game/DefaultEnvironment.tres"

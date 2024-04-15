@@ -1,16 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://goixjvylabf5"]
+[gd_scene load_steps=7 format=3 uid="uid://goixjvylabf5"]
 
 [ext_resource type="PackedScene" uid="uid://ca45sbq72mjyg" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Oponnent.glb" id="1_ec03a"]
-[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/ActorModel.cs" id="2_1bc0r"]
+[ext_resource type="Script" path="res://Scenes/Game/SubScenes/Actors/Opponent/OpponentModel.cs" id="2_qm8oi"]
 [ext_resource type="AnimationLibrary" uid="uid://kaqceu6mw3ex" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Animations/Animations.res" id="3_fcf32"]
 [ext_resource type="Material" uid="uid://cjt33a646jmpy" path="res://Scenes/Game/SubScenes/Actors/Opponent/Model/Sprite.001.tres" id="3_lin05"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_upino"]
-cull_mode = 1
-depth_draw_mode = 2
-albedo_color = Color(0.113725, 0.168627, 0.32549, 1)
-grow = true
-grow_amount = 0.02
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2pcbl"]
 radius = 0.3
@@ -19,37 +12,37 @@ radius = 0.3
 radius = 0.3
 
 [node name="Model" node_paths=PackedStringArray("_leftHandHurtbox", "_rightHandHurtbox") instance=ExtResource("1_ec03a")]
-script = ExtResource("2_1bc0r")
+script = ExtResource("2_qm8oi")
+Animation = "idle"
 _leftHandHurtbox = NodePath("Armature/Skeleton3D/LeftHand/Area3D")
 _rightHandHurtbox = NodePath("Armature/Skeleton3D/RightHand/Area3D")
-StandardMaterial3D = SubResource("StandardMaterial3D_upino")
 
 [node name="Armature" parent="." index="0"]
 transform = Transform3D(0.649519, 0.5, -2.18557e-08, 0, -4.37114e-08, -1, -0.375, 0.866025, -3.78552e-08, 0, -0.26, -0.3)
 
 [node name="Skeleton3D" parent="Armature" index="0"]
-bones/0/position = Vector3(0.27582, 1.21776e-07, -0.891035)
-bones/0/rotation = Quaternion(-0.0331434, 0.952506, -0.301229, 0.0299021)
-bones/1/rotation = Quaternion(0.060539, -0.0328898, 0.0389873, 0.996862)
-bones/2/rotation = Quaternion(0.117714, 0.0571726, -0.0617277, 0.989477)
-bones/3/rotation = Quaternion(-0.233543, -0.0568543, -0.924899, 0.294595)
-bones/4/rotation = Quaternion(-0.481562, -0.219945, 0.126227, 0.838921)
-bones/5/rotation = Quaternion(-0.348836, -0.127005, 0.317756, 0.872476)
-bones/6/rotation = Quaternion(-0.494619, 0.126192, 0.739372, 0.43904)
-bones/7/rotation = Quaternion(-0.638705, -0.183082, 0.16024, 0.729972)
-bones/8/rotation = Quaternion(0.0950831, -0.0389974, -0.376539, 0.920683)
+bones/0/position = Vector3(0.104145, 0.21978, -0.95277)
+bones/0/rotation = Quaternion(-0.899206, -0.148027, 0.0906078, 0.401631)
+bones/1/rotation = Quaternion(-0.127697, -0.00448054, 0.0472422, 0.990677)
+bones/2/rotation = Quaternion(0.273739, 0.137987, 0.056719, 0.950163)
+bones/3/rotation = Quaternion(0.338962, -0.0923573, -0.805353, 0.477474)
+bones/4/rotation = Quaternion(-0.906355, -0.0481926, 0.10766, 0.40572)
+bones/5/rotation = Quaternion(-0.0899578, -0.0373231, 0.381398, 0.919266)
+bones/6/rotation = Quaternion(-0.389895, -0.154145, 0.869292, 0.261828)
+bones/7/rotation = Quaternion(-0.2436, 0.10956, -0.0277066, 0.963269)
+bones/8/rotation = Quaternion(0.0212366, -0.000213691, -0.0100594, 0.999724)
 bones/9/rotation = Quaternion(7.30491e-07, 0.707107, -5.97711e-07, 0.707107)
-bones/10/position = Vector3(0.262505, 1.21776e-07, -0.991087)
-bones/10/rotation = Quaternion(0.0565265, -0.109367, -0.989639, 0.0738768)
-bones/11/rotation = Quaternion(0.584271, -0.240967, -0.559217, 0.536506)
-bones/12/rotation = Quaternion(-8.71021e-08, 2.73256e-08, 0.364762, 0.931101)
-bones/13/rotation = Quaternion(0.121259, 0.0631931, -0.000426985, 0.990607)
-bones/14/rotation = Quaternion(0.526592, 0.219971, 0.648376, 0.503908)
-bones/15/rotation = Quaternion(-4.26345e-08, -1.41751e-07, -0.326514, 0.945192)
-bones/16/rotation = Quaternion(0.0687384, -0.0715908, -0.0338632, 0.994486)
+bones/10/position = Vector3(0.146246, 0.0827331, -1.08401)
+bones/10/rotation = Quaternion(0.180242, 0.111553, 0.172625, 0.961909)
+bones/11/rotation = Quaternion(0.549669, -0.328301, -0.446596, 0.625008)
+bones/12/rotation = Quaternion(-1.62296e-07, -1.41978e-08, 0.308749, 0.951144)
+bones/13/rotation = Quaternion(0.0591977, 0.253983, -0.00923276, 0.965351)
+bones/14/rotation = Quaternion(0.534632, 0.226986, 0.514414, 0.630892)
+bones/15/rotation = Quaternion(-7.31932e-08, -1.62702e-07, -0.289123, 0.957292)
+bones/16/rotation = Quaternion(-0.00700223, -0.12559, 0.000308586, 0.992058)
 
 [node name="UpperChest" parent="Armature/Skeleton3D" index="0"]
-transform = Transform3D(-0.0384657, -0.0225629, -0.498008, 0.285931, 0.408162, -0.0405775, 0.408367, -0.287913, -0.0184977, 0.27323, 0.0673364, -0.969038)
+transform = Transform3D(0.140927, 0.0967169, 0.469878, -0.347736, -0.31678, 0.169499, 0.330482, -0.374561, -0.0220219, 0.116442, 0.173811, -1.04421)
 
 [node name="UpperChest" parent="Armature/Skeleton3D/UpperChest" index="0"]
 surface_material_override/0 = ExtResource("3_lin05")
@@ -70,7 +63,7 @@ surface_material_override/0 = ExtResource("3_lin05")
 surface_material_override/0 = ExtResource("3_lin05")
 
 [node name="LeftHand" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="9"]
-transform = Transform3D(0.673716, 0.0872726, 0.733819, 0.722682, 0.129658, -0.678911, -0.154396, 0.987711, 0.0242821, 0.808596, 0.0892377, -0.738496)
+transform = Transform3D(-0.0263422, 0.0902856, -0.995567, -0.997677, -0.0649666, 0.0205062, -0.0628272, 0.993795, 0.0917872, -0.359112, -0.0608915, -0.726794)
 bone_name = "LeftHand"
 bone_idx = 8
 
@@ -81,7 +74,7 @@ transform = Transform3D(1, -3.72529e-08, 0, -3.72529e-08, 1, -2.67755e-09, 5.587
 shape = SubResource("SphereShape3D_2pcbl")
 
 [node name="RightHand" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="10"]
-transform = Transform3D(0.363564, 0.0238129, -0.931265, -0.929452, -0.0580944, -0.364341, -0.0627773, 0.998027, 0.00101188, -0.319723, -0.0136431, -0.930233)
+transform = Transform3D(-0.111733, 0.342403, 0.932886, 0.191285, -0.913797, 0.358308, 0.975154, 0.218482, 0.0366051, 0.680706, 0.432369, -1.10718)
 bone_name = "RightHand"
 bone_idx = 4
 
@@ -97,4 +90,4 @@ libraries = {
 }
 autoplay = "idle"
 playback_default_blend_time = 0.5
-blend_times = [&"stun_end", &"idle", 0.01, &"walk_forward", &"idle", 0.5, &"walk_forward", &"walk_forward", 0.5, &"big_chop", &"big_chop_end", 0.01, &"big_chop_start", &"big_chop", 0.01, &"wastin_time_start", &"wastin_time", 0.001, &"stun", &"idle", 0.01]
+blend_times = [&"stun", &"idle", 0.01, &"stun_end", &"idle", 0.01, &"walk_forward", &"walk_forward", 0.5, &"walk_forward", &"idle", 0.5, &"big_chop", &"big_chop_end", 0.01, &"big_chop_start", &"big_chop", 0.01, &"wastin_time_start", &"wastin_time", 0.001]

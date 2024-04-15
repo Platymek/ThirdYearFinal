@@ -1,0 +1,58 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://bgj28dyawyqm8"]
+
+[sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_nj8e1"]
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_71tg5"]
+parameter_name = "ColorParameter"
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_tk2mw"]
+operator = 5
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_ej7nf"]
+parameter_name = "FloatParameter"
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform vec4 ColorParameter : source_color;
+uniform float FloatParameter;
+
+
+
+void fragment() {
+// ColorParameter:4
+	vec4 n_out4p0 = ColorParameter;
+
+
+// Fresnel:3
+	float n_in3p3 = 1.00000;
+	float n_out3p0 = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), n_in3p3);
+
+
+// FloatParameter:6
+	float n_out6p0 = FloatParameter;
+
+
+// FloatOp:5
+	float n_out5p0 = pow(n_out3p0, n_out6p0);
+
+
+// Output:0
+	ALBEDO = vec3(n_out4p0.xyz);
+	ALPHA = n_out5p0;
+
+
+}
+"
+graph_offset = Vector2(-120.393, 138.507)
+nodes/fragment/0/position = Vector2(580, 160)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFresnel_nj8e1")
+nodes/fragment/3/position = Vector2(-40, 300)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorParameter_71tg5")
+nodes/fragment/4/position = Vector2(20, 120)
+nodes/fragment/5/node = SubResource("VisualShaderNodeFloatOp_tk2mw")
+nodes/fragment/5/position = Vector2(300, 300)
+nodes/fragment/6/node = SubResource("VisualShaderNodeFloatParameter_ej7nf")
+nodes/fragment/6/position = Vector2(-40, 480)
+nodes/fragment/connections = PackedInt32Array(4, 0, 0, 0, 3, 0, 5, 0, 5, 0, 0, 1, 6, 0, 5, 1)
