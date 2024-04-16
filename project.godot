@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="ThirdYearFinal"
+config/name="Pick'n'Punch"
 config/tags=PackedStringArray("uni")
 run/main_scene="res://Scenes/Menus/MainMenu/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
