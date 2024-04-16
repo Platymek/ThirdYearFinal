@@ -10,7 +10,7 @@
 process_mode = 3
 script = ExtResource("1_mbovf")
 _forcedTypeSelection = Array[int]([2, 2, 0])
-_forcedTypeSelectionEnabled = Array[bool]([true, true, false, false, false, false])
+_forcedTypeSelectionEnabled = Array[bool]([true, true, true, false, false, false])
 _playerStatsDefault = ExtResource("2_lj5dc")
 _opponentStatsDefault = ExtResource("3_ll254")
 DebugPlayerStats = ExtResource("2_lj5dc")

@@ -36,9 +36,14 @@ public partial class Global : Node
 	private OpponentStats _savedOpponentStats;
 
 
-	// Settings //
+    // array of the currently eligible attack type categories
+    // to pull random attacks from
+    private Array<Opponent.AttackTypes> _eligibleAttackTypes;
+	private int _randomTypeIndex;
 
-	private bool _fullscreen;
+    // Settings //
+
+    private bool _fullscreen;
 	public bool Fullscreen
 	{
 		get => _fullscreen;
@@ -60,11 +65,6 @@ public partial class Global : Node
 			DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
 		}
 	}
-
-
-	// array of the currently eligible attack type categories
-	// to pull random attacks from
-	private Array<Opponent.AttackTypes> _eligibleAttackTypes;
 
 
 	// Node Functions //
@@ -291,7 +291,9 @@ public partial class Global : Node
 		Opponent.AttackTypes randomAttackType
 			= _forcedTypeSelectionEnabled[CurrentRoundProgress - roundOffset]
 			? _forcedTypeSelection[CurrentRoundProgress - roundOffset]
-			: _eligibleAttackTypes.PickRandom();
+			: _eligibleAttackTypes.Count > 1
+			? _eligibleAttackTypes[_randomTypeIndex++]
+			: _eligibleAttackTypes[0];
 
 		return GetRandomAttack(randomAttackType);
 	}
@@ -352,7 +354,10 @@ public partial class Global : Node
 
 	private void PrepareTemporaryUniqueAttacks()
 	{
-		if (_temporaryUniqueAttacks != null)
+		_randomTypeIndex = 0;
+		_eligibleAttackTypes.Shuffle();
+
+        if (_temporaryUniqueAttacks != null)
 		{
 			_temporaryUniqueAttacks.Free();
 		}
