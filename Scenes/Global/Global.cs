@@ -376,6 +376,7 @@ public partial class Global : Node
 		// if the player just won the final round
 		if (IsFinalRound())
 		{
+			SaveFile.IncrementGamesWon();
 			ChangeScene(Scene.YouWon);
 
 			return;

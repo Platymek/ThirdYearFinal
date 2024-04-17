@@ -17,7 +17,7 @@ text = "- Round 2 -"
 [node name="Description" type="Label" parent="AspectRatioContainer/CenterContainer/PanelContainer/VBoxContainer" index="1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 0
-text = "Select and attack to be added to the opponent's moveset in the next round."
+text = "Select an attack to be added to the opponent's moveset in the next round."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

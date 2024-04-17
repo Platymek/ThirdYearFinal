@@ -58,7 +58,7 @@ AttackType = 2
 
 [node name="Sumo Advance" type="Node" parent="OpponentUniqueAttacks/Neutral"]
 script = ExtResource("4_twu5d")
-Description = "The machine pushes you with continous slaps. Can you keep your ground?"
+Description = "The machine pushes you with continuous slaps. Can you keep your ground?"
 AttackType = 2
 
 [node name="MixUp" type="Node" parent="OpponentUniqueAttacks"]

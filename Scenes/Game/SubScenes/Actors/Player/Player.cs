@@ -47,6 +47,7 @@ public partial class Player : Actor
 						_playerAttackStats.Cancellable = true;
 						_playerAttackStats.DamageReactMutliplier = 1;
 						_playerAttackStats.KnockReactMutliplier = 1;
+						_playerAttackStats.CheckDamage = false;
 					}
 
 					break;
