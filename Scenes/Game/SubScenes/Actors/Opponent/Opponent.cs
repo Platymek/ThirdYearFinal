@@ -168,7 +168,7 @@ public partial class Opponent : Actor
 				case "Sumo Pressure":
 
 					_sumoCount = 0;
-					_sumoLimit = 10;
+					_sumoLimit = 4;
 					state = "sumo_pressure";
 					break;
 

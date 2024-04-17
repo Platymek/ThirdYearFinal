@@ -1114,7 +1114,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_3pk8e"]
 resource_name = "sumo_advance_end"
-length = 1.6
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1122,7 +1122,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.6),
+"times": PackedFloat32Array(2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["idle"]
@@ -1130,7 +1130,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_4408u"]
 resource_name = "sumo_advance_left"
-length = 0.6
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1138,7 +1138,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.6),
+"times": PackedFloat32Array(0.78),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["sumo_advance_next"]
@@ -1150,7 +1150,7 @@ tracks/1/path = NodePath("Model:_checkLeftHand")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.15, 0.525),
+"times": PackedFloat32Array(0.195, 0.6825),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1186,7 +1186,7 @@ tracks/4/path = NodePath("AttackStats:CheckDamage")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.15, 0.525),
+"times": PackedFloat32Array(0.195, 0.6825),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1210,7 +1210,7 @@ tracks/6/path = NodePath("AttackStats:ClosingInSpeed")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.15, 0.525),
+"times": PackedFloat32Array(0.195, 0.6825),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [2.0, 0.0]
@@ -1218,7 +1218,7 @@ tracks/6/keys = {
 
 [sub_resource type="Animation" id="Animation_mrn5l"]
 resource_name = "sumo_advance_right"
-length = 0.6
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1226,7 +1226,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.6),
+"times": PackedFloat32Array(0.78),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["sumo_advance_next"]
@@ -1238,7 +1238,7 @@ tracks/1/path = NodePath("Model:_checkRightHand")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.15, 0.525),
+"times": PackedFloat32Array(0.195, 0.6825),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1274,7 +1274,7 @@ tracks/4/path = NodePath("AttackStats:CheckDamage")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.15, 0.525),
+"times": PackedFloat32Array(0.195, 0.6825),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1298,7 +1298,7 @@ tracks/6/path = NodePath("AttackStats:ClosingInSpeed")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.15, 0.525),
+"times": PackedFloat32Array(0.195, 0.6825),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [2.0, 4.0]
@@ -1306,7 +1306,7 @@ tracks/6/keys = {
 
 [sub_resource type="Animation" id="Animation_fts4s"]
 resource_name = "sumo_advance_start"
-length = 2.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1314,7 +1314,7 @@ tracks/0/path = NodePath(".:State")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(2),
+"times": PackedFloat32Array(1.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["sumo_advance_next"]
@@ -1764,19 +1764,20 @@ _uniqueAttackLabel = NodePath("UniqueAttackLabel")
 _model = NodePath("Model")
 _secondCheck = NodePath("SecondCheck")
 _stats = ExtResource("3_v06ba")
+State = "sumo_advance_next"
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
 "": SubResource("AnimationLibrary_bq7h1")
 }
 autoplay = "idle"
-blend_times = [&"sumo_advance_right", &"sumo_advance_left", 0.01, &"sumo_advance_left", &"sumo_advance_right", 0.01]
+blend_times = [&"sumo_advance_left", &"sumo_advance_right", 0.01, &"sumo_advance_right", &"sumo_advance_left", 0.01]
 
 [node name="AttackStats" parent="." index="1"]
 script = ExtResource("4_m6ksn")
 ClosingInSpeed = 4.0
 StrafingSpeed = 0.0
-Damage = 0.4
+Damage = 0.1
 
 [node name="CollisionBox" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
@@ -1792,7 +1793,6 @@ visible = false
 
 [node name="Model" parent="." index="5" instance=ExtResource("5_kgm2n")]
 transform = Transform3D(1.58603, 0, -0.739582, 0, 1.75, 0, 0.739582, 0, 1.58603, -0.4, 0, 0.4)
-_checkLeftHand = true
 _checkRightHand = true
 
 [node name="DropShadow" parent="." index="6"]

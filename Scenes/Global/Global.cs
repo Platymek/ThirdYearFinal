@@ -12,6 +12,7 @@ public partial class Global : Node
 	[Export] public int RoundsToWin = 6;
 	[Export] private Array<Opponent.AttackTypes> _forcedTypeSelection;
 	[Export] private Array<bool> _forcedTypeSelectionEnabled;
+	[Export] private float _healthBonusMultiplier = 0.2f;
 
 	[ExportGroup("Default Stats")]
 	[Export] private PlayerStats _playerStatsDefault;
@@ -315,7 +316,7 @@ public partial class Global : Node
 		int numberOfUniqueAttacks 
 			= OpponentStats.CurrentUniqueAttacks[category].Count + 1;
 			
-		return 0.25f * numberOfUniqueAttacks;
+		return _healthBonusMultiplier * numberOfUniqueAttacks;
 	}
 
 	public float GetCurrentOpponentHealth()
@@ -387,16 +388,9 @@ public partial class Global : Node
 		SaveFile.SavedRoundProgress++;
 		SaveFile.IncrementRoundsWon();
 
+		PrepareTemporaryUniqueAttacks();
 
-		if (_temporaryUniqueAttacks != null)
-		{
-			_temporaryUniqueAttacks.Free();
-		}
-
-		_temporaryUniqueAttacks = RemainingUniqueAttacks.Duplicate();
-
-
-		Save();
+        Save();
 		ChangeScene(Scene.RoundEnd);
 	}
 
